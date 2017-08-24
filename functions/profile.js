@@ -46,6 +46,7 @@ exports.getFullProfile = userid =>
 				fun_product.allproductbyuser(userid)
 
 					.then(result => {
+						console.log(result.listproduct);
 						if(result.listproduct.length!==0){
 							console.log("fdhf");
 							users[0].listproduct = result.listproduct;

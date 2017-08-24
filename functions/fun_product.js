@@ -39,6 +39,7 @@ exports.allproductbyuser = (userid) =>
 
 		product.find({user : ObjectId(userid)}, {comment: 0,user : 0})
 
+
 			.then(product => {
 				resolve({listproduct: product});
 
