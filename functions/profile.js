@@ -48,15 +48,11 @@ exports.getFullProfile = userid =>
 					.then(result => {
 						if(result.listproduct!==0){
 							console.log("fdhf");
-
 							users[0].listproduct = result.listproduct;
-						}
-						else {
-							user[0].listproduct = undefined;
 						}
 						resolve({status: 201, user : users[0]});
 					})
-					.catch(() => resolve({status: 201, user : users[0]}));
+					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
 
 				}
