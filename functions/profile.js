@@ -49,7 +49,7 @@ exports.getFullProfile = userid =>
 						user.set("listproduct",result.listproduct);
 						resolve({status: 201, user : user});
 					})
-					.catch(err => res.status(err.status).json({message: err.message}));
+					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
 
 				}
