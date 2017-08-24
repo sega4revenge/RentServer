@@ -50,6 +50,9 @@ exports.getFullProfile = userid =>
 							console.log("fdhf");
 							users[0].listproduct = result.listproduct;
 						}
+						else {
+							user[0].listproduct = null;
+						}
 						resolve({status: 201, user : users[0]});
 					})
 					.catch(() => resolve({status: 201, user : users[0]}));
