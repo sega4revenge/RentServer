@@ -177,14 +177,13 @@ exports.refreshcomment = (productid) =>
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
-
+		console.log("cmtid:" + commentid + " productid: " +productid)
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
-			console.log(err);
-		})
-
+		});
+		product.save()
 
 			.then(() => {
-				comment.findByIdAndRemove(commentid);
+				comment.find({ _id: ObjectId(commentid) }).remove().exec();
 				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
@@ -198,8 +197,7 @@ exports.deletecomment = (commentid, productid) =>
 					.then(result => {
 
 						resolve({status: 201, comment: result.comment});
-					})
-					.catch(err => res.status(err.status).json({message: err.message}));
+					});
 
 				this.push_messtotopic(productid, "Ahihi", 1);
 
@@ -405,7 +403,6 @@ exports.uploadproduct = (productid, image) =>
 	new Promise((resolve, reject) => {
 
 		console.log(productid);
-
 
 
 		product.find({_id: ObjectId(productid)})
