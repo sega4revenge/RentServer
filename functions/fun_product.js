@@ -172,8 +172,7 @@ exports.deletecomment = (commentid,productid) =>
 
 
 			.then(() => {
-				comment.findByIdAndRemove({_id : commentid})
-				comment.save()
+				comment.findByIdAndRemove(commentid)
 				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
