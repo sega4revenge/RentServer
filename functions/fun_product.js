@@ -178,12 +178,44 @@ exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
 		console.log("cmtid:" + commentid + " productid: " + productid);
-		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
-			if (err) {
-				console.log("Something wrong when updating data!");
-			}
-			console.log(data);
-		});
+		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
+			.then(() => {
+				comment.findByIdAndRemove(commentid);
+				this.refreshcomment(productid)
+
+					.then(result => {
+
+						resolve({status: 201, comment: result.comment});
+					})
+					.catch(err => res.status(err.status).json({message: err.message}));
+
+				this.push_messtotopic(productid, "Ahihi", 1);
+
+
+				// let ObjectId;
+				// ObjectId = require("mongodb").ObjectID;
+				// comment.find({productid: ObjectId(productid)})
+				// 	.populate("user", "_id name photoprofile" )
+				// 	.then(comments => {
+				//
+				// 		if (comments.length === 0) {
+				//
+				// 			reject({status: 404, message: "Product Not Found !"});
+				//
+				// 		} else {
+				//
+				// 			return comments;
+				//
+				// 		}
+				// 	})
+				// 	.then(comment => {
+				//
+				//
+				//
+				// 	});
+
+
+			})
 
 	});
 exports.addcomment = (userid, productid, content, time) =>
