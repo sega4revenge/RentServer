@@ -173,7 +173,68 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
+exports.deletecomment = (commentid) =>
 
+	new Promise((resolve, reject) => {
+
+		product.findOneAndRemove({comment : ObjectId(commentid)})
+
+		product.save()
+
+
+			.then(() => {
+				comment.findByIdAndRemove(
+					{_id : ObjectId(commentid)}
+				);
+				this.refreshcomment(productid)
+
+					.then(result => {
+
+						resolve({status: 201, comment : result.comment});
+					})
+					.catch(err => res.status(err.status).json({message: err.message}));
+
+				this.push_messtotopic(productid,"Ahihi",1);
+
+
+				// let ObjectId;
+				// ObjectId = require("mongodb").ObjectID;
+				// comment.find({productid: ObjectId(productid)})
+				// 	.populate("user", "_id name photoprofile" )
+				// 	.then(comments => {
+				//
+				// 		if (comments.length === 0) {
+				//
+				// 			reject({status: 404, message: "Product Not Found !"});
+				//
+				// 		} else {
+				//
+				// 			return comments;
+				//
+				// 		}
+				// 	})
+				// 	.then(comment => {
+				//
+				//
+				//
+				// 	});
+
+
+			})
+
+			.catch(err => {
+
+				if (err.code === 11000) {
+
+					reject({status: 409, message: "Comment Already Registered !"});
+
+				} else {
+					reject({status: 500, message: "Internal Server Error 1!"});
+					throw err;
+
+				}
+			});
+	});
 exports.addcomment = (userid, productid, content, time) =>
 
 	new Promise((resolve, reject) => {
