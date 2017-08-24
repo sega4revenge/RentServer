@@ -184,40 +184,9 @@ exports.deletecomment = (commentid, productid) =>
 			}
 			console.log(data);
 		});
-		product.save()
+		product.save();
 
-			.then(() => {
 
-				// comment.findByIdAndUpdate(
-				// 	producid,
-				// 	{$push: {"comment": newcomment._id}},
-				// 	{safe: true, upsert: true, new: true},
-				// 	function (err, model) {
-				// 		console.log(err);
-				// 	}
-				// );
-			/*	this.refreshcomment(productid)
-
-					.then(result => {
-						resolve({status: 201, comment: result.comment});
-					})
-					.catch(err => res.status(err.status).json({message: err.message}));
-
-				this.push_messtotopic(productid, "Ahihi", 1);*/
-			})
-
-			.catch(err => {
-
-				if (err.code === 11000) {
-
-					reject({status: 409, message: "Comment Already Registered !"});
-
-				} else {
-					reject({status: 500, message: "Internal Server Error 1!"});
-					throw err;
-
-				}
-			});
 	});
 exports.addcomment = (userid, productid, content, time) =>
 
