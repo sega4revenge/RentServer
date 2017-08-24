@@ -42,7 +42,7 @@ exports.getFullProfile = userid =>
 			})
 
 			.then(() => {
-				fun_product.allproductbyuser(productid)
+				fun_product.allproductbyuser(userid)
 
 					.then(result => {
 						console.log(result.listproduct);
