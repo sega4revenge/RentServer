@@ -96,6 +96,27 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+
+	router.post('/getfullprofile', (req, res) => {
+		const userid = req.body.userid;
+
+
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			profile.getFullProfile(userid)
+				.then(result => res.json(result))
+				/*  .then(result => {
+
+					  res.status(result.status).json({message: result.message, product: result.product})
+				  })*/
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
 
