@@ -179,7 +179,10 @@ exports.deletecomment = (commentid, productid) =>
 	new Promise((resolve, reject) => {
 		console.log("cmtid:" + commentid + " productid: " +productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
-			resolve.status(statusCode >= 100 && statusCode < 600 ? err.code : 500);
+			if(err){
+				console.log("Something wrong when updating data!");
+			}
+			console.log(doc);
 		});
 		product.save()
 
