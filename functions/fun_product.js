@@ -182,17 +182,20 @@ exports.deletecomment = (commentid, productid) =>
 			.then(() => {
 				comment.findByIdAndRemove(commentid, function (err,offer){
 					if(err) { throw err; }
-					this.refreshcomment(productid)
+					console.log(offer);
+					console.log("fdhjfdj");
 
-						.then(result => {
-
-							resolve({status: 201, comment: result.comment});
-						})
-						.catch(err => res.status(err.status).json({message: err.message}));
-					this.push_messtotopic(productid, "Ahihi", 1);
-					// ...
 				});
+				console.log("fdhdfdj");
+				this.refreshcomment(productid)
 
+					.then(result => {
+
+						resolve({status: 201, comment: result.comment});
+					})
+					.catch(err => res.status(err.status).json({message: err.message}));
+
+				this.push_messtotopic(productid, "Ahihi", 1);
 
 
 				// let ObjectId;
