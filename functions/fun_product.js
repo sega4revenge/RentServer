@@ -189,9 +189,8 @@ exports.refreshcomment = (productid) =>
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
-
+		console.log("cmtid:" + commentid + " productid: " +productid)
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
-			console.log(err);
 		});
 		product.save()
 
@@ -210,8 +209,7 @@ exports.deletecomment = (commentid, productid) =>
 					.then(result => {
 
 						resolve({status: 201, comment: result.comment});
-					})
-					.catch(err => res.status(err.status).json({message: err.message}));
+					});
 
 				this.push_messtotopic(productid, "Ahihi", 1);
 
