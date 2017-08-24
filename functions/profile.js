@@ -46,10 +46,12 @@ exports.getFullProfile = userid =>
 				fun_product.allproductbyuser(userid)
 
 					.then(result => {
-						if(result.listproduct!==0){
+						if(result.listproduct.length!==0){
 							console.log("fdhf");
 							users[0].listproduct = result.listproduct;
 						}
+						else
+							delete user[0].listproduct;
 						resolve({status: 201, user : users[0]});
 					})
 					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
