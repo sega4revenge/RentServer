@@ -2,6 +2,8 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
+const FCM = require("fcm-node");
+const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
 exports.allproduct = () =>
 
 	new Promise((resolve, reject) => {
@@ -95,31 +97,56 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				}
 			});
 	});
+exports.push_messtotopic = (productid,msg,type) =>
 
+	new Promise((resolve, reject) => {
+		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+			to: '/topics/'+productid,
+
+			data: {
+				message: msg,
+				type : type
+			}
+		};
+		console.log(msg);
+
+		fcm.send(m, function(err, response){
+			if (err) {
+				console.log(err);
+				reject({status: 409, message: 'MessToTopic Error !'});
+			} else {
+				console.log(response);
+				resolve({status: 201, message: 'MessToTopic Sucessfully !',response : response});
+
+			}
+		});
+
+
+	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
-				let ObjectId;
-				ObjectId = require("mongodb").ObjectID;
-				comment.find({productid: ObjectId(productid)})
-					.populate("user", "_id name photoprofile" )
-					.then(comments => {
+		let ObjectId;
+		ObjectId = require("mongodb").ObjectID;
+		comment.find({productid: ObjectId(productid)})
+			.populate("user", "_id name photoprofile" )
+			.then(comments => {
 
-						if (comments.length === 0) {
+				if (comments.length === 0) {
 
-							reject({status: 404, message: "Product Not Found !"});
+					reject({status: 404, message: "Product Not Found !"});
 
-						} else {
+				} else {
 
-							return comments;
+					return comments;
 
-						}
-					})
-					.then(comment => {
+				}
+			})
+			.then(comment => {
 
-						resolve({comment: comment});
+				resolve({comment: comment});
 
-					})
+			})
 
 			.catch(err => {
 
@@ -128,7 +155,7 @@ exports.refreshcomment = (productid) =>
 					reject({status: 409, message: "Comment Already Registered !"});
 
 				} else {
-					reject({status: 500, message: "Internal Server Error !"});
+					reject({status: 500, message: "Internal Server Error2 !"});
 					throw err;
 
 				}
@@ -153,8 +180,6 @@ exports.addcomment = (userid, productid, content, time) =>
 
 
 			.then(() => {
-				resolve({status: 201, message: "Comment Sucessfully !"});
-
 				product.findByIdAndUpdate(
 					productid,
 					{$push: {"comment": newcomment._id}},
@@ -163,6 +188,17 @@ exports.addcomment = (userid, productid, content, time) =>
 						console.log(err);
 					}
 				);
+				this.refreshcomment(productid)
+
+					.then(result => {
+
+						resolve({status: 201, comment : result.comment});
+					})
+					.catch(err => res.status(err.status).json({message: err.message}));
+
+				this.push_messtotopic(productid,"Ahihi",1);
+
+
 				// let ObjectId;
 				// ObjectId = require("mongodb").ObjectID;
 				// comment.find({productid: ObjectId(productid)})
@@ -195,7 +231,7 @@ exports.addcomment = (userid, productid, content, time) =>
 					reject({status: 409, message: "Comment Already Registered !"});
 
 				} else {
-					reject({status: 500, message: "Internal Server Error !"});
+					reject({status: 500, message: "Internal Server Error 1!"});
 					throw err;
 
 				}
@@ -206,7 +242,6 @@ exports.addcomment = (userid, productid, content, time) =>
 exports.productdetail = (productid,userid) =>
 
 	new Promise((resolve, reject) => {
-
 		let ObjectId;
 		ObjectId = require("mongodb").ObjectID;
 
