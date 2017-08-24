@@ -170,31 +170,30 @@ exports.deletecomment = (commentid, productid) =>
 			.then(() => {
 				comment.findByIdAndRemove(commentid, function (err,offer){
 					if(err) { throw err; }
-					console.log(offer);
-					console.log("fdhjfdj");
+					module.exports.refreshcomment(productid)
+
+						.then(result => {
+
+							resolve({status: 201, comment: result.comment});
+						})
+						.catch(err => {
+							if (err.code === 11000) {
+
+								reject({status: 409, message: "Comment Already Registered !"});
+
+							} else {
+								reject({status: 500, message: "Internal Server Error 1!"});
+								throw err;
+
+							}
+						});
+
+
+					module.exports.push_messtotopic(productid, "Ahihi", 1);
 
 				});
 				console.log("fdhdfdj");
-				this.refreshcomment(productid)
 
-					.then(result => {
-
-						resolve({status: 201, comment: result.comment});
-					})
-					.catch(err => {
-						if (err.code === 11000) {
-
-							reject({status: 409, message: "Comment Already Registered !"});
-
-						} else {
-							reject({status: 500, message: "Internal Server Error 1!"});
-							throw err;
-
-						}
-					});
-
-
-				this.push_messtotopic(productid, "Ahihi", 1);
 
 
 				// let ObjectId;
