@@ -42,6 +42,7 @@ exports.getFullProfile = userid =>
 			})
 
 			.then(users => {
+				console.log("fdhgjgkf");
 				fun_product.allproductbyuser(userid)
 
 					.then(result => {

@@ -42,7 +42,7 @@ exports.allproductbyuser = (userid) =>
 			.then(products => {
 
 				if (products.length === 0) {
-
+					console.log("ko thay");
 					reject({status: 404, message: "Product Not Found !"});
 
 				} else {
