@@ -52,7 +52,7 @@ exports.getFullProfile = userid =>
 						}
 						resolve({status: 201, user : users[0]});
 					})
-					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+					.catch(() => resolve({status: 201, user : users[0]}));
 
 
 				}
