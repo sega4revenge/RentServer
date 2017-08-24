@@ -161,26 +161,30 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
-exports.deletecomment = (commentid,productid) =>
+exports.deletecomment = (commentid,producid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.findByIdAndRemove(productid,
-			{$push: {"comment": commentid}},
-			function (err, model) {
-				console.log(err);
-			})
+		product.findOneAndUpdate(producid, {$pull: {comment: commentid}}, function(err, data){
+			if(err) {
+				return res.status(500).json({'error' : 'error in deleting address'});
+			}
 
-		newcomment.save()
+			res.json(data);
+
+		})
+
+
 
 			.then(() => {
-				comment.findByIdAndRemove(
-					productid,
-					{$push: {"comment": commentid}},
-					function (err, model) {
-						console.log(err);
-					}
-				);
+				// comment.findByIdAndUpdate(
+				// 	producid,
+				// 	{$push: {"comment": newcomment._id}},
+				// 	{safe: true, upsert: true, new: true},
+				// 	function (err, model) {
+				// 		console.log(err);
+				// 	}
+				// );
 				this.refreshcomment(productid)
 
 					.then(result => {
