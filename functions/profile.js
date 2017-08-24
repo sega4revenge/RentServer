@@ -42,20 +42,19 @@ exports.getFullProfile = userid =>
 			})
 
 			.then(users => {
-				console.log("fdhgjgkf");
+
 				fun_product.allproductbyuser(userid)
 
 					.then(result => {
-						console.log(result.listproduct);
-						if(result.listproduct.length!==0){
-							console.log("fdhf");
+
+
 							users[0].listproduct = result.listproduct;
-						}
+
 					/*	else
 							delete user[0].listproduct;*/
 						resolve({status: 201, user : users[0]});
 					})
-					.catch(() => resolve({status: 201, user : users[0]}));
+					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
 
 				}

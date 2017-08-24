@@ -107,7 +107,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.allproductbyuser(userid)
+			profile.getFullProfile(userid)
 				.then(result => res.json(result))
 				/*  .then(result => {
 
