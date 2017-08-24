@@ -161,7 +161,7 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
-exports.deletecomment = (commentid,producid) =>
+exports.deletecomment = (commentid,productid) =>
 
 	new Promise((resolve, reject) => {
 
