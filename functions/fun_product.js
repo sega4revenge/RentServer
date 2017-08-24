@@ -196,11 +196,10 @@ exports.deletecomment = (commentid, productid) =>
 
 
 			.then(() => {
-				comment.find({
-					_id: commentid
-				}, function (err, docs) {
-					docs.remove(); //Remove all the documents that match!
-				});				// comment.findByIdAndUpdate(
+				comment.findOneAndUpdate(commentid, function (err, data) {
+					console.log(err);
+				})
+				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
 				// 	{safe: true, upsert: true, new: true},
