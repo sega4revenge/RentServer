@@ -143,18 +143,6 @@ exports.refreshcomment = (productid) =>
 
 		comment.find({productid: ObjectId(productid)})
 			.populate("user", "_id name photoprofile")
-			.then(comments => {
-
-				if (comments.length === 0) {
-
-					reject({status: 404, message: "Product Not Found !"});
-
-				} else {
-
-					return comments;
-
-				}
-			})
 			.then(comment => {
 
 				resolve({comment: comment});
@@ -193,7 +181,18 @@ exports.deletecomment = (commentid, productid) =>
 
 						resolve({status: 201, comment: result.comment});
 					})
-					.catch(err => res.status(err.status).json({message: err.message}));
+					.catch(err => {
+						if (err.code === 11000) {
+
+							reject({status: 409, message: "Comment Already Registered !"});
+
+						} else {
+							reject({status: 500, message: "Internal Server Error 1!"});
+							throw err;
+
+						}
+					});
+
 
 				this.push_messtotopic(productid, "Ahihi", 1);
 
@@ -256,7 +255,17 @@ exports.addcomment = (userid, productid, content, time) =>
 
 						resolve({status: 201, comment: result.comment});
 					})
-					.catch(err => res.status(err.status).json({message: err.message}));
+					.catch(err => {
+						if (err.code === 11000) {
+
+							reject({status: 409, message: "Comment Already Registered !"});
+
+						} else {
+							reject({status: 500, message: "Internal Server Error 1!"});
+							throw err;
+
+						}
+					});
 
 				this.push_messtotopic(productid, "Ahihi", 1);
 
