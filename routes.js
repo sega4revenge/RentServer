@@ -266,6 +266,7 @@ module.exports = router => {
 	});
 	router.post('/deletecomment', (req, res) => {
 		const commentid = req.body.commentid;
+		const productid = req.body.productid;
 
 		if (!commentid) {
 
@@ -273,7 +274,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.deletecomment(commentid)
+			fun_product.deletecomment(commentid,productid)
 
 				.then(result => {
 

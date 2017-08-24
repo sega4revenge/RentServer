@@ -161,11 +161,11 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
-exports.deletecomment = (commentid) =>
+exports.deletecomment = (commentid,productid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.findByIdAndRemove(commentid,
+		product.findByIdAndRemove(productid,
 			{$push: {"comment": commentid}},
 			function (err, model) {
 				console.log(err);
@@ -176,7 +176,7 @@ exports.deletecomment = (commentid) =>
 
 			.then(() => {
 				comment.findByIdAndRemove(
-					commentid,
+					productid,
 					{$push: {"comment": commentid}},
 					function (err, model) {
 						console.log(err);
