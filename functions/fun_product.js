@@ -182,7 +182,7 @@ exports.deletecomment = (commentid, productid) =>
 			if(err){
 				console.log("Something wrong when updating data!");
 			}
-			console.log(doc);
+			console.log(data);
 		});
 		product.save()
 
