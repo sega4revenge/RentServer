@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
         photoprofile    :String,
         name : String
     },
-    listproduct : String
+    listproduct : [JSON]
 
 });
  
