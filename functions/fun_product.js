@@ -41,6 +41,7 @@ exports.allproductbyuser = (userid) =>
 
 
 			.then(product => {
+				console.log(product);
 				resolve({listproduct: product});
 
 			})
