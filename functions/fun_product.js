@@ -177,9 +177,9 @@ exports.refreshcomment = (productid) =>
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
-		console.log("cmtid:" + commentid + " productid: " +productid);
+		console.log("cmtid:" + commentid + " productid: " + productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
-			if(err){
+			if (err) {
 				console.log("Something wrong when updating data!");
 			}
 			console.log(data);
@@ -196,14 +196,14 @@ exports.deletecomment = (commentid, productid) =>
 				// 		console.log(err);
 				// 	}
 				// );
-				this.refreshcomment(productid)
+			/*	this.refreshcomment(productid)
 
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
 					})
-				.catch(err => res.status(err.status).json({message: err.message}));
+					.catch(err => res.status(err.status).json({message: err.message}));
 
-				this.push_messtotopic(productid, "Ahihi", 1);
+				this.push_messtotopic(productid, "Ahihi", 1);*/
 			})
 
 			.catch(err => {
