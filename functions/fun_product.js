@@ -165,7 +165,7 @@ exports.deletecomment = (commentid,productid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.findOneAndUpdate(producid, {$pull: {comment: commentid}}, function(err, data){
+		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function(err, data){
 			if(err) {
 				return res.status(500).json({'error' : 'error in deleting address'});
 			}
