@@ -45,6 +45,7 @@ exports.getFullProfile = userid =>
 				fun_product.allproductbyuser(productid)
 
 					.then(result => {
+						console.log(result.listproduct);
 						user.set("listproduct",result.listproduct);
 						resolve({status: 201, user : user});
 					})
