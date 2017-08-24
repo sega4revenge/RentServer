@@ -52,7 +52,7 @@ exports.getFullProfile = userid =>
 							users[0].listproduct = result.listproduct;
 						}
 						else {
-							user[0].listproduct = null;
+							user[0].listproduct = undefined;
 						}
 						resolve({status: 201, user : users[0]});
 					})
