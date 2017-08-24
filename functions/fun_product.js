@@ -2,7 +2,6 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
-const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
 exports.allproduct = () =>
@@ -34,19 +33,7 @@ exports.allproduct = () =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.allproductbyuser = (userid) =>
 
-	new Promise((resolve, reject) => {
-
-		product.find({user : ObjectId(userid)}, {comment: 0,user : 0})
-			.then(product => {
-				resolve({listproduct: product});
-
-			})
-
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-
-	});
 exports.createproduct = (userid, prodctname, price, time, number, category, address, description, timestamp, type) =>
 
 	new Promise((resolve, reject) => {
@@ -139,7 +126,8 @@ exports.push_messtotopic = (productid,msg,type) =>
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
-
+		let ObjectId;
+		ObjectId = require("mongodb").ObjectID;
 		comment.find({productid: ObjectId(productid)})
 			.populate("user", "_id name photoprofile" )
 			.then(comments => {
@@ -177,11 +165,22 @@ exports.deletecomment = (commentid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.findOneAndRemove({comment : ObjectId(commentid)})
+		product.findByIdAndRemove(commentid,
+			{$push: {"comment": commentid}},
+			function (err, model) {
+				console.log(err);
+			})
+
+		newcomment.save()
+
 
 			.then(() => {
 				comment.findByIdAndRemove(
-					{_id : ObjectId(commentid)}
+					commentid,
+					{$push: {"comment": commentid}},
+					function (err, model) {
+						console.log(err);
+					}
 				);
 				this.refreshcomment(productid)
 
@@ -312,7 +311,8 @@ exports.addcomment = (userid, productid, content, time) =>
 exports.productdetail = (productid,userid) =>
 
 	new Promise((resolve, reject) => {
-
+		let ObjectId;
+		ObjectId = require("mongodb").ObjectID;
 
 		product.find({_id: ObjectId(productid)})
 			.populate({
@@ -360,7 +360,8 @@ exports.allcomment = (productid) =>
 
 	new Promise((resolve, reject) => {
 
-
+		let ObjectId;
+		ObjectId = require("mongodb").ObjectID;
 
 		product.find({_id: ObjectId(productid)}, {comment: 1})
 			.populate({
@@ -397,7 +398,8 @@ exports.uploadproduct = (productid, image) =>
 
 		console.log(productid);
 
-
+		let ObjectId;
+		ObjectId = require("mongodb").ObjectID;
 
 		product.find({_id: ObjectId(productid)})
 			.populate("user")
