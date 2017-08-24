@@ -54,7 +54,7 @@ exports.getFullProfile = userid =>
 							delete user[0].listproduct;*/
 						resolve({status: 201, user : users[0]});
 					})
-					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+					.catch(() => resolve({status: 201, user : users[0]}));
 
 
 				}
