@@ -50,8 +50,8 @@ exports.getFullProfile = userid =>
 							console.log("fdhf");
 							users[0].listproduct = result.listproduct;
 						}
-						else
-							delete user[0].listproduct;
+					/*	else
+							delete user[0].listproduct;*/
 						resolve({status: 201, user : users[0]});
 					})
 					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
