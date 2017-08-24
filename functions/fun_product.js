@@ -169,9 +169,6 @@ exports.deletecomment = (commentid,producid) =>
 			if(err) {
 				return res.status(500).json({'error' : 'error in deleting address'});
 			}
-
-			reject({status: 201, message: "OK !"});
-
 		})
 
 
