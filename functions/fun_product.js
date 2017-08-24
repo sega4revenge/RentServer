@@ -182,14 +182,14 @@ exports.deletecomment = (commentid, productid) =>
 			.then(() => {
 				comment.findByIdAndRemove(commentid, function (err,offer){
 					if(err) { throw err; }
-					refreshcomment(productid)
+					this.refreshcomment(productid)
 
 						.then(result => {
 
 							resolve({status: 201, comment: result.comment});
 						})
 						.catch(err => res.status(err.status).json({message: err.message}));
-				push_messtotopic(productid, "Ahihi", 1);
+					this.push_messtotopic(productid, "Ahihi", 1);
 					// ...
 				});
 
