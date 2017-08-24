@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema({
         email: String,
         photoprofile    :String,
         name : String
-    }
+    },
+    listproduct : JSON
 
 });
  
