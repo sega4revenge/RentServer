@@ -170,7 +170,7 @@ exports.deletecomment = (commentid,producid) =>
 				return res.status(500).json({'error' : 'error in deleting address'});
 			}
 
-			resolve({status: 201, delete : "delete in product"});
+			reject({status: 201, message: "OK !"});
 
 		})
 
