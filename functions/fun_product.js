@@ -2,6 +2,7 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
+const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
 exports.allproduct = () =>
@@ -37,7 +38,7 @@ exports.allproductbyuser = (userid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.find({user : ObjectId(userid)}, {comment: 0,user : 0})
+		product.find({user: ObjectId(userid)}, {comment: 0, user: 0})
 			.then(products => {
 
 				if (products.length === 0) {
@@ -78,7 +79,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				address: address,
 				description: description,
 				created_at: timestamp,
-				view : 0,
+				view: 0,
 				type: type
 			});
 		} else {
@@ -122,26 +123,26 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				}
 			});
 	});
-exports.push_messtotopic = (productid,msg,type) =>
+exports.push_messtotopic = (productid, msg, type) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: '/topics/'+productid,
+			to: "/topics/" + productid,
 
 			data: {
 				message: msg,
-				type : type
+				type: type
 			}
 		};
 		console.log(msg);
 
-		fcm.send(m, function(err, response){
+		fcm.send(m, function (err, response) {
 			if (err) {
 				console.log(err);
-				reject({status: 409, message: 'MessToTopic Error !'});
+				reject({status: 409, message: "MessToTopic Error !"});
 			} else {
 				console.log(response);
-				resolve({status: 201, message: 'MessToTopic Sucessfully !',response : response});
+				resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
 
 			}
 		});
@@ -151,10 +152,9 @@ exports.push_messtotopic = (productid,msg,type) =>
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
-		let ObjectId;
-		ObjectId = require("mongodb").ObjectID;
+
 		comment.find({productid: ObjectId(productid)})
-			.populate("user", "_id name photoprofile" )
+			.populate("user", "_id name photoprofile")
 			.then(comments => {
 
 				if (comments.length === 0) {
@@ -186,18 +186,17 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
-exports.deletecomment = (commentid,productid) =>
+exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
 
-		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function(err, data){
+		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
 			console.log(err);
 		})
 
 
-
 			.then(() => {
-				comment.findByIdAndRemove(commentid)
+				comment.findByIdAndRemove(commentid);
 				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
@@ -210,11 +209,11 @@ exports.deletecomment = (commentid,productid) =>
 
 					.then(result => {
 
-						resolve({status: 201, comment : result.comment});
+						resolve({status: 201, comment: result.comment});
 					})
 					.catch(err => res.status(err.status).json({message: err.message}));
 
-				this.push_messtotopic(productid,"Ahihi",1);
+				this.push_messtotopic(productid, "Ahihi", 1);
 
 
 				// let ObjectId;
@@ -285,11 +284,11 @@ exports.addcomment = (userid, productid, content, time) =>
 
 					.then(result => {
 
-						resolve({status: 201, comment : result.comment});
+						resolve({status: 201, comment: result.comment});
 					})
 					.catch(err => res.status(err.status).json({message: err.message}));
 
-				this.push_messtotopic(productid,"Ahihi",1);
+				this.push_messtotopic(productid, "Ahihi", 1);
 
 
 				// let ObjectId;
@@ -332,18 +331,17 @@ exports.addcomment = (userid, productid, content, time) =>
 	});
 
 
-exports.productdetail = (productid,userid) =>
+exports.productdetail = (productid, userid) =>
 
 	new Promise((resolve, reject) => {
-		let ObjectId;
-		ObjectId = require("mongodb").ObjectID;
+
 
 		product.find({_id: ObjectId(productid)})
 			.populate({
 				path: "user comment",
-				options: { sort: { 'time': -1 } },
+				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
-				populate: {path: "user", select: "_id name photoprofile" }
+				populate: {path: "user", select: "_id name photoprofile"}
 			})
 
 			.then(products => {
@@ -352,12 +350,12 @@ exports.productdetail = (productid,userid) =>
 					reject({status: 404, message: "Product Not Found !"});
 
 				} else {
-					if(products[0].user._id.toString() === userid){
+					if (products[0].user._id.toString() === userid) {
 					}
 					else {
 						product.findByIdAndUpdate(
 							productid,
-							{$set: {"view": products[0].view + 1 }},
+							{$set: {"view": products[0].view + 1}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
@@ -384,8 +382,6 @@ exports.allcomment = (productid) =>
 
 	new Promise((resolve, reject) => {
 
-		let ObjectId;
-		ObjectId = require("mongodb").ObjectID;
 
 		product.find({_id: ObjectId(productid)}, {comment: 1})
 			.populate({
@@ -422,8 +418,7 @@ exports.uploadproduct = (productid, image) =>
 
 		console.log(productid);
 
-		let ObjectId;
-		ObjectId = require("mongodb").ObjectID;
+
 
 		product.find({_id: ObjectId(productid)})
 			.populate("user")
