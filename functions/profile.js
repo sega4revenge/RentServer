@@ -46,6 +46,7 @@ exports.getFullProfile = userid =>
 
 					.then(result => {
 						if(result.listproduct!==0){
+							console.log("fdhf");
 							users[0].listproduct = result.listproduct;
 						}
 						resolve({status: 201, user : users[0]});
