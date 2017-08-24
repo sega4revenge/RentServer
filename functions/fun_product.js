@@ -192,13 +192,15 @@ exports.deletecomment = (commentid, productid) =>
 
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}}, function (err, data) {
 			console.log(err);
-		})
-
+		});
+		product.save()
 
 			.then(() => {
-				comment.findOneAndUpdate(commentid, function (err, data) {
-					console.log(err);
-				})
+				comment.find({
+					_id: commentid
+				}, function (err, docs) {
+					docs.remove(); //Remove all the documents that match!
+				});
 				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
@@ -419,7 +421,6 @@ exports.uploadproduct = (productid, image) =>
 	new Promise((resolve, reject) => {
 
 		console.log(productid);
-
 
 
 		product.find({_id: ObjectId(productid)})
