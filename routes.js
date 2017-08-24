@@ -264,6 +264,25 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/deletecomment', (req, res) => {
+		const commentid = req.body.commentid;
+		const productid = req.body.productid;
+
+		if (!commentid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.deletecomment(commentid,productid)
+
+				.then(result => {
+
+					res.status(result.status).json({message: result.message,comment: result.comment})
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
 		/*		const deviceId = req.body.deviceId;*/
