@@ -187,12 +187,7 @@ exports.deletecomment = (commentid, productid) =>
 		product.save()
 
 			.then(() => {
-				comment.find({ _id: ObjectId(commentid) }).remove().exec(function(err, data){
-					if(err){
-						console.log("Something wrong when updating data!");
-					}
-					console.log(data);
-				});
+
 				// comment.findByIdAndUpdate(
 				// 	producid,
 				// 	{$push: {"comment": newcomment._id}},
