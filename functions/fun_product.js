@@ -179,9 +179,6 @@ exports.deletecomment = (commentid) =>
 
 		product.findOneAndRemove({comment : ObjectId(commentid)})
 
-		product.save()
-
-
 			.then(() => {
 				comment.findByIdAndRemove(
 					{_id : ObjectId(commentid)}
