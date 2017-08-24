@@ -278,7 +278,7 @@ module.exports = router => {
 
 				.then(result => {
 
-					res.status(result.status).json({comment: result.comment})
+					res.status(result.status).json({message: result.message,comment: result.comment})
 				})
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
