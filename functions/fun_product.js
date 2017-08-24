@@ -181,22 +181,16 @@ exports.deletecomment = (commentid, productid) =>
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
 			.then(() => {
 				comment.findByIdAndRemove(commentid, function (err,offer){
-					if (err) {
-						throw err;
-					}
-					else
-					{
-						this.refreshcomment(productid)
-							.then(result => {
+					if(err) { throw err; }
+					refreshcomment(productid)
 
-								resolve({status: 201, comment: result.comment});
-							})
-							.catch(err => res.status(err.status).json({message: err.message}));
+						.then(result => {
 
-						this.push_messtotopic(productid, "Ahihi", 1);
-						// ...
-					}
-
+							resolve({status: 201, comment: result.comment});
+						})
+						.catch(err => res.status(err.status).json({message: err.message}));
+				push_messtotopic(productid, "Ahihi", 1);
+					// ...
 				});
 
 
