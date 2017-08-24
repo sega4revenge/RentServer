@@ -173,7 +173,6 @@ exports.deletecomment = (commentid,productid) =>
 
 		newcomment.save()
 
-
 			.then(() => {
 				comment.findByIdAndRemove(
 					productid,
