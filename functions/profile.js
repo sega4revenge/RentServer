@@ -47,7 +47,7 @@ exports.getFullProfile = userid =>
 					.then(result => {
 						console.log(result.listproduct);
 						user.listproduct = result.listproduct;
-						resolve({status: 201, user : user});
+						resolve({status: 201, user : "dfhfh"});
 					})
 					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
