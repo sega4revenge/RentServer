@@ -38,10 +38,20 @@ exports.allproductbyuser = (userid) =>
 	new Promise((resolve, reject) => {
 
 		product.find({user : ObjectId(userid)}, {comment: 0,user : 0})
+			.then(products => {
 
+				if (products.length === 0) {
+					console.log("ko thay");
+					reject({status: 404, message: "Product Not Found !"});
+
+				} else {
+
+					return products;
+
+				}
+			})
 
 			.then(product => {
-				console.log(product);
 				resolve({listproduct: product});
 
 			})
