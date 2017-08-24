@@ -33,7 +33,32 @@ exports.allproduct = () =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.allproductbyuser = (userid) =>
 
+	new Promise((resolve, reject) => {
+
+		product.find({user : ObjectId(userid)}, {comment: 0,user : 0})
+			.then(products => {
+
+				if (products.length === 0) {
+					console.log("ko thay");
+					reject({status: 404, message: "Product Not Found !"});
+
+				} else {
+
+					return products;
+
+				}
+			})
+
+			.then(product => {
+				resolve({listproduct: product});
+
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
 exports.createproduct = (userid, prodctname, price, time, number, category, address, description, timestamp, type) =>
 
 	new Promise((resolve, reject) => {
