@@ -180,7 +180,7 @@ exports.deletecomment = (commentid, productid) =>
 		console.log("cmtid:" + commentid + " productid: " + productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
 			.then(() => {
-				comment.findByIdAndRemove(req.params.id, function (err,offer){
+				comment.findByIdAndRemove(commentid, function (err,offer){
 					if(err) { throw err; }
 					console.log(offer);
 					console.log("fdhjfdj");
