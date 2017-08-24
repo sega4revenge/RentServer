@@ -197,7 +197,7 @@ exports.deletecomment = (commentid, productid) =>
 
 			.then(() => {
 				comment.find({
-					_id: ObjectId(commentid)
+					_id: commentid
 				}, function (err, docs) {
 					docs.remove(); //Remove all the documents that match!
 				});				// comment.findByIdAndUpdate(
