@@ -9,8 +9,8 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		if(typeArrange==0)
 		{
 
-
-			product.find( {productname: {  $regex :   searchkey   }, address : { $regex: location },category: category } ,{comment: 0}).sort({created_at: -1})
+//{  $regex :   searchkey   }
+			product.find( {productname: "/^" + searchkey +"$/i" , address : { $regex: location },category: category } ,{comment: 0}).sort({created_at: -1})
 				.populate("user")
 				.then(products => {
 
