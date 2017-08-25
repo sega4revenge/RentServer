@@ -11,5 +11,5 @@ const options = {
 		authdb: 'admin'
 	}
 };
-mongoose.connect('mongodb://45.77.36.109:27017/quickjobfind',{ useMongoClient: false, options });
+mongoose.connect('mongodb://45.77.36.109:27017/quickjobfind',options );
 module.exports = mongoose;
