@@ -6,10 +6,9 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch = (searchkey,location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
+		var regex = new RegExp(searchkey.toLowerCase(), "i")
 		if(typeArrange==0)
 		{
-
-			var regex = new RegExp(searchkey.toLowerCase(), "i")
 			//console.log("products = " + regex);
 			product.find( {productname: {  $regex :   regex   }, address : { $regex: location },category: { $regex: category } } ,{comment: 0}).sort({created_at: -1})
 				.populate("user")
@@ -32,7 +31,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		}
 		if(typeArrange==1)
 		{
-			product.find( {productname: {  $regex :  searchkey  }, address : { $regex: location },category: category } ,{comment: 0} ).sort({created_at: -1})
+			product.find( {productname: {  $regex :  regex  }, address : { $regex: location },category: { $regex: category } } ,{comment: 0} ).sort({created_at: -1})
 				.populate("user")
 				.then(products => {
 
@@ -54,7 +53,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		}
 		if(typeArrange==2)
 		{
-			product.find( {productname: {  $regex :  searchkey  }, address : { $regex: location },category: category } ,{comment: 0} ).sort({price: 1})
+			product.find( {productname: {  $regex :  regex  }, address : { $regex: location },category: { $regex: category } } ,{comment: 0} ).sort({price: 1})
 				.populate("user")
 				.then(products => {
 
@@ -76,7 +75,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		}
 		if(typeArrange==3)
 		{
-			product.find( {productname: {  $regex :  searchkey  }, address : { $regex: location },category: category }  ,{comment: 0} ).sort({price: -1})
+			product.find( {productname: {  $regex :  regex  }, address : { $regex: location },category: { $regex: category } }  ,{comment: 0} ).sort({price: -1})
 				.populate("user")
 				.then(products => {
 
