@@ -10,7 +10,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		{
 
 
-			product.find( {productname: {  $regex :  '/^' + searchkey + '$/i'  }, address : { $regex: location },category: category } ,{comment: 0}).sort({created_at: -1})
+			product.find( {productname: {  $regex :   searchkey + '$/i'  }, address : { $regex: location },category: category } ,{comment: 0}).sort({created_at: -1})
 				.populate("user")
 				.then(products => {
 
