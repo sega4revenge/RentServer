@@ -10,6 +10,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		{
 
 			var regex = new RegExp(["^", searchkey, "$"].join(""), "i");
+			console.log("products = " + regex);
 			product.find( {productname: {  $regex :   regex   }, address : { $regex: location },category: category } ,{comment: 0}).sort({created_at: -1})
 				.populate("user")
 				.then(products => {
