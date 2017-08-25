@@ -4,16 +4,14 @@
 'use strict';
 const mongoose = require('mongoose');
 
-const options = {
+
+mongoose.connect('mongodb://45.77.36.109:27017/quickjobfind', {
+	useMongoClient: true,
 	user: "sega",
 	pass: "sega4deptrai",
 	auth: {
 		authdb: 'admin'
 	}
-};
-mongoose.connect('mongodb://45.77.36.109:27017/quickjobfind', {
-	useMongoClient: true,
-	options
 });
 module.exports = mongoose;
 
