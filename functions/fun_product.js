@@ -111,7 +111,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				}
 			});
 	});
-exports.push_messtotopic = (productid, msg, type) =>
+exports.push_messtotopic = (productid, msg, userid) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
@@ -119,7 +119,7 @@ exports.push_messtotopic = (productid, msg, type) =>
 
 			data: {
 				message: msg,
-				type: type
+				userid: userid
 			}
 		};
 		console.log(msg);
@@ -266,7 +266,7 @@ exports.addcomment = (userid, productid, content, time) =>
 						}
 					});
 
-				this.push_messtotopic(productid, "Ahihi", 1);
+				this.push_messtotopic(productid, "Ahihi", userid);
 
 
 				// let ObjectId;
