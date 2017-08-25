@@ -102,7 +102,6 @@ module.exports = router => {
 
 
 		if (!userid) {
-
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
