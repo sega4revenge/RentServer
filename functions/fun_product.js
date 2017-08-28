@@ -142,11 +142,7 @@ exports.refreshcomment = (productid) =>
 
 
 		comment.find({productid: ObjectId(productid)})
-			.populate({
-				path: "user product",
-				// Get friends of friends - populate the 'friends' array for every friend
-				populate: {path: "user", select: "_id name"}
-			})
+			.populate("user product", "_id name photoprofile user")
 			.then(comment => {
 
 				resolve({comment: comment});
