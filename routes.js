@@ -102,6 +102,7 @@ module.exports = router => {
 
 
 		if (!userid) {
+
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
@@ -258,7 +259,7 @@ module.exports = router => {
 
 				.then(result => {
 
-					res.status(result.status).json({message: result.message,comment: result.comment, user : result.user})
+					res.status(result.status).json({message: result.message,comment: result.comment, product: result.product})
 				})
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
