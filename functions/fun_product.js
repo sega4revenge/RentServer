@@ -251,9 +251,9 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
+						resolve({status: 201, comment: result.comment});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user, userid);
 						console.log("addcommnet : "+result.comment[0].product.user);
-						resolve({status: 201, comment: result.comment});
 					})
 					.catch(err => {
 						if (err.code === 11000) {
