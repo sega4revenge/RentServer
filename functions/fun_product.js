@@ -252,7 +252,7 @@ exports.addcomment = (userid, productid, content, time) =>
 
 					.then(result => {
 						module.exports.push_messtotopic(productid, result.comment[0].product.user, userid);
-
+						console.log("addcommnet : "+result.comment[0].product.user);
 						resolve({status: 201, comment: result.comment});
 					})
 					.catch(err => {
