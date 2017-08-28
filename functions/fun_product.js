@@ -140,11 +140,9 @@ exports.push_messtotopic = (productid, msg, userid) =>
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
+
 		comment.find({productid: ObjectId(productid)})
-			.populate({
-				path : "user product",
-				populate: {path: "user", select: "_id name"}
-			})
+			.populate("user", "_id name photoprofile")
 			.then(comment => {
 
 				resolve({comment: comment});
@@ -250,7 +248,6 @@ exports.addcomment = (userid, productid, content, time) =>
 						console.log(err);
 					}
 				);
-
 				this.refreshcomment(productid)
 
 					.then(result => {
