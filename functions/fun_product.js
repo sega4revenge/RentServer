@@ -265,7 +265,22 @@ exports.addcomment = (userid, productid, content, time) =>
 
 						}
 					});
+				this.productdetail(productid,"")
+					.then(result => {
 
+						resolve({status: 201, user: result.product.user.userid});
+					})
+					.catch(err => {
+						if (err.code === 11000) {
+
+							reject({status: 409, message: "Comment Already Registered !"});
+
+						} else {
+							reject({status: 500, message: "Internal Server Error 4!"});
+							throw err;
+
+						}
+					});
 				this.push_messtotopic(productid, "Ahihi", userid);
 
 
