@@ -141,7 +141,7 @@ exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
 
-		comment.find()
+		comment.find({productid: ObjectId(productid)})
 			.then(comment => {
 
 				resolve({comment: comment});
