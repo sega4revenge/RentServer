@@ -141,7 +141,8 @@ exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
 
-		comment.find({productid: ObjectId(productid)})
+		comment.find({product: ObjectId(productid)})
+			.populate("user product", "_id name photoprofile user")
 			.then(comment => {
 
 				resolve({comment: comment});
