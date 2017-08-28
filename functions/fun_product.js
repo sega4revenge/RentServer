@@ -122,7 +122,7 @@ exports.push_messtotopic = (productid, msg, userid) =>
 				userid: userid
 			}
 		};
-		console.log(msg);
+		console.log("push mess: " +msg);
 
 		fcm.send(m, function (err, response) {
 			if (err) {
@@ -165,7 +165,7 @@ exports.refreshcomment = (productid) =>
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
-		console.log("cmtid:" + commentid + " productid: " + productid);
+		// console.log("cmtid:" + commentid + " productid: " + productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
 			.then(() => {
 				comment.findByIdAndRemove(commentid, function (err,offer){
