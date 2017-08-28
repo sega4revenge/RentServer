@@ -140,9 +140,11 @@ exports.push_messtotopic = (productid, msg, userid) =>
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
-
 		comment.find({productid: ObjectId(productid)})
-			.populate("user", "_id name photoprofile")
+			.populate({
+				path : "user product",
+				populate: {path: "user", select: "_id name"}
+			})
 			.then(comment => {
 
 				resolve({comment: comment});
@@ -248,26 +250,12 @@ exports.addcomment = (userid, productid, content, time) =>
 						console.log(err);
 					}
 				);
+
 				this.refreshcomment(productid)
 
 					.then(result => {
+
 						resolve({status: 201, comment: result.comment});
-						module.exports.productdetail(productid,userid)
-							.then(result => {
-								console.log("OK NA`");
-								resolve({status: 201, product: result.product});
-							})
-							.catch(err => {
-								if (err.code === 11000) {
-
-									reject({status: 409, message: "Comment Already Registered !"});
-
-								} else {
-									reject({status: 500, message: "Internal Server Error 1!"});
-									throw err;
-
-								}
-							});
 					})
 					.catch(err => {
 						if (err.code === 11000) {
