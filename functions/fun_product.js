@@ -142,9 +142,7 @@ exports.refreshcomment = (productid) =>
 
 
 		comment.find({productid: ObjectId(productid)})
-			.populate({
-				path: "productid"
-			})
+			.populate("user productid", "_id name photoprofile user")
 			.then(comment => {
 
 				resolve({comment: comment});
