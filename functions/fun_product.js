@@ -251,6 +251,7 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
+						module.exports.push_messtotopic(productid, result.comment[0].product.user, userid);
 
 						resolve({status: 201, comment: result.comment});
 					})
@@ -266,7 +267,6 @@ exports.addcomment = (userid, productid, content, time) =>
 						}
 					});
 
-				this.push_messtotopic(productid, "Ahihi", userid);
 
 
 				// let ObjectId;
