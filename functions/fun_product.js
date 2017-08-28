@@ -252,8 +252,9 @@ exports.addcomment = (userid, productid, content, time) =>
 
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
-						module.exports.productdetail(productid,"")
+						module.exports.productdetail(productid,userid)
 							.then(result => {
+								console.log("OK NA`");
 								resolve({status: 201, product: result.product});
 							})
 							.catch(err => {
