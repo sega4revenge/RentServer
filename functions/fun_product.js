@@ -118,8 +118,9 @@ exports.push_messtotopic = (productid, msg, userid) =>
 			to: "/topics/" + productid,
 
 			data: {
-				message: msg,
-				userid: userid
+				productid : productid,
+				useridproduct: msg,
+				useridcmt: userid
 			}
 		};
 		console.log("push mess: " +msg);
