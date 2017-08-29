@@ -235,7 +235,7 @@ module.exports = router => {
 			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp, type)
 				.then(result => {
 
-					res.setHeader('Location', '/product/' + userid);
+					//res.setHeader('Location', '/product/' + userid);
 					res.status(result.status).json({message: result.message, product: result.product})
 				})
 
