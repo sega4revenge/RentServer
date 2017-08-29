@@ -48,6 +48,28 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp, type) =>
+
+	new Promise((resolve, reject) => {
+
+		product.find({_id: ObjectId(productid)})
+			.then(products => {
+				let product = products[0];
+				product.productname = productname;
+				product.price = price;
+				product.time = time;
+				product.number = number;
+				product.category = category;
+				product.address = address;
+				product.description = description;
+				product.timestamp = timestamp;
+				return product.save();
+			})
+			.then(product => {resolve({status: 200, message: "Edit Susscess !"});})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
 exports.createproduct = (userid, prodctname, price, time, number, category, address, description, timestamp, type) =>
 
 	new Promise((resolve, reject) => {

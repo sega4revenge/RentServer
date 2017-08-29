@@ -213,6 +213,36 @@ module.exports = router => {
 	});
 
 
+	router.post('/editproduct', (req, res) => {
+		const productid = req.body.productid;
+		//const userid = req.body.user;
+		const productname = req.body.productname;
+		const price = req.body.price;
+		const time = req.body.time;
+		const number = req.body.number;
+		const category = req.body.category;
+		const address = req.body.address;
+		const description = req.body.description;
+
+		const day = new Date();
+		const timestamp = day.getTime();
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp, type)
+				.then(result => {
+
+					res.setHeader('Location', '/product/' + userid);
+					res.status(result.status).json({message: result.message, product: result.product})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+
 	router.post('/createproduct', (req, res) => {
 		const userid = req.body.user;
 		const productname = req.body.productname;
