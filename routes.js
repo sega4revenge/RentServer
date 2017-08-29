@@ -226,7 +226,7 @@ module.exports = router => {
 
 		const day = new Date();
 		const timestamp = day.getTime();
-		if (!userid) {
+		if (!productid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
