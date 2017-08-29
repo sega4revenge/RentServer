@@ -223,7 +223,6 @@ module.exports = router => {
 		const category = req.body.category;
 		const address = req.body.address;
 		const description = req.body.description;
-
 		const day = new Date();
 		const timestamp = day.getTime();
 		if (!productid) {
@@ -232,7 +231,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp, type)
+			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp)
 				.then(result => {
 
 					//res.setHeader('Location', '/product/' + userid);
