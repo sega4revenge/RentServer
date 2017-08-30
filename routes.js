@@ -227,6 +227,9 @@ module.exports = router => {
 		const description = req.body.description;
 		listitem = req.body.listimgdel;
 		console.log(listitem[0]);
+
+
+
 		//for(var i =0;i<=listitem.length;i++)
 	//	{
 		//	console.log(listitem[i]);
