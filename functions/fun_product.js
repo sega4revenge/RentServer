@@ -103,7 +103,7 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 
 				return productss.save();
 			})
-			.then(product => {resolve({status: 200, product: product});})
+			.then(product => {resolve({status: 200, message: "Success"});})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
