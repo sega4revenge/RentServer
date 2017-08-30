@@ -95,7 +95,7 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 						console.log(productid+"/"+listitem[i]);
 						product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
 							.then(() =>{
-								console.log("Delete Image Success");
+								resolve({status: 200, message: "Delete Image Success"});
 							})
 							.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 					}
