@@ -213,6 +213,34 @@ module.exports = router => {
 		}
 	});
 
+	router.post('/deleteproduct', (req, res) => {
+
+		const productid = req.body.productid;
+		var listitem = req.body.listimgdel;
+		var arrImgDel = [];
+		if(listitem != "0")
+		{
+			arrImgDel = listitem.split(" , ");
+			if (arrImgDel.length > 0) {
+				for (var i = 0; i <= (arrImgDel.length - 1); i++) {
+					fs.unlink(uploadDir + arrImgDel[i], (err) => {
+						if (err) throw err;
+						console.log('successfully deleted /image/' + arrImgDel[i]);
+					});
+				}
+			}
+		}
+		if (!productid) {
+			res.status(400).json({message: 'Invalid Request !'});
+		} else {
+			fun_product.deletecomment(productid)
+				.then(result => {
+
+					res.status(result.status).json({message: result.message,comment: result.comment})
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 
 	router.post('/editproduct', (req, res) => {
 
