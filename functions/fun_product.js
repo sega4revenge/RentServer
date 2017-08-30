@@ -10,7 +10,7 @@ exports.allproduct = (type) =>
 		const d = new Date();
 		const timeStamp = d.getTime();
 		console.log("TIMESTAMP: " + timeStamp);
-	if(type === 1){
+	if(type === "1"){
 		product.find({type: "1"}, {comment: 0})
 			.populate("user")
 			.then(products => {
