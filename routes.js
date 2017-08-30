@@ -227,7 +227,7 @@ module.exports = router => {
 		const description = req.body.description;
 		var listitem = req.body.listimgdel;
 		var arrImgDel = listitem.split(" , ");
-		console.log(arrImgDel + "aaaaaaaa");
+		console.log(arrImgDel.length + "aaaaaaaa");
 		if (arrImgDel.length > 0) {
 			for (var i = 0; i <= (arrImgDel.length - 1); i++) {
 				fs.unlink(uploadDir + arrImgDel[i], (err) => {
