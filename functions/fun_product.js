@@ -89,7 +89,7 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				product.description = description;
 				product.timestamp = timestamp;
 				for(var i=0;i<=(listitem.images.length-1);i++){
-					product.images.remove(listitem[i]);
+					product.images.removeItem(listitem[i]);
 				}
 				return product.save();
 			})
