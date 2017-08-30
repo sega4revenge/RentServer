@@ -92,13 +92,17 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				productss.address = address;
 				productss.description = description;
 				productss.timestamp = timestamp;
-				for(var i=0;i<=(listitem.length-1);i++){
-					console.log(productid+"/"+listitem[i]);
-					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
-						.then(() =>{
-							console.log("Add Image Success");
-						})
+				if(listitem.length != 0)
+				{
+					for(var i=0;i<=(listitem.length-1);i++){
+						console.log(productid+"/"+listitem[i]);
+						product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
+							.then(() =>{
+								console.log("Add Image Success");
+							})
+					}
 				}
+
 				return productss.save();
 			})
 			.then(product => {resolve({status: 200, product: product});})

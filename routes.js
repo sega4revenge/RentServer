@@ -226,14 +226,18 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		var listitem = req.body.listimgdel;
-		var arrImgDel = listitem.split(" , ");
-		console.log(arrImgDel[0]+ "aaaaaaaa" +listitem);
-		if (arrImgDel.length > 0 || !listitem || listitem == "") {
-			for (var i = 0; i <= (arrImgDel.length - 1); i++) {
-				fs.unlink(uploadDir + arrImgDel[i], (err) => {
-					if (err) throw err;
-					console.log('successfully deleted /image/' + arrImgDel[i]);
-				});
+		var arrImgDel = [];
+		if(listitem != "0")
+		{
+			arrImgDel = listitem.split(" , ");
+			console.log(arrImgDel[0]+ "aaaaaaaa" +listitem);
+			if (arrImgDel.length > 0 || !listitem || listitem == "") {
+				for (var i = 0; i <= (arrImgDel.length - 1); i++) {
+					fs.unlink(uploadDir + arrImgDel[i], (err) => {
+						if (err) throw err;
+						console.log('successfully deleted /image/' + arrImgDel[i]);
+					});
+				}
 			}
 		}
 		const day = new Date();
