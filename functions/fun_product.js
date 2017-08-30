@@ -90,7 +90,7 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				product.timestamp = timestamp;
 				return product.save();
 			})
-			.then(product => {resolve({status: 200, message: "Edit Susscess !"});})
+			.then(product => {resolve({status: 200, product: product});})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
