@@ -226,15 +226,12 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		var listitem = req.body.listimgdel;
-		console.log(listitem+"aaaaaaaa");
-		var arr = JSON.parse(listitem);
-			//listitem.split(", ");
-			//
-		console.log(arr+"aaaaaaaa");
-		//for(var i =0;i<=listitem.length;i++)
-	//	{
-		//	console.log(listitem[i]);
-		//}
+		var arrImgDel =listitem.split(" , ");
+	//	console.log(arr+"aaaaaaaa");
+		for(var i =0;i<=arrImgDel.length;i++)
+		{
+			console.log(arrImgDel[i]);
+		}
 
 		const day = new Date();
 		const timestamp = day.getTime();
