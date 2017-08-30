@@ -73,7 +73,7 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp) =>
+exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp,userid) =>
 
 	new Promise((resolve, reject) => {
 
