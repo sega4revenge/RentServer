@@ -166,23 +166,22 @@ module.exports = router => {
 	router.post('/allproduct', (req, res) => {
 
 
-		// const type = req.body.type;
+		// const email = req.body.email;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
 
-		// if (!type) {
+		// if (!email || !password || !tokenfirebase) {
 		//
 		//     res.status(400).json({message: 'Invalid Request !'});
 		//
 		// } else {
 
-			fun_product.allproduct(type)
-			// .then(result => res.json(result))
+		fun_product.allproduct()
+		// .then(result => res.json(result))
 
-				.then(result => res.json(result))
+			.then(result => res.json(result))
 
-				.catch(err => res.status(err.status).json({message: err.message}));
-		// }
+			.catch(err => res.status(err.status).json({message: err.message}));
 
 	});
 	router.post('/users', (req, res) => {
@@ -213,35 +212,6 @@ module.exports = router => {
 		}
 	});
 
-
-	router.post('/editproduct', (req, res) => {
-		const productid = req.body.productid;
-		//const userid = req.body.user;
-		const productname = req.body.productname;
-		const price = req.body.price;
-		const time = req.body.time;
-		const number = req.body.number;
-		const category = req.body.category;
-		const address = req.body.address;
-		const description = req.body.description;
-		const day = new Date();
-		const timestamp = day.getTime();
-		if (!productid) {
-
-			res.status(400).json({message: 'Invalid Request !'});
-
-		} else {
-
-			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp)
-				.then(result => {
-
-					//res.setHeader('Location', '/product/' + userid);
-					res.status(result.status).json({message: result.message, product: result.product})
-				})
-
-				.catch(err => res.status(err.status).json({message: err.message}));
-		}
-	});
 
 	router.post('/createproduct', (req, res) => {
 		const userid = req.body.user;
