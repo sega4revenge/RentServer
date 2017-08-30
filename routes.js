@@ -225,9 +225,10 @@ module.exports = router => {
 		const category = req.body.category;
 		const address = req.body.address;
 		const description = req.body.description;
-		var listitem = req.body.listimgdel;
-		var arr = listitem.split(", ");
-		console.log(arr[1]+"aaaaaaaa");
+		var listitem = req.body.isArray(listimgdel);
+		//var arr =
+			//listitem.split(", ");
+		console.log(listitem[1]+"aaaaaaaa");
 		//for(var i =0;i<=listitem.length;i++)
 	//	{
 		//	console.log(listitem[i]);
