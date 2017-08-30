@@ -231,7 +231,7 @@ module.exports = router => {
 
 		for(var i =0;i<=(arrImgDel.length-1);i++)
 		{
-			fs.unlink(uploadDir+"/"+arrImgDel[i], (err) => {
+			fs.unlink(uploadDir+arrImgDel[i], (err) => {
 				if (err) throw err;
 				console.log('successfully deleted /image/'+arrImgDel[i]);
 			});
