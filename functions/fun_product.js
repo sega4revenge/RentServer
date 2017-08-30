@@ -5,12 +5,12 @@ const comment = new require("../models/comment");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
-exports.allproduct = () =>
-
+exports.allproduct = (type) =>
 	new Promise((resolve, reject) => {
 		const d = new Date();
 		const timeStamp = d.getTime();
 		console.log("TIMESTAMP: " + timeStamp);
+	if(type === 1){
 		product.find({type: "1"}, {comment: 0})
 			.populate("user")
 			.then(products => {
@@ -32,6 +32,31 @@ exports.allproduct = () =>
 			})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+	} else {
+		product.find({type: "2"}, {comment: 0})
+			.populate("user")
+			.then(products => {
+
+				if (products.length === 0) {
+
+					reject({status: 404, message: "Product Not Found !"});
+
+				} else {
+
+					return products;
+
+				}
+			})
+
+			.then(product => {
+				resolve({status: 200, listproduct: product});
+
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+	}
+
+
 
 	});
 exports.allproductbyuser = (userid) =>
@@ -44,6 +69,28 @@ exports.allproductbyuser = (userid) =>
 				resolve({listproduct: product});
 
 			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp) =>
+
+	new Promise((resolve, reject) => {
+
+		product.find({_id: ObjectId(productid)})
+			.then(products => {
+				let product = products[0];
+				product.productname = productname;
+				product.price = price;
+				product.time = time;
+				product.number = number;
+				product.category = category;
+				product.address = address;
+				product.description = description;
+				product.timestamp = timestamp;
+				return product.save();
+			})
+			.then(product => {resolve({status: 200, message: "Edit Susscess !"});})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
