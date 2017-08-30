@@ -226,10 +226,7 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		listitem = req.body.listimgdel;
-		console.log(listitem[0]);
-
-
-
+		console.log(listitem);
 		//for(var i =0;i<=listitem.length;i++)
 	//	{
 		//	console.log(listitem[i]);
