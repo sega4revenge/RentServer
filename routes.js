@@ -226,7 +226,8 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		var listitem = req.body.listimgdel;
-		var arr = JSON.parse(listitem);
+
+		var arr = JSON.parse("[" + listitem + "]");
 			//listitem.split(", ");
 			//
 		console.log(arr+"aaaaaaaa");
