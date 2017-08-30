@@ -166,15 +166,15 @@ module.exports = router => {
 	router.post('/allproduct', (req, res) => {
 
 
-		const type = req.body.type;
+		// const type = req.body.type;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
 
-		if (!type) {
-
-		    res.status(400).json({message: 'Invalid Request !'});
-
-		} else {
+		// if (!type) {
+		//
+		//     res.status(400).json({message: 'Invalid Request !'});
+		//
+		// } else {
 
 			fun_product.allproduct(type)
 			// .then(result => res.json(result))
@@ -182,7 +182,7 @@ module.exports = router => {
 				.then(result => res.json(result))
 
 				.catch(err => res.status(err.status).json({message: err.message}));
-		}
+		// }
 
 	});
 	router.post('/users', (req, res) => {
