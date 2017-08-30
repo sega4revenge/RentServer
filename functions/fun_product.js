@@ -88,8 +88,8 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				product.address = address;
 				product.description = description;
 				product.timestamp = timestamp;
-				for(var i=0;i<=(listitem.images.length-1);i++){
-					product.images.removeItem(listitem[i]);
+				for(var i=0;i<=(listitem.length-1);i++){
+					product.findOneAndUpdate(productid,{$pull: {images: listitem[i]} });
 				}
 				return product.save();
 			})
