@@ -230,7 +230,6 @@ module.exports = router => {
 		if(listitem != "0")
 		{
 			arrImgDel = listitem.split(" , ");
-			console.log(arrImgDel[0]+ "aaaaaaaa" +listitem);
 			if (arrImgDel.length > 0 || !listitem || listitem == "") {
 				for (var i = 0; i <= (arrImgDel.length - 1); i++) {
 					fs.unlink(uploadDir + arrImgDel[i], (err) => {
@@ -250,11 +249,8 @@ module.exports = router => {
 
 			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp,arrImgDel)
 				.then(result => {
-
-					//res.setHeader('Location', '/product/' + userid);
 					res.status(result.status).json({message: result.message, product: result.product})
 				})
-
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
