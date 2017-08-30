@@ -89,7 +89,7 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				product.description = description;
 				product.timestamp = timestamp;
 				for(var i=0;i<=(listitem.length-1);i++){
-					product.findOneAndUpdate(productid,{$pull: {images: listitem[i]} });
+					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} });
 				}
 				return product.save();
 			})
