@@ -79,19 +79,19 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 
 		product.find({_id: ObjectId(productid)})
 			.then(products => {
-				let product = products[0];
-				product.productname = productname;
-				product.price = price;
-				product.time = time;
-				product.number = number;
-				product.category = category;
-				product.address = address;
-				product.description = description;
-				product.timestamp = timestamp;
+				let productss = products[0];
+				productss.productname = productname;
+				productss.price = price;
+				productss.time = time;
+				productss.number = number;
+				productss.category = category;
+				productss.address = address;
+				productss.description = description;
+				productss.timestamp = timestamp;
 				for(var i=0;i<=(listitem.length-1);i++){
 					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} });
 				}
-				return product.save();
+				return productss.save();
 			})
 			.then(product => {resolve({status: 200, product: product});})
 
