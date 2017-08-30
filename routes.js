@@ -228,20 +228,24 @@ module.exports = router => {
 		var listitem = req.body.listimgdel;
 		var arrImgDel =listitem.split(" , ");
 	//	console.log(arr+"aaaaaaaa");
+		const fs = require('fs');
 		for(var i =0;i<=(arrImgDel.length-1);i++)
 		{
-			console.log(arrImgDel[i]);
+			fs.unlink('/image/'+arrImgDel[i], (err) => {
+				if (err) throw err;
+				console.log('successfully deleted /image/'+arrImgDel[i]);
+			});
 		}
 
 		const day = new Date();
 		const timestamp = day.getTime();
-		/*if (!productid) {
+		if (!productid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp,userid)
+			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp,arrImgDel)
 				.then(result => {
 
 					//res.setHeader('Location', '/product/' + userid);
@@ -249,7 +253,7 @@ module.exports = router => {
 				})
 
 				.catch(err => res.status(err.status).json({message: err.message}));
-		}*/
+		}
 	});
 
 	router.post('/createproduct', (req, res) => {

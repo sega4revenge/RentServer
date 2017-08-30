@@ -73,7 +73,7 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp,userid) =>
+exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp,listitem) =>
 
 	new Promise((resolve, reject) => {
 
@@ -88,6 +88,9 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				product.address = address;
 				product.description = description;
 				product.timestamp = timestamp;
+				for(var i=0;i<=(listitem.images.length-1);i++){
+					product.images.remove(listitem[i]);
+				}
 				return product.save();
 			})
 			.then(product => {resolve({status: 200, product: product});})
