@@ -215,7 +215,7 @@ module.exports = router => {
 
 
 	router.post('/editproduct', (req, res) => {
-		var listitem = [];
+
 		const productid = req.body.productid;
 		const userid = req.body.user;
 		const productname = req.body.productname;
@@ -225,7 +225,7 @@ module.exports = router => {
 		const category = req.body.category;
 		const address = req.body.address;
 		const description = req.body.description;
-		listitem = req.body.listimgdel;
+		var listitem = req.body.listimgdel;
 		console.log(listitem[1]+"aaaaaaaa");
 		//for(var i =0;i<=listitem.length;i++)
 	//	{
