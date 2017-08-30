@@ -233,7 +233,7 @@ module.exports = router => {
 		if (!productid) {
 			res.status(400).json({message: 'Invalid Request !'});
 		} else {
-			fun_product.deletecomment(productid)
+			fun_product.deleteProduct(productid)
 				.then(result => {
 
 					res.status(result.status).json({message: result.message,comment: result.comment})
