@@ -226,17 +226,16 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		var listitem = req.body.listimgdel;
-		var arrImgDel =listitem.split(" , ");
-		console.log(listitem+"aaaaaaaa");
-
-		for(var i =0;i<=(arrImgDel.length-1);i++)
-		{
-			fs.unlink(uploadDir+arrImgDel[i], (err) => {
-				if (err) throw err;
-				console.log('successfully deleted /image/'+arrImgDel[i]);
-			});
+		var arrImgDel = listitem.split(" , ");
+		console.log(listitem + "aaaaaaaa");
+		if (arrImgDel.length > 0) {
+			for (var i = 0; i <= (arrImgDel.length - 1); i++) {
+				fs.unlink(uploadDir + arrImgDel[i], (err) => {
+					if (err) throw err;
+					console.log('successfully deleted /image/' + arrImgDel[i]);
+				});
+			}
 		}
-
 		const day = new Date();
 		const timestamp = day.getTime();
 		if (!productid) {

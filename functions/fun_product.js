@@ -96,9 +96,8 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 					console.log(productid+"/"+listitem[i]);
 					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
 						.then(() =>{
-							console.log("11111111111");
+							console.log("Add Image Success");
 						})
-
 				}
 				return productss.save();
 			})
