@@ -215,6 +215,7 @@ module.exports = router => {
 
 
 	router.post('/editproduct', (req, res) => {
+		var listitem = [];
 		const productid = req.body.productid;
 		const userid = req.body.user;
 		const productname = req.body.productname;
@@ -224,7 +225,8 @@ module.exports = router => {
 		const category = req.body.category;
 		const address = req.body.address;
 		const description = req.body.description;
-		const imgdel = req.body.listimgdel;
+		listitem = req.body.listimgdel;
+		console.log(listitem.length+"222222");
 		const day = new Date();
 		const timestamp = day.getTime();
 		if (!productid) {
