@@ -226,10 +226,10 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		listitem = req.body.listimgdel;
-		console.log(listitem.length+"222222");
+		console.log(listitem.length+"legth   "+listitem[0]);
 		const day = new Date();
 		const timestamp = day.getTime();
-		if (!productid) {
+		/*if (!productid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
@@ -243,7 +243,7 @@ module.exports = router => {
 				})
 
 				.catch(err => res.status(err.status).json({message: err.message}));
-		}
+		}*/
 	});
 
 	router.post('/createproduct', (req, res) => {
