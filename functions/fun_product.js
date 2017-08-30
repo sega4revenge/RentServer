@@ -73,6 +73,10 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.delete = ()=>
+	new Promise((resolve, reject) => {
+		product.findOne
+	});
 exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp,listitem) =>
 
 	new Promise((resolve, reject) => {
@@ -90,8 +94,11 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				productss.timestamp = timestamp;
 				for(var i=0;i<=(listitem.length-1);i++){
 					console.log(productid+"/"+listitem[i]);
-					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} });
-					console.log("11111111111");
+					product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
+						.then(() =>{
+							console.log("11111111111");
+						})
+
 				}
 				return productss.save();
 			})
