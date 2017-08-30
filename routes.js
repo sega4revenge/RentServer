@@ -228,10 +228,10 @@ module.exports = router => {
 		var listitem = req.body.listimgdel;
 		var arrImgDel =listitem.split(" , ");
 	//	console.log(arr+"aaaaaaaa");
-		const fs = require('fs');
+
 		for(var i =0;i<=(arrImgDel.length-1);i++)
 		{
-			fs.unlink('/uploads/'+arrImgDel[i], (err) => {
+			fs.unlink(uploadDir+"/"+arrImgDel[i], (err) => {
 				if (err) throw err;
 				console.log('successfully deleted /image/'+arrImgDel[i]);
 			});
