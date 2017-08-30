@@ -228,7 +228,7 @@ module.exports = router => {
 		var listitem = req.body.listimgdel;
 		var arrImgDel =listitem.split(" , ");
 	//	console.log(arr+"aaaaaaaa");
-		for(var i =0;i<=arrImgDel.length;i++)
+		for(var i =0;i<=(arrImgDel.length-1);i++)
 		{
 			console.log(arrImgDel[i]);
 		}
