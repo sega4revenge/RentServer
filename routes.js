@@ -226,7 +226,12 @@ module.exports = router => {
 		const address = req.body.address;
 		const description = req.body.description;
 		listitem = req.body.listimgdel;
-		console.log(listitem.length+"legth   "+listitem[0]);
+		console.log(listitem.length+"legth");
+		for(var i =0;i<=listitem.length;i++)
+		{
+			console.log(listitem[i]);
+		}
+
 		const day = new Date();
 		const timestamp = day.getTime();
 		/*if (!productid) {
