@@ -223,10 +223,13 @@ exports.refreshcomment = (productid) =>
 				}
 			});
 	});
+
 exports.deleteProduct = (productid) =>
 
 	new Promise((resolve, reject) => {
+
 		comment.deleteMany({product: ObjectId(productid)})
+
 			.then((comment)=>{
 				product.findByIdAndRemove(productid, function (err,offer){
 					if(err) { throw err; }
@@ -236,6 +239,7 @@ exports.deleteProduct = (productid) =>
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 	});
+
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
