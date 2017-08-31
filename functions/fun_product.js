@@ -5,57 +5,62 @@ const comment = new require("../models/comment");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
-exports.allproduct = (type) =>
+exports.allproduct = (type, page) =>
 	new Promise((resolve, reject) => {
 		const d = new Date();
 		const timeStamp = d.getTime();
+		const limit = 10;
+		if(page<1) page = 1;
+		const start =  (limit * page) - limit;
 		console.log("TIMESTAMP: " + timeStamp);
-	if(type === 1){
-		product.find({type: "1"}, {comment: 0})
-			.populate("user")
-			.then(products => {
 
-				if (products.length === 0) {
 
-					reject({status: 404, message: "Product Not Found !"});
+		if (type === 1) {
 
-				} else {
+			product.find({type: "1"}, {comment: 0}).skip(start).limit(limit)
+				.populate("user")
+				.then(products => {
 
-					return products;
+					if (products.length === 0) {
 
-				}
-			})
+						reject({status: 404, message: "Product Not Found !"});
 
-			.then(product => {
-				resolve({status: 200, listproduct: product});
+					} else {
 
-			})
+						return products;
 
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-	} else {
-		product.find({type: "2"}, {comment: 0})
-			.populate("user")
-			.then(products => {
+					}
+				})
 
-				if (products.length === 0) {
+				.then(product => {
+					resolve({status: 200, listproduct: product});
 
-					reject({status: 404, message: "Product Not Found !"});
+				})
 
-				} else {
+				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+		} else {
+			product.find({type: "2"}, {comment: 0})
+				.populate("user")
+				.then(products => {
 
-					return products;
+					if (products.length === 0) {
 
-				}
-			})
+						reject({status: 404, message: "Product Not Found !"});
 
-			.then(product => {
-				resolve({status: 200, listproduct: product});
+					} else {
 
-			})
+						return products;
 
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-	}
+					}
+				})
 
+				.then(product => {
+					resolve({status: 200, listproduct: product});
+
+				})
+
+				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+		}
 
 
 	});
@@ -74,7 +79,7 @@ exports.allproductbyuser = (userid) =>
 
 	});
 
-exports.EditProduct = (productid,productname, price, time, number, category, address,  description, timestamp,listitem) =>
+exports.EditProduct = (productid, productname, price, time, number, category, address, description, timestamp, listitem) =>
 
 	new Promise((resolve, reject) => {
 
@@ -89,12 +94,11 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 				productss.address = address;
 				productss.description = description;
 				productss.timestamp = timestamp;
-				if(listitem.length != 0)
-				{
-					for(var i=0;i<=(listitem.length-1);i++){
-						console.log(productid+"/"+listitem[i]);
-						product.findOneAndUpdate( {_id: ObjectId(productid)} ,{$pull: {images: listitem[i]} })
-							.then(() =>{
+				if (listitem.length != 0) {
+					for (var i = 0; i <= (listitem.length - 1); i++) {
+						console.log(productid + "/" + listitem[i]);
+						product.findOneAndUpdate({_id: ObjectId(productid)}, {$pull: {images: listitem[i]}})
+							.then(() => {
 								resolve({status: 200, message: "Delete Image Success"});
 							})
 							.catch(err => reject({status: 500, message: "Internal Server Error !"}));
@@ -103,7 +107,9 @@ exports.EditProduct = (productid,productname, price, time, number, category, add
 
 				return productss.save();
 			})
-			.then(product => {resolve({status: 200, message: "Success"});})
+			.then(product => {
+				resolve({status: 200, message: "Success"});
+			})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
@@ -178,12 +184,12 @@ exports.push_messtotopic = (productid, msg, userid) =>
 			to: "/topics/" + productid,
 
 			data: {
-				productid : productid,
+				productid: productid,
 				useridproduct: msg,
 				useridcmt: userid
 			}
 		};
-		console.log("push mess: " +msg);
+		console.log("push mess: " + msg);
 
 		fcm.send(m, function (err, response) {
 			if (err) {
@@ -230,9 +236,11 @@ exports.deleteProduct = (productid) =>
 
 		comment.deleteMany({product: ObjectId(productid)})
 
-			.then((comment)=>{
-				product.findByIdAndRemove(productid, function (err,offer){
-					if(err) { throw err; }
+			.then((comment) => {
+				product.findByIdAndRemove(productid, function (err, offer) {
+					if (err) {
+						throw err;
+					}
 					resolve({status: 200, message: "IS !"});
 				});
 
@@ -246,8 +254,10 @@ exports.deletecomment = (commentid, productid) =>
 		// console.log("cmtid:" + commentid + " productid: " + productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
 			.then(() => {
-				comment.findByIdAndRemove(commentid, function (err,offer){
-					if(err) { throw err; }
+				comment.findByIdAndRemove(commentid, function (err, offer) {
+					if (err) {
+						throw err;
+					}
 					module.exports.refreshcomment(productid)
 
 						.then(result => {
@@ -273,7 +283,6 @@ exports.deletecomment = (commentid, productid) =>
 				console.log("fdhdfdj");
 
 
-
 				// let ObjectId;
 				// ObjectId = require("mongodb").ObjectID;
 				// comment.find({productid: ObjectId(productid)})
@@ -297,7 +306,7 @@ exports.deletecomment = (commentid, productid) =>
 				// 	});
 
 
-			})
+			});
 
 	});
 exports.addcomment = (userid, productid, content, time) =>
@@ -331,7 +340,7 @@ exports.addcomment = (userid, productid, content, time) =>
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user, userid);
-						console.log("addcommnet : "+result.comment[0].product.user);
+						console.log("addcommnet : " + result.comment[0].product.user);
 					})
 					.catch(err => {
 						if (err.code === 11000) {
@@ -344,7 +353,6 @@ exports.addcomment = (userid, productid, content, time) =>
 
 						}
 					});
-
 
 
 				// let ObjectId;

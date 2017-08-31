@@ -167,6 +167,7 @@ module.exports = router => {
 
 
 		const type = req.body.type;
+		const page = req.body.page;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
 
@@ -176,7 +177,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.allproduct(type)
+			fun_product.allproduct(type,page)
 			// .then(result => res.json(result))
 
 				.then(result => res.json(result))
