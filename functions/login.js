@@ -28,7 +28,6 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
             if (bcrypt.compareSync(password, hashed_password)) {
                 user.tokenfirebase = tokenfirebase;
-
                 user.save();
                 resolve({ status: 200, user : user });
             } else {
