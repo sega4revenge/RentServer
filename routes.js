@@ -152,7 +152,7 @@ module.exports = router => {
 			login.loginUser(email, password, tokenfirebase)
 
 				.then(result => {
-
+					res.setHeader('Location', '/users/' + email);
 					res.status(result.status).json({message: result.message, user: result.user});
 					console.log(user)
 
