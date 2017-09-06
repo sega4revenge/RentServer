@@ -7,7 +7,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
 		var regex = new RegExp(searchkey.toLowerCase(), "i")
-		if(typeArrange==0)
+		if(typeArrange===0)
 		{
 			//console.log("products = " + regex);
 			product.find( {productname: {  $regex :   regex   }, address : { $regex: location },category: { $regex: category } } ,{comment: 0}).sort({view: -1})

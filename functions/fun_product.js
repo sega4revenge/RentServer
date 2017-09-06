@@ -10,6 +10,7 @@ exports.allproduct = (type, page) =>
 		const d = new Date();
 		const timeStamp = d.getTime();
 		const limit = 10;
+		if(page.is)
 		if(page<1) page = 1;
 		const start =  (limit * page) - limit;
 		console.log("TIMESTAMP: " + timeStamp);
