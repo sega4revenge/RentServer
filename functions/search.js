@@ -9,7 +9,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		let arrImgDel = location.split(" , ");
 		let dn = arrImgDel[0];
 		let hcm = arrImgDel[1];
-		product.find( {$or:[{address: {$regex: dn}},{address: {$regex: hcm}},{address: {$regex: "" }}]})
+		product.find( {$or:[{address: {$regex: dn}},{address: {$regex: hcm}}]})
 
 			.then(products => {
 				console.log("products = " +  location);
