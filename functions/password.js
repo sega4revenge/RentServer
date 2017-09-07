@@ -14,13 +14,12 @@ exports.changePassword = (userid, password, newPassword) =>
  
         .then(users => {
  
-            let user = users[0];
-            const hashed_password = user.hashed_password;
+            const hashed_password = users[0].hashed_password;
  
             if (bcrypt.compareSync(password, hashed_password)) {
  
                 const salt = bcrypt.genSaltSync(10);
-                user.hashed_password = bcrypt.hashSync(newPassword, salt);
+				users[0].hashed_password = bcrypt.hashSync(newPassword, salt);
  
                 return user.save();
  
