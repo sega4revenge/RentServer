@@ -54,6 +54,7 @@ module.exports = router => {
 			var listcategory = req.body.listcategory;
 		var typeArrange = req.body.typeArrange;
 
+
 		search.mSearch2(listaddress,listcategory,typeArrange)
 		//search.mSearch1(keysearch,location, category,typeArrange)
 			.then(result => res.json(result))
