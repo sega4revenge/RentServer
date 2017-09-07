@@ -6,11 +6,11 @@ const nodemailer = new require('nodemailer');
 const randomstring = new require("randomstring");
 const config = new require('../config/config.json');
  
-exports.changePassword = (user, password, newPassword) =>
+exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
  
-        user.find({ _id: ObjectId(user) })
+        user.find({ _id: ObjectId(userid) })
  
         .then(users => {
  
