@@ -352,6 +352,26 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/changepassword', (req, res) => {
+		const user = req.body.user;
+		const oldpass = req.body.oldpass;
+		const newpass = req.body.newpass;
+
+		if (!user || !oldpass || !newpass) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			password.changePassword(user,oldpass,newpass)
+
+				.then(result => {
+
+					res.status(result.status).json({message: result.message})
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
 		/*		const deviceId = req.body.deviceId;*/

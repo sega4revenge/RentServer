@@ -208,7 +208,6 @@ exports.push_messtotopic = (productid, msg, userid) =>
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
-
 		comment.find({product: ObjectId(productid)})
 			.populate("user product", "_id name photoprofile user")
 			.then(comment => {
