@@ -7,7 +7,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
 
-		product.find( {address: { $in : location[0]  }})
+		product.find( {address: { $in : location  }})
 
 			.then(products => {
 				console.log("products = " +  location);
