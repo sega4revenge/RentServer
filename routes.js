@@ -365,11 +365,10 @@ module.exports = router => {
 
 			password.changePassword(user,oldpass,newpass)
 
-				.then(result => {
 
-					res.status(result.status).json({message: result.message})
-				})
-				.catch(err => res.status(err.status).json({message: err.message}));
+				.then(result => res.status(result.status).json({ message: result.message }))
+
+				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
 	router.post('/push_mess', (req, res) => {
