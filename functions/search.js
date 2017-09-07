@@ -8,9 +8,9 @@ exports.mSearch2 = (location, category,typeArrange) =>
 	new Promise((resolve,reject) => {
 	console.log(location);
 		product.find( {address: { $in : [location]  }})
-			.populate("user")
-			.then(products => {
 
+			.then(products => {
+				console.log("products = " + { $in : [location]  });
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
