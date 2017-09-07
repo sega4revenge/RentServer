@@ -6,6 +6,7 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
+	console.log(location);
 		product.find( {address: { $in : location  }})
 			.populate("user")
 			.then(products => {
