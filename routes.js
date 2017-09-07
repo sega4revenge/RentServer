@@ -164,17 +164,11 @@ module.exports = router => {
 	router.post('/allproduct', (req, res) => {
 
 
-		let type = req.body.type;
+		const type = req.body.type;
 		const page = req.body.page;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
 
-		if(!type){
-			console.log("OK");
-			type = "010101";
-			// user_id = "01010101";
-			console.log(type);
-		}
 		if (!type) {
 
 		    res.status(400).json({message: 'Invalid Request !'});
