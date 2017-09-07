@@ -10,17 +10,18 @@ const ObjectId = require("mongodb").ObjectID;
 exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
-        console.log(userid + " " + password + " " + newPassword);
-        user.find({ _id: ObjectId(userid) })
+
+        user.find({ _id: Object(userid) })
  
         .then(users => {
  
-            const hashed_password = users[0].hashed_password;
+            let user = users[0];
+            const hashed_password = user.hashed_password;
  
             if (bcrypt.compareSync(password, hashed_password)) {
  
                 const salt = bcrypt.genSaltSync(10);
-				users[0].hashed_password = bcrypt.hashSync(newPassword, salt);
+                user.hashed_password = bcrypt.hashSync(newPassword, salt);
  
                 return user.save();
  
