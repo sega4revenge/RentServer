@@ -7,10 +7,10 @@ exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
 
-		product.find( {address: { $in : [ location ]   }})
+		product.find( {address: { $in : [location]   }})
 
 			.then(products => {
-				console.log(hcm +"products = " +  dn);
+
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
