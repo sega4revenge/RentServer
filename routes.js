@@ -41,16 +41,21 @@ module.exports = router => {
 	router.get('/sendsms', (req, res) => {
 		sms.sendsms("0906448076","abc","","",1)
 	});
+	/*	const keysearch = req.body.keysearch;
+	const category = req.body.category;
+	const location = req.body.location;
+	const typeArrange = req.body.typeArrange;
+	console.log("keysearch = " + keysearch);
+	console.log("category = " + category);
+	console.log("location = " + location);
+	console.log("typeArrange = " + typeArrange);*/
 	router.post('/search', (req, res) => {
-		const keysearch = req.body.keysearch;
-		const category = req.body.category;
-		const location = req.body.location;
-		const typeArrange = req.body.typeArrange;
-		console.log("keysearch = " + keysearch);
-		console.log("category = " + category);
-		console.log("location = " + location);
-		console.log("typeArrange = " + typeArrange);
-		search.mSearch(keysearch,location, category,typeArrange)
+		var listaddress = req.body.listaddress;
+		var listcategory = req.body.listcategory;
+		var typeArrange = req.body.typeArrange;
+
+		search.mSearch2(listaddress,listcategory,typeArrange)
+		//search.mSearch1(keysearch,location, category,typeArrange)
 			.then(result => res.json(result))
 
 			.catch(err => res.status(err.status).json({message: err.message}));
