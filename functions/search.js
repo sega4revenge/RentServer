@@ -6,8 +6,9 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
-
-		product.find( {address: { $in : [ /^Đà Nẵng/  ,  /^Hồ Chí Minh/ ]   }})
+		let dn = /^Đà Nẵng/;
+		let hcm =  /^Hồ Chí Minh/;
+		product.find( {address: { $in : [ dn  ,  hcm ]   }})
 
 			.then(products => {
 				console.log("products = " +  location);
