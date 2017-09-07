@@ -5,7 +5,8 @@ const bcrypt = new require('bcryptjs');
 const nodemailer = new require('nodemailer');
 const randomstring = new require("randomstring");
 const config = new require('../config/config.json');
- 
+const ObjectId = require("mongodb").ObjectID;
+
 exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
