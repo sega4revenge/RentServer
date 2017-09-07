@@ -6,12 +6,13 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
-		let dn = "/^Đà Nẵng/";
-		let hcm =  "/^Hồ Chí Minh/";
+		let arrImgDel = location.split(" , ");
+		let dn = arrImgDel[0];
+		let hcm = arrImgDel[1];
 		product.find( {address: { $in : [ dn  ,  hcm ]   }})
 
 			.then(products => {
-				console.log("products = " +  location);
+				console.log(hcm +"products = " +  dn);
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
