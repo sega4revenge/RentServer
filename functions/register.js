@@ -2,7 +2,28 @@
 
 const user = new require('../models/user');
 const bcrypt = new require('bcryptjs');
+exports.verifyemail = (email) =>
 
+	new Promise((resolve,reject) => {
+
+		user.find({email: email})
+
+			.then(users => {
+
+				if (users.length === 0) {
+
+					resolve({ status: 200, message : 'Ok' });
+
+				} else {
+
+					reject({ status: 404, message: 'User Not Found !' });
+
+				}
+			})
+
+			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+
+	});
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
     new Promise((resolve, reject) => {

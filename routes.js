@@ -217,7 +217,27 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/verifyemail', (req, res) => {
 
+		const email = req.body.email;
+
+		if (!email) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.verifyemail(email)
+
+				.then(result => {
+
+					res.setHeader('Location', '/users/' + email);
+					res.status(result.status).json({message: result.message, user: result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/deleteproduct', (req, res) => {
 
 		const productid = req.body.productid;
