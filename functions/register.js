@@ -16,7 +16,7 @@ exports.verifyemail = (email) =>
 
 				} else {
 
-					reject({ status: 404, message: 'User Not Found !' });
+					reject({ status: 404, message: 'User Already Registered !' });
 
 				}
 			})
