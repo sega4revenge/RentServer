@@ -238,6 +238,26 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/registerfinish', (req, res) => {
+
+		const email = req.body.email;
+		const code = req.body.code;
+
+		if (!email || !code) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.registerFinish(emai,code)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/deleteproduct', (req, res) => {
 
 		const productid = req.body.productid;

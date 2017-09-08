@@ -157,3 +157,39 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 }
             });
     });
+exports.registerFinish = (email, code) =>
+	new Promise((resolve, reject) => {
+		console.log("Finish");
+
+		user.find({ email: email })
+
+			.then(users => {
+
+				let user = users[0];
+
+				const diff = new Date() - new Date(user.temp_password_time);
+				const seconds = Math.floor(diff / 1000);
+				console.log(`Seconds : ${seconds}`);
+
+				if (seconds < 300) { return user; } else { reject({ status: 401, message: 'Time Out ! Try again' }); } }) .then(user => {
+
+			if (bcrypt.compareSync(code, user.temp_password)) {
+
+				const salt = bcrypt.genSaltSync(10);
+				user.hashed_password = bcrypt.hashSync(newPassword, salt);
+				user.temp_password = undefined;
+				user.temp_password_time = undefined;
+
+				return user.save();
+
+			} else {
+
+				reject({ status: 401, message: 'Invalid Code !' });
+			}
+		})
+
+			.then(user => resolve({ status: 200, message: 'Register Successfully !' }))
+
+			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+
+	});
