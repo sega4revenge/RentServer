@@ -2,6 +2,9 @@
 
 const user = new require('../models/user');
 const bcrypt = new require('bcryptjs');
+const password = new require('../functions/password');
+const randomstring = new require("randomstring");
+
 exports.verifyemail = (email) =>
 
 	new Promise((resolve,reject) => {
@@ -11,7 +14,6 @@ exports.verifyemail = (email) =>
 			.then(users => {
 
 				if (users.length === 0) {
-
 					resolve({ status: 200, message : 'Ok' });
 
 				} else {
@@ -24,10 +26,12 @@ exports.verifyemail = (email) =>
 			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
 	});
+
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
     new Promise((resolve, reject) => {
-        let hash;
+		const random = randomstring.generate(8);
+		let hash,code;
         let newUser;
         console.log(type);
         if (type === 1) {
@@ -70,6 +74,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
         else {
             const salt = bcrypt.genSaltSync(10);
             hash = bcrypt.hashSync(password, salt);
+            code = bcrypt.hashSync(random,salt);
 
             newUser = new user({
                 name: name,
@@ -78,6 +83,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 hashed_password: hash,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date()
 
             });
 
