@@ -9,7 +9,9 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		let arrImgDel = location.split(" , ");
 		let dn = arrImgDel[0];
 		let hcm = arrImgDel[1];
-		var ids = new Array( dn, hcm );
+		var ids = [];
+		ids.push(dn);
+		ids.push(hcm);
 		product.find( {address: {$in: ids  }})
 
 			.then(products => {
