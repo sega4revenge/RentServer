@@ -175,8 +175,6 @@ exports.registerFinish = (email, code) =>
 
 			if (bcrypt.compareSync(code, user.temp_password)) {
 
-				const salt = bcrypt.genSaltSync(10);
-				user.hashed_password = bcrypt.hashSync(newPassword, salt);
 				user.temp_password = undefined;
 				user.temp_password_time = undefined;
 				user.status = "1";
