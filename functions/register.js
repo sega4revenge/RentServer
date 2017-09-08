@@ -179,7 +179,7 @@ exports.registerFinish = (email, code) =>
 				user.hashed_password = bcrypt.hashSync(newPassword, salt);
 				user.temp_password = undefined;
 				user.temp_password_time = undefined;
-
+				user.status = "1"
 				return user.save();
 
 			} else {
