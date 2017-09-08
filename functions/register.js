@@ -109,7 +109,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 			};
 
-			return transporter.sendMail(mailOptions);
+			transporter.sendMail(mailOptions);
         }
 
 
