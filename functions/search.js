@@ -11,7 +11,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		let hcm = arrImgDel[1];
 		var ids = new Array( dn ,hcm );
 
-		product.find( {address: {$in: ids }})
+		product.find( {address: {$in: [ids] }})
 
 			.then(products => {
 				console.log("products = " +  ids);
