@@ -6,10 +6,10 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
-		let arrImgDel = location.split(" , ");
+	/*	let arrImgDel = location.split(" , ");
 		let dn = arrImgDel[0];
-		let hcm = arrImgDel[1];
-		var ids = new Array( dn ,hcm );
+		let hcm = arrImgDel[1];*/
+		var ids = new Array(location);
 
 		product.find( {address: {$in: [ids] }})
 
