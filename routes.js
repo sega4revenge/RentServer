@@ -249,7 +249,7 @@ module.exports = router => {
 
 		} else {
 
-			register.registerFinish(emai,code)
+			register.registerFinish(email,code)
 
 				.then(result => {
 					res.status(result.status).json({message: result.message})
