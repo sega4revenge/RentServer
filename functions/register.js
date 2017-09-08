@@ -4,6 +4,8 @@ const user = new require('../models/user');
 const bcrypt = new require('bcryptjs');
 const password = new require('../functions/password');
 const randomstring = new require("randomstring");
+const nodemailer = new require('nodemailer');
+const config = new require('../config/config.json');
 
 exports.verifyemail = (email) =>
 
@@ -84,11 +86,30 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
 				temp_password: code,
-				temp_password_time: new Date()
+				temp_password_time: new Date(),
+                status: "0"
 
             });
 
 
+			const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+
+			const mailOptions = {
+
+				from: `"${config.name}" <${config.email}>`,
+				to: email,
+				subject: 'Verify Email Request ',
+				html: `Hello ${name},
+ 
+                     Your verification  is <b>${random}</b>.  
+                The verification is valid for only 5 minutes.
+ 
+                Thanks,
+                Sega Gò Vấp.`
+
+			};
+
+			return transporter.sendMail(mailOptions);
         }
 
 
