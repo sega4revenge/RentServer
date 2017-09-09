@@ -11,13 +11,13 @@ exports.allproduct = (type, page,category) =>
 		const timeStamp = d.getTime();
 		const limit = 10;
 		if(page.is)
-		if(page<1) page = 1;
+			if(page<1) page = 1;
 		const start =  (limit * page) - limit;
 		console.log("TIMESTAMP: " + timeStamp);
 
 
 		if (type === 1) {
-			if(category != 999 )
+			if(category === 999 )
 			{
 				console.log("TIMESTAMP:11111 ");
 				product.find({type: "1"}, {comment: 0}).skip(start).limit(limit)
@@ -67,7 +67,7 @@ exports.allproduct = (type, page,category) =>
 			}
 
 		} else {
-			if(category != 999 ) {
+			if(category === 999 ) {
 				console.log("TIMESTAMP:33333 ");
 				product.find({type: "2"}, {comment: 0})
 					.populate("user")
