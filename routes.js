@@ -169,7 +169,7 @@ module.exports = router => {
 	});
 	router.post('/allproduct', (req, res) => {
 
-
+		const category = req.body.category;
 		const type = req.body.type;
 		const page = req.body.page;
 		// const password = req.body.password;
@@ -181,7 +181,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.allproduct(type,page)
+			fun_product.allproduct(type,page,category)
 			// .then(result => res.json(result))
 
 				.then(result => res.json(result))

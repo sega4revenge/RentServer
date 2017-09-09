@@ -5,7 +5,7 @@ const comment = new require("../models/comment");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
-exports.allproduct = (type, page) =>
+exports.allproduct = (type, page,category) =>
 	new Promise((resolve, reject) => {
 		const d = new Date();
 		const timeStamp = d.getTime();
@@ -17,50 +17,99 @@ exports.allproduct = (type, page) =>
 
 
 		if (type === 1) {
+			if(category != 999 )
+			{
+				product.find({type: "1"}, {comment: 0}).skip(start).limit(limit)
+					.populate("user")
+					.then(products => {
 
-			product.find({type: "1"}, {comment: 0}).skip(start).limit(limit)
-				.populate("user")
-				.then(products => {
+						if (products.length === 0) {
 
-					if (products.length === 0) {
+							reject({status: 404, message: "Product Not Found !"});
 
-						reject({status: 404, message: "Product Not Found !"});
+						} else {
 
-					} else {
+							return products;
 
-						return products;
+						}
+					})
 
-					}
-				})
+					.then(product => {
+						resolve({status: 200, listproduct: product});
 
-				.then(product => {
-					resolve({status: 200, listproduct: product});
+					})
 
-				})
+					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			}else{
+				product.find({type: "1",category: category}, {comment: 0}).skip(start).limit(limit)
+					.populate("user")
+					.then(products => {
 
-				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+						if (products.length === 0) {
+
+							reject({status: 404, message: "Product Not Found !"});
+
+						} else {
+
+							return products;
+
+						}
+					})
+
+					.then(product => {
+						resolve({status: 200, listproduct: product});
+
+					})
+
+					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			}
+
 		} else {
-			product.find({type: "2"}, {comment: 0})
-				.populate("user")
-				.then(products => {
+			if(category != 999 ) {
+				product.find({type: "2"}, {comment: 0})
+					.populate("user")
+					.then(products => {
 
-					if (products.length === 0) {
+						if (products.length === 0) {
 
-						reject({status: 404, message: "Product Not Found !"});
+							reject({status: 404, message: "Product Not Found !"});
 
-					} else {
+						} else {
 
-						return products;
+							return products;
 
-					}
-				})
+						}
+					})
 
-				.then(product => {
-					resolve({status: 200, listproduct: product});
+					.then(product => {
+						resolve({status: 200, listproduct: product});
 
-				})
+					})
 
-				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			}else{
+				product.find({type: "2", category: category}, {comment: 0})
+					.populate("user")
+					.then(products => {
+
+						if (products.length === 0) {
+
+							reject({status: 404, message: "Product Not Found !"});
+
+						} else {
+
+							return products;
+
+						}
+					})
+
+					.then(product => {
+						resolve({status: 200, listproduct: product});
+
+					})
+
+					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			}
 		}
 
 
