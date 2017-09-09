@@ -19,7 +19,6 @@ exports.allproduct = (type, page,category) =>
 		if (type === 1) {
 			if(category === 999 )
 			{
-				console.log("TIMESTAMP:11111 ");
 				product.find({type: "1"}, {comment: 0}).skip(start).limit(limit)
 					.populate("user")
 					.then(products => {
@@ -42,7 +41,6 @@ exports.allproduct = (type, page,category) =>
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
-				console.log("TIMESTAMP:222222 ");
 				product.find({type: "1",category: category}, {comment: 0}).skip(start).limit(limit)
 					.populate("user")
 					.then(products => {
@@ -68,7 +66,6 @@ exports.allproduct = (type, page,category) =>
 
 		} else {
 			if(category === 999 ) {
-				console.log("TIMESTAMP:33333 ");
 				product.find({type: "2"}, {comment: 0})
 					.populate("user")
 					.then(products => {
@@ -91,7 +88,6 @@ exports.allproduct = (type, page,category) =>
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
-				console.log("TIMESTAMP:44444 ");
 				product.find({type: "2", category: category}, {comment: 0})
 					.populate("user")
 					.then(products => {
