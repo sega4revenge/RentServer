@@ -174,7 +174,7 @@ module.exports = router => {
 		const page = req.body.page;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
-		console.log(category,type,page);
+
 		if (!type) {
 
 		    res.status(400).json({message: 'Invalid Request !'});
