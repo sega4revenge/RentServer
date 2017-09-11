@@ -292,7 +292,7 @@ module.exports = router => {
 		const userid = req.body.user;
 		const productname = req.body.productname;
 		const price = req.body.price;
-		const time = req.body.time;
+		const time = req.body.time;1
 		const number = req.body.number;
 		const category = req.body.category;
 		const address = req.body.address;
