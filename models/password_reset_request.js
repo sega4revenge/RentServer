@@ -10,7 +10,7 @@ const productSchema = mongoose.Schema({
     phone                           : String,
     encrypted_temp_password         : String,
     salt                            : String,
-    created_at                      : Sring
+    created_at                      : String
 });
 
 mongoose.Promise = global.Promise;

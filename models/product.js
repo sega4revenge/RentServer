@@ -10,15 +10,16 @@ const productSchema = mongoose.Schema({
     productname         : String,
     price               : String,
     number              : String,
-    location            : String,
     description         : String,
     category            : String,
-    address             : String,
     type                : String,
     time                : String,
     created_at          : String,
-    lat                 : String,
-    lot                 : String,
+	location: {
+		type: { type: String, default:'Point' },
+        address : {type : String },
+		coordinates: { type: [Number], index: '2dsphere'}
+	},
     view                : Number,
     images              : [String],
 	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}]

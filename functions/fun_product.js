@@ -141,7 +141,7 @@ exports.EditProduct = (productid, productname, price, time, number, category, ad
 				productss.time = time;
 				productss.number = number;
 				productss.category = category;
-				productss.address = address;
+				productss.location.address = address;
 				productss.description = description;
 				productss.timestamp = timestamp;
 				if (listitem.length != 0) {
@@ -180,10 +180,12 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				time: time,
 				number: number,
 				category: category,
-				address: address,
 				description: description,
-				lat: lat,
-				lot: lot,
+				location: {
+					type: 'Point',
+					address : address,
+					coordinates: [lot,lat]
+				},
 				created_at: timestamp,
 				view: 0,
 				type: type
@@ -197,10 +199,13 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				time: "",
 				number: number,
 				category: category,
-				address: address,
+
 				description: description,
-				lat: lat,
-				lot: lot,
+				location: {
+					type: 'Point',
+					address : address,
+					coordinates: [lot,lat]
+				},
 				created_at: timestamp,
 				type: type
 			});
