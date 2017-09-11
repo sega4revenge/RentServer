@@ -17,6 +17,8 @@ const productSchema = mongoose.Schema({
     type                : String,
     time                : String,
     created_at          : String,
+    lat                 : String,
+    lot                 : String,
     view                : Number,
     images              : [String],
 	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}]
