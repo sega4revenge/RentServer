@@ -108,7 +108,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 Sega Gò Vấp.`
 
 			};
-
+			console.log("Gui mail 1");
 			transporter.sendMail(mailOptions);
         }
 
@@ -185,7 +185,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 Sega Gò Vấp.`
 
 									};
-
+									console.log("Gui mail 2");
 									transporter.sendMail(mailOptions);
 									resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
 
