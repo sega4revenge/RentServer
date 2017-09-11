@@ -13,6 +13,7 @@ const userSchema = mongoose.Schema({
     tokenfirebase : String,
 	temp_password : String,
 	temp_password_time : String,
+    status : String,
     facebook :{
         id : String,
         token : String,

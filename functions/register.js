@@ -2,12 +2,42 @@
 
 const user = new require('../models/user');
 const bcrypt = new require('bcryptjs');
+const password = new require('../functions/password');
+const randomstring = new require("randomstring");
+const nodemailer = new require('nodemailer');
+const config = new require('../config/config.json');
+
+exports.verifyemail = (email) =>
+
+	new Promise((resolve,reject) => {
+
+		user.find({email: email})
+
+			.then(users => {
+
+				if (users.length === 0) {
+					resolve({ status: 200, message : 'Ok' });
+
+				} else {
+
+					reject({ status: 404, message: 'User Already Registered !' });
+
+				}
+			})
+
+			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+
+	});
 
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
     new Promise((resolve, reject) => {
-        let hash;
+		const random = randomstring.generate(8);
+		let hash,code;
         let newUser;
+		const salt = bcrypt.genSaltSync(10);
+		hash = bcrypt.hashSync(password, salt);
+		code = bcrypt.hashSync(random,salt);
         console.log(type);
         if (type === 1) {
             newUser = new user({
@@ -17,6 +47,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 photoprofile : photoprofile,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+				status: "0",
                 facebook: {
                     id: id,
                     token: token,
@@ -36,6 +69,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 photoprofile : photoprofile,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+				status: "0",
                 google: {
                     id: id,
                     token: token,
@@ -47,8 +83,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
-            const salt = bcrypt.genSaltSync(10);
-            hash = bcrypt.hashSync(password, salt);
+
 
             newUser = new user({
                 name: name,
@@ -57,10 +92,31 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 hashed_password: hash,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+                status: "0"
 
             });
 
 
+			const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+
+			const mailOptions = {
+
+				from: `"${config.name}" <${config.email}>`,
+				to: email,
+				subject: 'Verify Email Request ',
+				html: `Hello ${name},
+ 
+                     Your verification  is <b>${random}</b>.  
+                The verification is valid for only 5 minutes.
+ 
+                Thanks,
+                Sega Gò Vấp.`
+
+			};
+
+			transporter.sendMail(mailOptions);
         }
 
 
@@ -108,3 +164,37 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 }
             });
     });
+exports.registerFinish = (email, code) =>
+	new Promise((resolve, reject) => {
+		console.log("Finish");
+
+		user.find({ email: email })
+
+			.then(users => {
+
+				let user = users[0];
+
+				const diff = new Date() - new Date(user.temp_password_time);
+				const seconds = Math.floor(diff / 1000);
+				console.log(`Seconds : ${seconds}`);
+
+				if (seconds < 300) { return user; } else { reject({ status: 401, message: 'Time Out ! Try again' }); } }) .then(user => {
+
+			if (bcrypt.compareSync(code, user.temp_password)) {
+
+				user.temp_password = undefined;
+				user.temp_password_time = undefined;
+				user.status = "1";
+				return user.save();
+
+			} else {
+
+				reject({ status: 401, message: 'Invalid Code !' });
+			}
+		})
+
+			.then(user => resolve({ status: 200, message: 'Register Successfully !' }))
+
+			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+
+	});

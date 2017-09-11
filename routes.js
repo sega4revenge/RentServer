@@ -169,19 +169,19 @@ module.exports = router => {
 	});
 	router.post('/allproduct', (req, res) => {
 
-
+		const category = req.body.category;
 		const type = req.body.type;
 		const page = req.body.page;
 		// const password = req.body.password;
 		// const tokenfirebase = req.body.tokenfirebase;
-
+		console.log(category,type,page);
 		if (!type) {
 
 		    res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			fun_product.allproduct(type,page)
+			fun_product.allproduct(type,page,category)
 			// .then(result => res.json(result))
 
 				.then(result => res.json(result))
@@ -217,7 +217,47 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/verifyemail', (req, res) => {
 
+		const email = req.body.email;
+
+		if (!email) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.verifyemail(email)
+
+				.then(result => {
+
+					res.setHeader('Location', '/users/' + email);
+					res.status(result.status).json({message: result.message, user: result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+	router.post('/registerfinish', (req, res) => {
+
+		const email = req.body.email;
+		const code = req.body.code;
+
+		if (!email || !code) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.registerFinish(email,code)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/deleteproduct', (req, res) => {
 
 		const productid = req.body.productid;
