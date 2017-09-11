@@ -164,7 +164,7 @@ exports.EditProduct = (productid, productname, price, time, number, category, ad
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.createproduct = (userid, prodctname, price, time, number, category, address, description, timestamp, type) =>
+exports.createproduct = (userid, prodctname, price, time, number, category, address, description, lat, lot, timestamp, type) =>
 
 	new Promise((resolve, reject) => {
 
@@ -182,6 +182,8 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				category: category,
 				address: address,
 				description: description,
+				lat: lat,
+				lot: lot,
 				created_at: timestamp,
 				view: 0,
 				type: type
@@ -197,6 +199,8 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				category: category,
 				address: address,
 				description: description,
+				lat: lat,
+				lot: lot,
 				created_at: timestamp,
 				type: type
 			});
