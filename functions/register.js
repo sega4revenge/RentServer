@@ -123,6 +123,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 if (err.code === 11000) {
 					console.log("type:" +type);
                     if (type !== "0")
+					{
                         user.find({email: email})
 
                             .then(users => {
@@ -147,6 +148,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
                                 }
                             });
+					}
                     else
                         reject({status: 409, message: 'User Already Registered !'});
 
