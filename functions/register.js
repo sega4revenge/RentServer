@@ -35,6 +35,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 		const random = randomstring.generate(8);
 		let hash,code;
         let newUser;
+		const salt = bcrypt.genSaltSync(10);
+		hash = bcrypt.hashSync(password, salt);
+		code = bcrypt.hashSync(random,salt);
         console.log(type);
         if (type === 1) {
             newUser = new user({
@@ -44,6 +47,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 photoprofile : photoprofile,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+				status: "0",
                 facebook: {
                     id: id,
                     token: token,
@@ -63,6 +69,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 photoprofile : photoprofile,
                 tokenfirebase: tokenfirebase,
                 created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+				status: "0",
                 google: {
                     id: id,
                     token: token,
@@ -74,9 +83,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
-            const salt = bcrypt.genSaltSync(10);
-            hash = bcrypt.hashSync(password, salt);
-            code = bcrypt.hashSync(random,salt);
+
 
             newUser = new user({
                 name: name,
