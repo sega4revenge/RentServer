@@ -121,7 +121,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
             .catch(err => {
 
                 if (err.code === 11000) {
-					console.log(type);
+					console.log("type:" +type);
                     if (type !== "0")
                         user.find({email: email})
 
@@ -186,7 +186,7 @@ exports.registerFinish = (email, code) =>
 			}
 		})
 
-			.then(user => resolve({ status: 200, message: 'Register Successfully !' }))
+			.then(user => resolve({ status: 200, message: 'Register Successfully !',user: user }))
 
 			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
 
