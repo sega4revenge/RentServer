@@ -121,7 +121,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
             .catch(err => {
 
                 if (err.code === 11000) {
-					console.log("type:" +type);
                     if (type !== 0)
 					{
                         user.find({email: email})

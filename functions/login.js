@@ -26,7 +26,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
             const hashed_password = user.hashed_password;
  
-            if (bcrypt.compareSync(password, hashed_password)) {
+            if (bcrypt.compareSync(password, hashed_password) && user.status === "1") {
                 user.tokenfirebase = tokenfirebase;
                 user.save();
                 console.log("sdfghfh");
