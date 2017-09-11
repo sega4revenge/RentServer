@@ -153,7 +153,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 						user.find({email: email})
 							.then(users => {
 
-								if (users[0].status = "0") {
+								if (users[0].status === "0") {
 									const salt = bcrypt.genSaltSync(10);
 									hash = bcrypt.hashSync(password, salt);
 									code = bcrypt.hashSync(random,salt);
