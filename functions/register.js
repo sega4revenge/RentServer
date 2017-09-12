@@ -74,22 +74,46 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
-            const salt = bcrypt.genSaltSync(10);
-            hash = bcrypt.hashSync(password, salt);
-            code = bcrypt.hashSync(random,salt);
+			user.find({email: email})
+				.then(users =>{
+					if(users.length === 0){
+						const salt = bcrypt.genSaltSync(10);
+						hash = bcrypt.hashSync(password, salt);
+						code = bcrypt.hashSync(random,salt);
 
-            newUser = new user({
-                name: name,
-                email: email,
-                photoprofile : photoprofile,
-                hashed_password: hash,
-                tokenfirebase: tokenfirebase,
-                created_at: new Date(),
-				temp_password: code,
-				temp_password_time: new Date(),
-                status_code: "0"
+						newUser = new user({
+							name: name,
+							email: email,
+							photoprofile : photoprofile,
+							hashed_password: hash,
+							tokenfirebase: tokenfirebase,
+							created_at: new Date(),
+							temp_password: code,
+							temp_password_time: new Date(),
+							status_code: "0"
 
-            });
+						});
+						const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+
+						const mailOptions = {
+
+							from: `"${config.name}" <${config.email}>`,
+							to: email,
+							subject: 'Verify Email Request ',
+							html: `Hello ${name},
+ 
+                     Your verification  is <b>${random}</b>.  
+                The verification is valid for only 5 minutes.
+ 
+                Thanks,
+                Sega Gò Vấp.`
+
+						};
+						console.log("Gui mail 1");
+						transporter.sendMail(mailOptions);
+					}
+				});
+
         }
 
 
@@ -165,9 +189,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 Sega Gò Vấp.`
 
 									};
-									console.log("Gui mail 1");
+									console.log("Gui mail 2");
 									transporter.sendMail(mailOptions);
-									resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
+									resolve({status: 201, message: 'User Registered Sucessfully + check mail!', user: users[0]});
 
 								} else {
 									reject({status: 409, message: 'User Already Registered !'});
