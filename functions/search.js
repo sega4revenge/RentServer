@@ -9,15 +9,19 @@ exports.mSearch2 = (location, category,typeArrange) =>
 	//	let arrImgDel = location.split(" , ");
 	//	let dn = arrImgDel[0];
 	//	let hcm = arrImgDel[1];
-		var regex = [];
+		var regexLocation = [];
 		for (var i = 0; i < location.length; i++) {
-			regex[i] = new RegExp(location[i].toLowerCase(), "i");
+			regexLocation[i] = new RegExp(location[i].toLowerCase(), "i");
+		}
+		var regexCategory = [];
+		for (var i = 0; i < location.length; i++) {
+			regexCategory[i] = new RegExp(category[i].toLowerCase(), "i");
 		}
 		if(typeArrange===0) {
-			product.find({address: {$in: regex}}).sort({view: -1})
+			product.find({address: {$in: regexLocation}, category: {$in: regexCategory }}).sort({view: -1})
 
 				.then(products => {
-					console.log("products = " + regex);
+					console.log("products = " + regexLocation);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
@@ -34,10 +38,10 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
 		if(typeArrange===1) {
-			product.find({address: {$in: regex}}).sort({created_at: -1})
+			product.find({address: {$in: regexLocation} , category: {$in: regexCategory }}).sort({created_at: -1})
 
 				.then(products => {
-					console.log("products = " + regex);
+					console.log("products = " + regexLocation);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
@@ -54,10 +58,10 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
 		if(typeArrange===2) {
-			product.find({address: {$in: regex}}).sort({price: 1})
+			product.find({address: {$in: regexLocation} , category: {$in: regexCategory }}).sort({price: 1})
 
 				.then(products => {
-					console.log("products = " + regex);
+					console.log("products = " + regexLocation);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
@@ -74,7 +78,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
 		if(typeArrange===3) {
-			product.find({address: {$in: regex}}).sort({price: -1})
+			product.find({address: {$in: regex} , category: {$in: regexCategory }}).sort({price: -1})
 
 				.then(products => {
 					console.log("products = " + regex);
@@ -102,7 +106,7 @@ exports.mSearch = (searchkey,location, category,typeArrange) =>
 		if(typeArrange===0)
 		{
 			//console.log("products = " + regex);
-			product.find( {productname: {  $regex :   regex   }, address : { $regex: location },category: { $regex: category } } ,{comment: 0}).sort({view: -1})
+			product.find( {productname: {  $regex :   regex   } , address : { $regex: location },category: { $regex: category } } ,{comment: 0}).sort({view: -1})
 				.populate("user")
 				.then(products => {
 
