@@ -90,26 +90,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 status_code: "0"
 
             });
-
-
-			const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
-
-			const mailOptions = {
-
-				from: `"${config.name}" <${config.email}>`,
-				to: email,
-				subject: 'Verify Email Request ',
-				html: `Hello ${name},
- 
-                     Your verification  is <b>${random}</b>.  
-                The verification is valid for only 5 minutes.
- 
-                Thanks,
-                Sega Gò Vấp.`
-
-			};
-			console.log("Gui mail 1");
-			transporter.sendMail(mailOptions);
         }
 
 
