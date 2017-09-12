@@ -17,7 +17,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		for (var i = 0; i < location.length; i++) {
 			regexCategory[i] = new RegExp(category[i].toLowerCase(), "i");
 		}
-		if(typeArrange === 0) {
+		//if(typeArrange === 0) {
 			product.find({address: {$in: regexLocation}, category: {$in: regexCategory } } ).sort({view: -1})
 
 				.then(products => {
@@ -36,7 +36,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 
 				})
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-		}
+		//}
 		// if(typeArrange===1) {
 		// 	product.find({address: {$in: regexLocation} , category: {$in: regexCategory }}).sort({created_at: -1})
 		//
