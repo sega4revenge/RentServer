@@ -78,6 +78,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				.then(temp =>{
 					console.log(temp.status_code);
 					if(temp.status_code.equals("0")){
+						console.log("abc");
 						const salt = bcrypt.genSaltSync(10);
 						hash = bcrypt.hashSync(password, salt);
 						code = bcrypt.hashSync(random,salt);
@@ -94,7 +95,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							status_code: "0"
 
 						});
-						console.log("abc");
+
 					// 	const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 				//
 					// 	const mailOptions = {
