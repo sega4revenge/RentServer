@@ -1,173 +1,166 @@
-'use strict';
+"use strict";
 
-const user = new require('../models/user');
-const bcrypt = new require('bcryptjs');
-const password = new require('../functions/password');
+const user = new require("../models/user");
+const bcrypt = new require("bcryptjs");
+const password = new require("../functions/password");
 const randomstring = new require("randomstring");
-const nodemailer = new require('nodemailer');
-const config = new require('../config/config.json');
+const nodemailer = new require("nodemailer");
+const config = new require("../config/config.json");
 
 exports.verifyemail = (email) =>
 
-	new Promise((resolve,reject) => {
+	new Promise((resolve, reject) => {
 
 		user.find({email: email})
 
 			.then(users => {
 
 				if (users.length === 0) {
-					resolve({ status: 200, message : 'Ok' });
+					resolve({status: 200, message: "Ok"});
 
 				} else {
 
-					reject({ status: 404, message: 'User Already Registered !' });
+					reject({status: 404, message: "User Already Registered !"});
 
 				}
 			})
 
-			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
 
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
-    new Promise((resolve, reject) => {
+	new Promise((resolve, reject) => {
 		const random = randomstring.generate(8);
-		let hash,code;
-        let newUser;
-        console.log(type);
-        if (type === 1) {
-            newUser = new user({
-                name: name,
-                email: email,
-                hashed_password: "",
-                photoprofile : photoprofile,
-                tokenfirebase: tokenfirebase,
-                created_at: new Date(),
-                facebook: {
-                    id: id,
-                    token: token,
-                    name: name,
-                    email: email,
-                    photoprofile : photoprofile
-                }
-            });
+		let hash, code;
+		let newUser;
+		console.log(type);
+		if (type === 1) {
+			newUser = new user({
+				name: name,
+				email: email,
+				hashed_password: "",
+				photoprofile: photoprofile,
+				tokenfirebase: tokenfirebase,
+				created_at: new Date(),
+				facebook: {
+					id: id,
+					token: token,
+					name: name,
+					email: email,
+					photoprofile: photoprofile
+				}
+			});
 
-            console.log("abc");
-        }
-        else if (type === 2) {
-            newUser = new user({
-                name: name,
-                email: email,
-                hashed_password: "",
-                photoprofile : photoprofile,
-                tokenfirebase: tokenfirebase,
-                created_at: new Date(),
-                google: {
-                    id: id,
-                    token: token,
-                    name: name,
-                    email: email,
-                    photoprofile : photoprofile
-                }
-            });
+			console.log("abc");
+		}
+		else if (type === 2) {
+			newUser = new user({
+				name: name,
+				email: email,
+				hashed_password: "",
+				photoprofile: photoprofile,
+				tokenfirebase: tokenfirebase,
+				created_at: new Date(),
+				google: {
+					id: id,
+					token: token,
+					name: name,
+					email: email,
+					photoprofile: photoprofile
+				}
+			});
 
-        }
-        else {
-			user.findOne({email: email})
-				.then(temp =>{
-					console.log(temp.status_code);
-					if(temp.status_code === '0'){
-						console.log("abc");
-						const salt = bcrypt.genSaltSync(10);
-						hash = bcrypt.hashSync(password, salt);
-						code = bcrypt.hashSync(random,salt);
+		}
+		else {
 
-						newUser = new user({
-							name: name,
-							email: email,
-							photoprofile : photoprofile,
-							hashed_password: hash,
-							tokenfirebase: tokenfirebase,
-							created_at: new Date(),
-							temp_password: code,
-							temp_password_time: new Date(),
-							status_code: "0"
+			const salt = bcrypt.genSaltSync(10);
+			hash = bcrypt.hashSync(password, salt);
+			code = bcrypt.hashSync(random, salt);
 
-						});
+			newUser = new user({
+				name: name,
+				email: email,
+				photoprofile: photoprofile,
+				hashed_password: hash,
+				tokenfirebase: tokenfirebase,
+				created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+				status_code: "0"
 
-					// 	const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
-				//
-					// 	const mailOptions = {
-				//
-					// 		from: `"${config.name}" <${config.email}>`,
-					// 		to: email,
-					// 		subject: 'Verify Email Request ',
-					// 		html: `Hello ${name},
-				//
-                //      Your verification  is <b>${random}</b>.
-                // The verification is valid for only 5 minutes.
-				//
-                // Thanks,
-                // Sega Gò Vấp.`
-				//
-					// 	};
-					// 	console.log("Gui mail 1");
-					// 	transporter.sendMail(mailOptions);
-					}
-					else {
-						reject({status: 409, message: 'User Already Registered !'});
-					}
-				})
-				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			});
 
 		}
 
 
-        newUser.save()
+		newUser.save()
 
 
-            .then(() => resolve({status: 201, message: 'User Registered Sucessfully !', user: newUser}))
+			.then(() => {
+					if (type === 0) {
+						const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 
-            .catch(err => {
+						const mailOptions = {
 
-                if (err.code === 11000) {
-                    if (type !== 0)
-					{
-                        user.find({email: email})
+							from: `"${config.name}" <${config.email}>`,
+							to: email,
+							subject: "Verify Email Request ",
+							html: `Hello ${name},
+ 
+                     Your verification  is <b>${random}</b>.  
+                The verification is valid for only 5 minutes.
+ 
+                Thanks,
+                Sega Gò Vấp.`
 
-                            .then(users => {
-
-                                if (type === 1) {
-                                    users[0].facebook.name = name;
-                                    users[0].facebook.id = id;
-                                    users[0].facebook.token = token;
-                                    users[0].facebook.photoprofile = photoprofile;
-                                    users[0].tokenfirebase = tokenfirebase;
-                                    users[0].save();
-                                    resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
-
-                                } else {
-                                    users[0].google.name = name;
-                                    users[0].google.id = id;
-                                    users[0].google.token = token;
-                                    users[0].google.photoprofile = photoprofile;
-                                    users[0].tokenfirebase = tokenfirebase;
-                                    users[0].save();
-                                    resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
-
-                                }
-                            });
+						};
+						console.log("Gui mail 1");
+						transporter.sendMail(mailOptions);
 					}
-                    else
-					{
+
+					resolve({status: 201, message: "User Registered Sucessfully !", user: newUser});
+				}
+			)
+
+			.catch(err => {
+
+				if (err.code === 11000) {
+					if (type !== 0) {
+						user.find({email: email})
+
+							.then(users => {
+
+								if (type === 1) {
+									users[0].facebook.name = name;
+									users[0].facebook.id = id;
+									users[0].facebook.token = token;
+									users[0].facebook.photoprofile = photoprofile;
+									users[0].tokenfirebase = tokenfirebase;
+									users[0].save();
+									resolve({status: 201, message: "User Registered Sucessfully !", user: users[0]});
+
+								} else {
+									users[0].google.name = name;
+									users[0].google.id = id;
+									users[0].google.token = token;
+									users[0].google.photoprofile = photoprofile;
+									users[0].tokenfirebase = tokenfirebase;
+									users[0].save();
+									resolve({status: 201, message: "User Registered Sucessfully !", user: users[0]});
+
+								}
+							});
+					}
+					else {
 						user.find({email: email})
 							.then(users => {
 
 								if (users[0].status_code === "0") {
 									const salt = bcrypt.genSaltSync(10);
 									hash = bcrypt.hashSync(password, salt);
-									code = bcrypt.hashSync(random,salt);
+									code = bcrypt.hashSync(random, salt);
 
 									users[0].name = name;
 									users[0].email = email;
@@ -186,7 +179,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 										from: `"${config.name}" <${config.email}>`,
 										to: email,
-										subject: 'Verify Email Request ',
+										subject: "Verify Email Request ",
 										html: `Hello ${name},
  
                      Your verification  is <b>${random}</b>.  
@@ -198,10 +191,14 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									};
 									console.log("Gui mail 2");
 									transporter.sendMail(mailOptions);
-									resolve({status: 201, message: 'User Registered Sucessfully + check mail!', user: users[0]});
+									resolve({
+										status: 201,
+										message: "User Registered Sucessfully + check mail!",
+										user: users[0]
+									});
 
 								} else {
-									reject({status: 409, message: 'User Already Registered !'});
+									reject({status: 409, message: "User Already Registered !"});
 
 									// users[0].google.name = name;
 									// users[0].google.id = id;
@@ -215,18 +212,18 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							});
 					}
 
-                } else {
-                    reject({status: 500, message: 'Internal Server Error !'});
-                    throw err;
+				} else {
+					reject({status: 500, message: "Internal Server Error !"});
+					throw err;
 
-                }
-            });
-    });
+				}
+			});
+	});
 exports.registerFinish = (email, code) =>
 	new Promise((resolve, reject) => {
 		console.log("Finish");
 
-		user.find({ email: email })
+		user.find({email: email})
 
 			.then(users => {
 
@@ -236,7 +233,12 @@ exports.registerFinish = (email, code) =>
 				const seconds = Math.floor(diff / 1000);
 				console.log(`Seconds : ${seconds}`);
 
-				if (seconds < 300) { return user; } else { reject({ status: 401, message: 'Time Out ! Try again' }); } }) .then(user => {
+				if (seconds < 300) {
+					return user;
+				} else {
+					reject({status: 401, message: "Time Out ! Try again"});
+				}
+			}).then(user => {
 
 			if (bcrypt.compareSync(code, user.temp_password)) {
 
@@ -247,12 +249,12 @@ exports.registerFinish = (email, code) =>
 
 			} else {
 
-				reject({ status: 401, message: 'Invalid Code !' });
+				reject({status: 401, message: "Invalid Code !"});
 			}
 		})
 
-			.then(user => resolve({ status: 200, message: 'Register Successfully !',user: user }))
+			.then(user => resolve({status: 200, message: "Register Successfully !", user: user}))
 
-			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
