@@ -82,8 +82,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				.then(users => {
 
 					if (users[0].status === "0") {
-
-
 						users[0].name = name;
 						users[0].email = email;
 						users[0].photoprofile = token;
@@ -92,7 +90,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 						users[0].created_at = new Date();
 						users[0].temp_password = code;
 						users[0].temp_password_time = new Date();
-						users[0].type = "0";
+						users[0].status = "0";
 						users[0].save();
 
 						const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
