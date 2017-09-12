@@ -74,9 +74,50 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
-            const salt = bcrypt.genSaltSync(10);
-            hash = bcrypt.hashSync(password, salt);
-            code = bcrypt.hashSync(random,salt);
+			const salt = bcrypt.genSaltSync(10);
+			hash = bcrypt.hashSync(password, salt);
+			code = bcrypt.hashSync(random,salt);
+
+			user.find({email: email})
+				.then(users => {
+
+					if (users[0].status === "0") {
+
+
+						users[0].name = name;
+						users[0].email = email;
+						users[0].photoprofile = token;
+						users[0].hashed_password = hash;
+						users[0].tokenfirebase = tokenfirebase;
+						users[0].created_at = new Date();
+						users[0].temp_password = code;
+						users[0].temp_password_time = new Date();
+						users[0].type = "0";
+						users[0].save();
+
+						const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+
+						const mailOptions = {
+
+							from: `"${config.name}" <${config.email}>`,
+							to: email,
+							subject: 'Verify Email Request ',
+							html: `Hello ${name},
+ 
+                     Your verification  is <b>${random}</b>.  
+                The verification is valid for only 5 minutes.
+ 
+                Thanks,
+                Sega Gò Vấp.`
+
+						};
+						console.log("Gui mail 2");
+						transporter.sendMail(mailOptions);
+						resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
+
+					}
+				});
+
 
             newUser = new user({
                 name: name,
@@ -150,58 +191,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 					}
                     else
 					{
-						user.find({email: email})
-							.then(users => {
+						reject({status: 409, message: 'User Already Registered !'});
 
-								if (users[0].status === "0") {
-									const salt = bcrypt.genSaltSync(10);
-									hash = bcrypt.hashSync(password, salt);
-									code = bcrypt.hashSync(random,salt);
-
-									users[0].name = name;
-									users[0].email = email;
-									users[0].photoprofile = token;
-									users[0].hashed_password = hash;
-									users[0].tokenfirebase = tokenfirebase;
-									users[0].created_at = new Date();
-									users[0].temp_password = code;
-									users[0].temp_password_time = new Date();
-									users[0].type = "0";
-									users[0].save();
-
-									const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
-
-									const mailOptions = {
-
-										from: `"${config.name}" <${config.email}>`,
-										to: email,
-										subject: 'Verify Email Request ',
-										html: `Hello ${name},
- 
-                     Your verification  is <b>${random}</b>.  
-                The verification is valid for only 5 minutes.
- 
-                Thanks,
-                Sega Gò Vấp.`
-
-									};
-									console.log("Gui mail 2");
-									transporter.sendMail(mailOptions);
-									resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
-
-								} else {
-									reject({status: 409, message: 'User Already Registered !'});
-
-									// users[0].google.name = name;
-									// users[0].google.id = id;
-									// users[0].google.token = token;
-									// users[0].google.photoprofile = photoprofile;
-									// users[0].tokenfirebase = tokenfirebase;
-									// users[0].save();
-									// resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
-
-								}
-							});
 					}
 
                 } else {
