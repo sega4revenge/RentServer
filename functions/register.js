@@ -76,6 +76,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
         else {
 			user.findOne({email: email})
 				.then(temp =>{
+					console.log(temp.email);
 					console.log(temp.status_code);
 					if(temp.status_code.toString() === "0"){
 						console.log("abc");
