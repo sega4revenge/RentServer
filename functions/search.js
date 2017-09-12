@@ -14,13 +14,13 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			regexLocation[i] = new RegExp(location[i].toLowerCase(), "i");
 		}
 		var regexCategory = [];
-		for (var i = 0; i < typeArrange.length; i++) {
-			regexCategory[i] = new RegExp(typeArrange[i].toLowerCase(), "i");
+		for (var i = 0; i < category.length; i++) {
+			regexCategory[i] = new RegExp(category[i].toLowerCase(), "i");
 		}
 		product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}})
 
 			.then(products => {
-				console.log("products = " +  typeArrange);
+				console.log("products = " +  category);
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
