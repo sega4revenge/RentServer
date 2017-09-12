@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
     tokenfirebase : String,
 	temp_password : String,
 	temp_password_time : String,
-    status : String,
+    status_code : String,
     facebook :{
         id : String,
         token : String,
@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     listproduct : [JSON]
 
 });
- 
+
 mongoose.Promise = global.Promise;
 
 module.exports = mongoose.model('user', userSchema);

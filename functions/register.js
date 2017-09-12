@@ -90,7 +90,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							created_at: new Date(),
 							temp_password: code,
 							temp_password_time: new Date(),
-							status: "0"
+							status_code: "0"
 
 						});
 
@@ -162,7 +162,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 						user.find({email: email})
 							.then(users => {
 
-								if (users[0].status === "0") {
+								if (users[0].status_code === "0") {
 									const salt = bcrypt.genSaltSync(10);
 									hash = bcrypt.hashSync(password, salt);
 									code = bcrypt.hashSync(random,salt);
@@ -175,7 +175,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									users[0].created_at = new Date();
 									users[0].temp_password = code;
 									users[0].temp_password_time = new Date();
-									users[0].type = "0";
+									users[0].status_code = "0";
 									users[0].save();
 
 									const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
@@ -240,7 +240,7 @@ exports.registerFinish = (email, code) =>
 
 				user.temp_password = undefined;
 				user.temp_password_time = undefined;
-				user.status = "1";
+				user.status_code = "1";
 				return user.save();
 
 			} else {
