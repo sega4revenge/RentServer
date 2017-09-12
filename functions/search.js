@@ -16,7 +16,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		product.find( {address: {$in: regex }})
 
 			.then(products => {
-				console.log("products = " +  location[0] + location[1]);
+				console.log("products = " +  regex);
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
