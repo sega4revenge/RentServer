@@ -9,9 +9,11 @@ exports.mSearch2 = (location, category,typeArrange) =>
 	//	let arrImgDel = location.split(" , ");
 	//	let dn = arrImgDel[0];
 	//	let hcm = arrImgDel[1];
-		var ids = new Array(location[0],location[1]);
-
-		product.find( {address: {$in: [/^$location[0]/i,/^$location[1]/i] }})
+		var regex = [];
+		for (var i = 0; i < location.length; i++) {
+			regex[i] = new RegExp(location[i]);
+		}
+		product.find( {address: {$in: regex }})
 
 			.then(products => {
 				console.log("products = " +  location[0] + location[1]);
