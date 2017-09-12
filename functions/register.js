@@ -114,6 +114,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 						console.log("Gui mail 1");
 						transporter.sendMail(mailOptions);
 					}
+				})
+				.catch(err => {
+					reject({status: err.code, message: 'Error'});
 				});
 
         }
