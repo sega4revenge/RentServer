@@ -32,7 +32,10 @@ exports.verifyemail = (email) =>
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
 	new Promise((resolve, reject) => {
-		const random = randomstring.generate(8);
+		const random = randomstring.general({
+			length : 8,
+			charset : 'hex'
+		});
 		let hash, code;
 		let newUser;
 		console.log(type);
