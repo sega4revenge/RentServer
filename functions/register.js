@@ -74,6 +74,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
+			console.log(email);
 			user.findOne({email: email})
 				.then(temp =>{
 					console.log(temp.email);
