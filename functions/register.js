@@ -77,6 +77,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 			user.findOne({email: email})
 				.then(temp =>{
+					console.log(temp.status_code);
 					if(temp.status_code === 0){
 						const salt = bcrypt.genSaltSync(10);
 						hash = bcrypt.hashSync(password, salt);
