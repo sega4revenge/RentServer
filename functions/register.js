@@ -74,10 +74,10 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
-			console.log("ok ok ok ok");
-			user.find({email: email})
-				.then(users =>{
-					if(users.length === 0){
+
+			user.findOne({email: email})
+				.then(temp =>{
+					if(temp.status_code === 0){
 						const salt = bcrypt.genSaltSync(10);
 						hash = bcrypt.hashSync(password, salt);
 						code = bcrypt.hashSync(random,salt);
@@ -112,6 +112,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 					// 	};
 					// 	console.log("Gui mail 1");
 					// 	transporter.sendMail(mailOptions);
+					}
+					else {
+						reject({status: 409, message: 'User Already Registered !'});
 					}
 				})
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));

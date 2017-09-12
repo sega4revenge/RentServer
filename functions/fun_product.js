@@ -144,7 +144,7 @@ exports.EditProduct = (productid, productname, price, time, number, category, ad
 				productss.location.address = address;
 				productss.description = description;
 				productss.timestamp = timestamp;
-				if (listitem.length != 0) {
+				if (listitem.length !== 0) {
 					for (var i = 0; i <= (listitem.length - 1); i++) {
 						console.log(productid + "/" + listitem[i]);
 						product.findOneAndUpdate({_id: ObjectId(productid)}, {$pull: {images: listitem[i]}})
