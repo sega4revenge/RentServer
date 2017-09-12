@@ -17,7 +17,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		for (var i = 0; i < typeArrange.length; i++) {
 			regexCategory[i] = new RegExp(typeArrange[i].toLowerCase(), "i");
 		}
-		product.find( {"location.address": {$in: regexLocation} , category: {$in: regexCategory}})
+		product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}})
 
 			.then(products => {
 				console.log("products = " +  typeArrange);
