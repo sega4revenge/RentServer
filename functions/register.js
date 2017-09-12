@@ -74,6 +74,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
         }
         else {
+			console.log("ok ok ok ok");
 			user.find({email: email})
 				.then(users =>{
 					if(users.length === 0){
@@ -93,7 +94,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							status_code: "0"
 
 						});
-						console.log("ok ok ok ok");
 					// 	const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 				//
 					// 	const mailOptions = {
