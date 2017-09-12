@@ -77,32 +77,29 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
             const salt = bcrypt.genSaltSync(10);
             hash = bcrypt.hashSync(password, salt);
             code = bcrypt.hashSync(random,salt);
-			user.find({email: email})
 
-				.then(users => {
-					if (users.length === 0){
-						newUser = new user({
-							name: name,
-							email: email,
-							photoprofile : photoprofile,
-							hashed_password: hash,
-							tokenfirebase: tokenfirebase,
-							created_at: new Date(),
-							temp_password: code,
-							temp_password_time: new Date(),
-							status_code: "0"
+            newUser = new user({
+                name: name,
+                email: email,
+                photoprofile : photoprofile,
+                hashed_password: hash,
+                tokenfirebase: tokenfirebase,
+                created_at: new Date(),
+				temp_password: code,
+				temp_password_time: new Date(),
+                status: "0"
 
-						});
+            });
 
 
-						const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+			const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 
-						const mailOptions = {
+			const mailOptions = {
 
-							from: `"${config.name}" <${config.email}>`,
-							to: email,
-							subject: 'Verify Email Request ',
-							html: `Hello ${name},
+				from: `"${config.name}" <${config.email}>`,
+				to: email,
+				subject: 'Verify Email Request ',
+				html: `Hello ${name},
  
                      Your verification  is <b>${random}</b>.  
                 The verification is valid for only 5 minutes.
@@ -110,15 +107,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 Thanks,
                 Sega Gò Vấp.`
 
-						};
-						console.log("Gui mail 1");
-						transporter.sendMail(mailOptions);
-					}
-				})
-				.catch(err => {
-					reject({status: err.code, message: 'Error'});
-				});
-
+			};
+			console.log("Gui mail 1");
+			transporter.sendMail(mailOptions);
         }
 
 
@@ -162,7 +153,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 						user.find({email: email})
 							.then(users => {
 
-								if (users[0].status_code === "0") {
+								if (users[0].status === "0") {
 									const salt = bcrypt.genSaltSync(10);
 									hash = bcrypt.hashSync(password, salt);
 									code = bcrypt.hashSync(random,salt);
@@ -175,7 +166,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									users[0].created_at = new Date();
 									users[0].temp_password = code;
 									users[0].temp_password_time = new Date();
-									users[0].status_code = "0";
+									users[0].type = "0";
 									users[0].save();
 
 									const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
@@ -194,7 +185,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
                 Sega Gò Vấp.`
 
 									};
-									console.log("Gui mail 2");
+									console.log("Gui mail 1");
 									transporter.sendMail(mailOptions);
 									resolve({status: 201, message: 'User Registered Sucessfully !', user: users[0]});
 
@@ -240,7 +231,7 @@ exports.registerFinish = (email, code) =>
 
 				user.temp_password = undefined;
 				user.temp_password_time = undefined;
-				user.status_code = "1";
+				user.status = "1";
 				return user.save();
 
 			} else {
