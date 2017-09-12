@@ -11,7 +11,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 	//	let hcm = arrImgDel[1];
 		var regex = [];
 		for (var i = 0; i < location.length; i++) {
-			regex[i] = new RegExp(location[i]);
+			regex[i] = new RegExp(location[i].toLowerCase(), "i");
 		}
 		product.find( {address: {$in: regex }})
 
