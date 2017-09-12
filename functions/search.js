@@ -9,12 +9,15 @@ exports.mSearch2 = (location, category,typeArrange) =>
 	//	let arrImgDel = location.split(" , ");
 	//	let dn = arrImgDel[0];
 	//	let hcm = arrImgDel[1];
-		var regex = [];
+		var regexLocation = [];
 		for (var i = 0; i < location.length; i++) {
-			regex[i] = new RegExp(location[i].toLowerCase(), "i");
+			regexLocation[i] = new RegExp(location[i].toLowerCase(), "i");
 		}
-
-		product.find( {address: {$in: regex }}).sort({view: -1})
+		var regexCategory = [];
+		for (var i = 0; i < location.length; i++) {
+			regexCategory[i] = new RegExp(category[i].toLowerCase(), "i");
+		}
+		product.find( {address: {$in: regexLocation } , category: {$in: regexCategory } }).sort({view: -1})
 
 			.then(products => {
 				console.log("products = " +  regex);
