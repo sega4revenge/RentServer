@@ -94,6 +94,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							status_code: "0"
 
 						});
+						console.log("abc");
 					// 	const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
 				//
 					// 	const mailOptions = {
