@@ -51,10 +51,13 @@ module.exports = router => {
 	console.log("typeArrange = " + typeArrange);*/
 	router.post('/search', (req, res) => {
 		var listaddress = req.body.listaddress;
-			var listcategory = req.body.listcategory;
+		var listcategory = req.body.listcategory;
 		var typeArrange = req.body.typeArrange;
-
-
+		console.log(listaddress);
+		console.log("\n");
+		console.log(listcategory)
+		console.log("\n");
+		console.log(typeArrange)
 		search.mSearch2(listaddress,listcategory,typeArrange)
 		//search.mSearch1(keysearch,location, category,typeArrange)
 			.then(result => res.json(result))
