@@ -15,6 +15,7 @@ const productSchema = mongoose.Schema({
     type                : String,
     time                : String,
     created_at          : String,
+	statussave			: String,
 	location: {
 		type: { type: String, default:'Point' },
         address : {type : String },

@@ -218,9 +218,19 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 
 
 			.then(() => {
-				newproduct.populate("user", "_id name email images", function (err) {
-					resolve({status: 201, message: "product Registered Sucessfully !", product: newproduct});
-				});
+				user.findByIdAndUpdate(
+					userid,
+					{$push: {"listproduct": newproduct._id}},
+					{safe: true, upsert: true, new: true},
+					function (err, model) {
+						console.log(err);
+						newproduct.populate("user", "_id name email images", function (err) {
+
+							resolve({status: 201, message: "product Registered Sucessfully !", product: newproduct});
+						});
+					}
+				);
+
 			})
 
 
