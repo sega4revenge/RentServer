@@ -332,10 +332,25 @@ exports.mSaveProduct = (userid,productid) =>
 						.then(get =>{
 							if (get.length === 0) {
 								console.log("run233");
+								saveProduct.findByIdAndUpdate(sav._id,
+									{$push: {"productid":productid}},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
+									}
+								);
+								resolve({status: 200, message: "Luu thanh cong"});
 							}else{
-								console.log("run244",get);
+								console.log("run244");
+								saveProduct.findByIdAndRemove(sav._id, function (err, offer) {
+									if (err) {
+										throw err;
+									}
+									resolve({status: 200, message: "Xoa thanh cong"});
+								});
 							}
-							resolve({status: 201, message: "ok"});
+
 						})
 						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
 				/*	const mData = sav[0];
