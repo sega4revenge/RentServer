@@ -12,4 +12,4 @@ const saveproSchema = mongoose.Schema({
 
 mongoose.Promise = global.Promise;
 
-module.exports = mongoose.model('savepro', saveproSchema);
+module.exports = mongoose.model('ProductSave', saveproSchema);

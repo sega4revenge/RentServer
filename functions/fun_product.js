@@ -311,8 +311,8 @@ exports.mSaveProduct = (userid,productid) =>
 	new Promise((resolve, reject) =>{
 		saveProduct.find({"user": ObjectId(userid)})
 			.populate({
-				path: "product saverpro",
-				populate: {path: "saverpro", select: "_id user productid"}
+				path: "product ProductSave",
+				populate: {path: "ProductSave", select: "_id user productid"}
 			})
 			.then(sav => {
 				if (sav.length === 0 ) {
