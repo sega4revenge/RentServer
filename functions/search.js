@@ -25,7 +25,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		}
 		console.log("arrCate = " +  regexCategory);
 		console.log("typeArrange = " +  typeArrange);
-		if(typeArrange==="0")
+		if(typeArrange === 0)
 		{
 			console.log("products = " +  "ssssssssss");
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({view: -1})
@@ -47,7 +47,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				})
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
-		if(typeArrange==="1")
+		if(typeArrange=== 1)
 		{
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({created_at: -1})
 
@@ -68,7 +68,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				})
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
-		if(typeArrange==="2")
+		if(typeArrange=== 2)
 		{
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({price: 1})
 
@@ -89,7 +89,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 				})
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 		}
-		if(typeArrange==="3")
+		if(typeArrange=== 3)
 		{
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({price: -1})
 
