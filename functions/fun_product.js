@@ -324,7 +324,7 @@ exports.mSaveProduct = (userid,productid) =>
 						user : userid
 					})
 					saveProduct2.save();
-					console.log("run111");
+					resolve({status: 201, message: "ok"});
 				}else {
 					console.log("run2222");
 					saveProduct.find({"productid":ObjectId(productid)})
@@ -338,8 +338,9 @@ exports.mSaveProduct = (userid,productid) =>
 									}
 								);
 								console.log("run3333");
+								resolve({status: 201, message: "ok"});
 							} else {
-								saveProduct.findOneAndRemove({user: ObjectId(userid) },
+								saveProduct.findOneAndRemove({user: ObjectId(userid)},
 									{$pull: {"productid": productid}},
 									{safe: true, upsert: true, new:true},
 									function (err,models) {
@@ -347,10 +348,12 @@ exports.mSaveProduct = (userid,productid) =>
 									}
 								);
 								console.log("run444");
+								resolve({status: 201, message: "ok"});
 							}
 						})
+						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
 				}
-				resolve({status: 201, message: "ok"});
+
 			})
 			// .then(result => resolve({status: 201, message: "ok"})
 			// )
