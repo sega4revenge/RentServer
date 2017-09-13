@@ -16,7 +16,7 @@ const productSchema = mongoose.Schema({
     time                : String,
     created_at          : String,
 	location: {
-		type: { type: String, default:'Point' },
+		type: { type: String },
         address : {type : String },
 		coordinates: { type: [Number], index: '2dsphere'}
 	},
