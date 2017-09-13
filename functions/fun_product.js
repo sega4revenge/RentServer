@@ -309,6 +309,7 @@ exports.deleteProduct = (productid) =>
 	});
 exports.mSaveProduct = (userid,productid) =>
 	new Promise((resolve, reject) =>{
+
 		saveProduct.find({"user": ObjectId(userid)})
 			.populate({
 				path: "product ProductSave",
@@ -316,12 +317,11 @@ exports.mSaveProduct = (userid,productid) =>
 			})
 			.then(sav => {
 				if (sav.length === 0 ) {
-					const saveProduct = new saveProduct({
+					const saveProduct2 = new saveProduct({
 						productid : productid,
 						user : userid
 					})
-					saveProduct.save();
-					resolve({status: 201, message: "ok"});
+					saveProduct2.save();
 				}else {
 					saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
@@ -333,7 +333,6 @@ exports.mSaveProduct = (userid,productid) =>
 										console.log(err);
 									}
 								);
-								resolve({status: 201, message: "ok"});
 							} else {
 								saveProduct.findOneAndRemove({user: ObjectId(userid) },
 									{$pull: {"productid": productid}},
@@ -342,10 +341,10 @@ exports.mSaveProduct = (userid,productid) =>
 										console.log(err);
 									}
 								);
-								resolve({status: 201, message: "ok"});
 							}
 						})
 				}
+				resolve({status: 201, message: "ok"});
 			})
 			// .then(result => resolve({status: 201, message: "ok"})
 			// )
