@@ -564,6 +564,7 @@ exports.productdetail = (productid, userid) =>
 		product.find({_id: ObjectId(productid)})
 			.populate({
 				path: "user comment",
+				select: "-listproduct",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 				populate: {path: "user", select: "_id name photoprofile"}
