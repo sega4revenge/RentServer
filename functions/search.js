@@ -10,19 +10,20 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		var regexCategory = [];
 		let arrLoca = location.split(" , ");
 		if(arrLoca)
-		{	console.log("arrLoca = " +  arrLoca.length);
+		{
 			for (var i = 0; i < arrLoca.length; i++) {
 				regexLocation[i] = new RegExp(arrLoca[i].toLowerCase(), "i");
 			}
 		}
+		console.log("arrLoca = " +  regexLocation);
 		let arrCate = category.split(" , ");
 		if(arrCate)
-		{	console.log("arrCate = " +  arrCate.length);
+		{
 			for (var i = 0; i < arrCate.length; i++) {
 				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
 			}
 		}
-
+		console.log("arrCate = " +  regexCategory);
 		if(typeArrange==="0")
 		{
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({view: -1})
