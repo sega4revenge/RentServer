@@ -24,6 +24,7 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			}
 		}
 		console.log("arrCate = " +  regexCategory);
+		onsole.log("typeArrange = " +  typeArrange);
 		if(typeArrange==="0")
 		{
 			console.log("products = " +  "ssssssssss");
