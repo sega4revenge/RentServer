@@ -6,17 +6,23 @@ const bcrypt = new require('bcryptjs');
 exports.mSearch2 = (location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
-	//	let arrImgDel = location.split(" , ");
-	//	let dn = arrImgDel[0];
-	//	let hcm = arrImgDel[1];
 		var regexLocation = [];
-		for (var i = 0; i < location.length; i++) {
-			regexLocation[i] = new RegExp(location[i].toLowerCase(), "i");
-		}
 		var regexCategory = [];
-		for (var i = 0; i < category.length; i++) {
-			regexCategory[i] = new RegExp(category[i].toLowerCase(), "i");
+		let arrLoca = location.split(" , ");
+		if(arrLoca)
+		{
+			for (var i = 0; i < arrLoca.length; i++) {
+				regexLocation[i] = new RegExp(arrLoca[i].toLowerCase(), "i");
+			}
 		}
+		let arrCate = category.split(" , ");
+		if(arrCate)
+		{
+			for (var i = 0; i < arrCate.length; i++) {
+				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
+			}
+		}
+
 		if(typeArrange==="0")
 		{
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({view: -1})
