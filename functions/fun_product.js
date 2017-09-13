@@ -207,6 +207,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 					coordinates: [lot,lat]
 				},
 				created_at: timestamp,
+				view: 0,
 				type: type
 			});
 		}
