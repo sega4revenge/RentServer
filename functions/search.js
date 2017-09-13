@@ -10,14 +10,14 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		var regexCategory = [];
 		let arrLoca = location.split(" , ");
 		if(arrLoca)
-		{
+		{	console.log("arrLoca = " +  arrLoca.length);
 			for (var i = 0; i < arrLoca.length; i++) {
 				regexLocation[i] = new RegExp(arrLoca[i].toLowerCase(), "i");
 			}
 		}
 		let arrCate = category.split(" , ");
 		if(arrCate)
-		{
+		{	console.log("arrCate = " +  arrCate.length);
 			for (var i = 0; i < arrCate.length; i++) {
 				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
 			}
