@@ -327,7 +327,7 @@ exports.mSaveProduct = (userid,productid) =>
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
 				}else {
-					console.log("run2222",sav);
+					console.log("run2222",sav._id);
 					saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
