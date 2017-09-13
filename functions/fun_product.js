@@ -22,7 +22,7 @@ exports.allproduct = (type, page,category) =>
 			if(category === 999 )
 			{
 				product.find({}, {comment: 0}).skip(start).limit(limit)
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -69,7 +69,7 @@ exports.allproduct = (type, page,category) =>
 		} else {
 			if(category === 999 ) {
 				product.find({}, {comment: 0})
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -91,7 +91,7 @@ exports.allproduct = (type, page,category) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
 				product.find({category: category}, {comment: 0})
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
