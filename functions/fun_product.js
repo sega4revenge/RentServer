@@ -328,7 +328,24 @@ exports.mSaveProduct = (userid,productid) =>
 					resolve({status: 201, message: "ok"});
 				}else {
 					console.log("run2222",sav);
+					saveProduct.find({"productid":ObjectId(productid)})
+						.then(get =>{
+							if (get.length === 0) {
+								console.log("run233");
+							}else{
+								console.log("run244",get);
+							}
+							resolve({status: 201, message: "ok"});
+						})
+						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
+				/*	const mData = sav[0];
+					for(var i=0;i<mData.productid.length;i++)
+					{
+						if(mData.productid[i] === productid)
+						{
 
+						}
+					}*/
 				/*	saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
