@@ -311,10 +311,11 @@ exports.mSaveProduct = (userid,productid) =>
 	new Promise((resolve, reject) =>{
 
 		saveProduct.find({"user": ObjectId(userid)})
-			.populate({
-				path: "product ProductSave",
-				populate: {path: "ProductSave", select: "_id user productid"}
-			})
+			.populate("product")
+			// .populate({
+			// 	path: "product ProductSave",
+			// 	populate: {path: "ProductSave", select: "_id user productid"}
+			// })
 			.then(sav => {
 				console.log("run");
 				if (sav.length === 0 ) {
@@ -326,7 +327,7 @@ exports.mSaveProduct = (userid,productid) =>
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
 				}else {
-					console.log("run2222",sav.product);
+					console.log("run2222",sav);
 
 				/*	saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
