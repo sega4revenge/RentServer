@@ -43,8 +43,8 @@ exports.allproduct = (type, page,category) =>
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
-				product.find({category: category}, {comment: 0, listproduct : 0}).skip(start).limit(limit)
-					.populate("user")
+				product.find({category: category}, {comment: 0}).skip(start).limit(limit)
+					.populate({path : "user", listproduct : 0})
 					.then(products => {
 
 						if (products.length === 0) {
