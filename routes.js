@@ -287,6 +287,18 @@ module.exports = router => {
 		}
 	});
 
+	router.post('/saveproduct', (req,res) => {
+		const userid = req.body.usid;
+		const productid = req.body.proid;
+		console.log(productid,userid);
+		if(!productid){
+			res.status(400).json({message: 'yeu cau khong hop le'});
+		}else {
+			fun_product.mSaveProduct(userid,productid)
+				.then(result => res.json(result))
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/editproduct', (req, res) => {
 
 		const productid = req.body.productid;

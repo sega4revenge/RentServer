@@ -2,6 +2,7 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
+const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
@@ -306,7 +307,50 @@ exports.deleteProduct = (productid) =>
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 	});
-
+exports.mSaveProduct = (userid,productid) =>
+	new Promise((resolve, reject) =>{
+		saveProduct.find({"user": ObjectId(userid)})
+			.populate({
+				path: "product saverpro",
+				populate: {path: "saverpro", select: "_id user productid"}
+			})
+			.then(sav => {
+				if (sav.length === 0 ) {
+					const saveProduct = new saveProduct({
+						productid : productid,
+						user : userid
+					})
+					saveProduct.save();
+					resolve({status: 201, message: "ok"});
+				}else {
+					saveProduct.find({"productid":ObjectId(productid)})
+						.then(get =>{
+							if (get.length === 0) {
+								get.findByIdAndUpdate({user: ObjectId(userid)},
+									{$push: {"productid":productid}},
+									{safe: true, upsert: true , new: true},
+									function (err, models) {
+										console.log(err);
+									}
+								);
+								resolve({status: 201, message: "ok"});
+							} else {
+								saverpro.findOneAndRemove({user: ObjectId(userid) },
+									{$pull: {"productid": productid}},
+									{safe: true, upsert: true, new:true},
+									function (err,models) {
+										console.log(err);
+									}
+								);
+								resolve({status: 201, message: "ok"});
+							}
+						})
+				}
+			})
+			// .then(result => resolve({status: 201, message: "ok"})
+			// )
+			.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
+	});
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
