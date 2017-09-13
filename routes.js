@@ -53,9 +53,9 @@ module.exports = router => {
 		var listaddress = req.body.listaddress;
 		var listcategory = req.body.listcategory;
 		var typeArrange = req.body.typeArrange;
-		console.log(listaddress);
+		console.log(listaddress[0]);
 		console.log("\n");
-		console.log(listcategory)
+		console.log(listcategory[0])
 		console.log("\n");
 		console.log(typeArrange)
 		search.mSearch2(listaddress,listcategory,typeArrange)
