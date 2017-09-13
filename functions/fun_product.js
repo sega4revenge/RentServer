@@ -352,6 +352,7 @@ exports.mSaveProduct = (userid,productid) =>
 										}
 									}
 								);
+								resolve({status: 201, message: "Huy Luu thanh cong"});
 							}
 
 						})
