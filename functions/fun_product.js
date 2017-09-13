@@ -327,13 +327,14 @@ exports.mSaveProduct = (userid,productid) =>
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
 				}else {
-					console.log("run2222",sav._id);
+					const mData = sav[0];
+					console.log("run2222",mData);
 					saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
-								console.log("run233");
-								saveProduct.findByIdAndUpdate(sav._id,
-									{$push: {"productid":productid}},
+								saveProduct.findByIdAndUpdate(mData._id,
+									{$push: { "productid": productid }},
+									{safe: true, upsert: true, new: true},
 									function (err, offer) {
 										if (err) {
 											throw err;
@@ -342,13 +343,15 @@ exports.mSaveProduct = (userid,productid) =>
 								);
 								resolve({status: 200, message: "Luu thanh cong"});
 							}else{
-								console.log("run244");
-								saveProduct.findByIdAndRemove(sav._id, function (err, offer) {
-									if (err) {
-										throw err;
+								saveProduct.findByIdAndUpdate(mData._id,
+									{$pull: { "productid": productid }},
+									{safe: true, upsert: true, new: true},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
 									}
-									resolve({status: 200, message: "Xoa thanh cong"});
-								});
+								);
 							}
 
 						})
