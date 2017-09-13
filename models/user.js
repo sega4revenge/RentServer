@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require("./connect");
-
+const Schema = require("mongoose/lib/schema");
 
 const userSchema = mongoose.Schema({
     name             : String,
@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
         photoprofile    :String,
         name : String
     },
-    listproduct : [{type: Schema.Types.ObjectId, ref: 'product'}]
+    listproduct: [{type: Schema.Types.ObjectId, ref: 'product'}]
 
 
 });
