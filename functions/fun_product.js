@@ -326,8 +326,9 @@ exports.mSaveProduct = (userid,productid) =>
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
 				}else {
-					console.log("run2222");
-					saveProduct.find({"productid":ObjectId(productid)})
+					console.log("run2222",sav.product);
+
+				/*	saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
 								saveProduct.findByIdAndUpdate({user: ObjectId(userid)},
@@ -353,7 +354,7 @@ exports.mSaveProduct = (userid,productid) =>
 								resolve({status: 201, message: "ok"});
 							}
 						})
-						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
+						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));*/
 				}
 
 			})
