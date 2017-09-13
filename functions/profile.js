@@ -39,12 +39,6 @@ exports.getFullProfile = userid =>
 				options: {sort: {"time": -1}}
 				// Get friends of friends - populate the 'friends' array for every friend
 			})
-			.exec(function (err, post) {
-				if(err) throw err;
-				console.log(post);
-
-
-			})
 
 			.then(users => {
 
