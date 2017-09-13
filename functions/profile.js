@@ -34,28 +34,16 @@ exports.getFullProfile = userid =>
 		ObjectId = require('mongodb').ObjectID;
 
 		user.find({ _id: ObjectId(userid)})
-			.exec(function (err, post) {
-				if(err) throw err;
-				console.log(post);
-
-
+			.populate({
+				path: "listproduct",
+				options: {sort: {"time": -1}},
+				// Get friends of friends - populate the 'friends' array for every friend
 			})
+
 
 			.then(users => {
 
-				fun_product.allproductbyuser(userid)
-
-					.then(result => {
-
-
-							users[0].listproduct = result.listproduct;
-
-					/*	else
-							delete user[0].listproduct;*/
-						resolve({status: 201, user : users[0]});
-					})
-					.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
-
+				resolve({status: 201, user : users[0]});
 
 				}
 

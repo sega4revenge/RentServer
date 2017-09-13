@@ -2,6 +2,8 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
+const user = new require("../models/user");
+const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
@@ -207,6 +209,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 					coordinates: [lot,lat]
 				},
 				created_at: timestamp,
+				view: 0,
 				type: type
 			});
 		}
@@ -216,9 +219,19 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 
 
 			.then(() => {
-				newproduct.populate("user", "_id name email images", function (err) {
-					resolve({status: 201, message: "product Registered Sucessfully !", product: newproduct});
-				});
+				user.findByIdAndUpdate(
+					userid,
+					{$push: {"listproduct": newproduct._id}},
+					{safe: true, upsert: true, new: true},
+					function (err, model) {
+						console.log(err);
+						newproduct.populate("user", "_id name email images", function (err) {
+
+							resolve({status: 201, message: "product Registered Sucessfully !", product: newproduct});
+						});
+					}
+				);
+
 			})
 
 
@@ -305,7 +318,97 @@ exports.deleteProduct = (productid) =>
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 	});
+exports.mSaveProduct = (userid,productid) =>
+	new Promise((resolve, reject) =>{
 
+		saveProduct.find({"user": ObjectId(userid)})
+			.populate("product")
+			// .populate({
+			// 	path: "product ProductSave",
+			// 	populate: {path: "ProductSave", select: "_id user productid"}
+			// })
+			.then(sav => {
+				console.log("run");
+				if (sav.length === 0 ) {
+
+					const saveProduct2 = new saveProduct({
+						productid : productid,
+						user : userid
+					})
+					saveProduct2.save();
+					resolve({status: 201, message: "ok"});
+				}else {
+					const mData = sav[0];
+					saveProduct.find({"productid":ObjectId(productid)})
+						.then(get =>{
+							if (get.length === 0) {
+								saveProduct.findByIdAndUpdate(mData._id,
+									{$push: { "productid": productid }},
+									{safe: true, upsert: true, new: true},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
+									}
+								);
+								resolve({status: 200, message: "Luu thanh cong"});
+							}else{
+								saveProduct.findByIdAndUpdate(mData._id,
+									{$pull: { "productid": productid }},
+									{safe: true, upsert: true, new: true},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
+									}
+								);
+								resolve({status: 201, message: "Huy Luu thanh cong"});
+							}
+
+						})
+						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
+				/*	const mData = sav[0];
+					for(var i=0;i<mData.productid.length;i++)
+					{
+						if(mData.productid[i] === productid)
+						{
+
+						}
+					}*/
+				/*	saveProduct.find({"productid":ObjectId(productid)})
+						.then(get =>{
+							if (get.length === 0) {
+								saveProduct.findByIdAndUpdate({user: ObjectId(userid)},
+									{$push: {"productid":productid}},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
+									}
+								);
+								console.log("run3333");
+								resolve({status: 201, message: "ok"});
+							} else {
+								saveProduct.findOneAndRemove({user: ObjectId(userid)},
+									{$pull: {"productid": productid}},
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
+									}
+								);
+								console.log("run444");
+								resolve({status: 201, message: "ok"});
+							}
+						})
+						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));*/
+				}
+
+			})
+			// .then(result => resolve({status: 201, message: "ok"})
+			// )
+			.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
+	});
 exports.deletecomment = (commentid, productid) =>
 
 	new Promise((resolve, reject) => {
