@@ -326,7 +326,7 @@ exports.mSaveProduct = (userid,productid) =>
 					saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
-								get.findByIdAndUpdate({user: ObjectId(userid)},
+								saveProduct.findByIdAndUpdate({user: ObjectId(userid)},
 									{$push: {"productid":productid}},
 									{safe: true, upsert: true , new: true},
 									function (err, models) {
@@ -335,7 +335,7 @@ exports.mSaveProduct = (userid,productid) =>
 								);
 								resolve({status: 201, message: "ok"});
 							} else {
-								saverpro.findOneAndRemove({user: ObjectId(userid) },
+								saveProduct.findOneAndRemove({user: ObjectId(userid) },
 									{$pull: {"productid": productid}},
 									{safe: true, upsert: true, new:true},
 									function (err,models) {
