@@ -316,13 +316,17 @@ exports.mSaveProduct = (userid,productid) =>
 				populate: {path: "ProductSave", select: "_id user productid"}
 			})
 			.then(sav => {
+				console.log("run");
 				if (sav.length === 0 ) {
+
 					const saveProduct2 = new saveProduct({
 						productid : productid,
 						user : userid
 					})
 					saveProduct2.save();
+					console.log("run111");
 				}else {
+					console.log("run2222");
 					saveProduct.find({"productid":ObjectId(productid)})
 						.then(get =>{
 							if (get.length === 0) {
@@ -333,6 +337,7 @@ exports.mSaveProduct = (userid,productid) =>
 										console.log(err);
 									}
 								);
+								console.log("run3333");
 							} else {
 								saveProduct.findOneAndRemove({user: ObjectId(userid) },
 									{$pull: {"productid": productid}},
@@ -341,6 +346,7 @@ exports.mSaveProduct = (userid,productid) =>
 										console.log(err);
 									}
 								);
+								console.log("run444");
 							}
 						})
 				}
