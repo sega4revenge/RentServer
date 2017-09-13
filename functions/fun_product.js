@@ -332,9 +332,10 @@ exports.mSaveProduct = (userid,productid) =>
 							if (get.length === 0) {
 								saveProduct.findByIdAndUpdate({user: ObjectId(userid)},
 									{$push: {"productid":productid}},
-									{safe: true, upsert: true , new: true},
-									function (err, models) {
-										console.log(err);
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
 									}
 								);
 								console.log("run3333");
@@ -342,9 +343,10 @@ exports.mSaveProduct = (userid,productid) =>
 							} else {
 								saveProduct.findOneAndRemove({user: ObjectId(userid)},
 									{$pull: {"productid": productid}},
-									{safe: true, upsert: true, new:true},
-									function (err,models) {
-										console.log(err);
+									function (err, offer) {
+										if (err) {
+											throw err;
+										}
 									}
 								);
 								console.log("run444");
