@@ -51,8 +51,8 @@ module.exports = router => {
 	console.log("typeArrange = " + typeArrange);*/
 	router.post('/search', (req, res) => {
 		var keySearch = req.body.keysearch;
-		var listaddress = req.body.listaddress;
-		var listcategory = req.body.listcategory;
+		var listaddress = req.body.location;
+		var listcategory = req.body.category;
 		var typeArrange = req.body.typeArrange;
 
 		console.log(listaddress,listcategory,typeArrange);

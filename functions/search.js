@@ -24,10 +24,9 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			}
 		}
 		console.log("arrCate = " +  regexCategory);
-		console.log("typeArrange = " +  typeArrange);
+
 		if(typeArrange === 0)
 		{
-			console.log("products = " +  "ssssssssss");
 			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({view: -1})
 
 				.then(products => {
