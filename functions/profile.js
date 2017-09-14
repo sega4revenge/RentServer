@@ -36,7 +36,7 @@ exports.getFullProfile = userid =>
 		user.find({ _id: ObjectId(userid)})
 			.populate({
 				path: "listproduct",
-				select: "-user",
+				select: "-user, -comment",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 			})
