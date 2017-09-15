@@ -541,7 +541,7 @@ module.exports = router => {
 
 			});
 			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
-			res.status(200).json({uploaded: true, name: fields.user})
+			res.status(200).json({uploaded: true, user: user})
 		});
 		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
 		// 	if (err) throw err;

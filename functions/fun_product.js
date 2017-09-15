@@ -713,7 +713,20 @@ exports.edit_avatar = (userid, image) =>
 			{safe: true, upsert: true, new: true},
 			function (err, model) {
 				console.log(err);
+
 			}
 		)
+			.then(userss => {
+
+				if (userss.length === 0) {
+
+					reject({status: 404, message: "User Not Found !"});
+
+				} else {
+
+					resolve({status: 200, user: userss});
+
+				}
+			})
 
 	});
