@@ -535,7 +535,7 @@ module.exports = router => {
 			// console.log("oldava: "+fields.oldavatar);
 			// console.log("image: "+fields.userid);
 			fs.unlink(uploadDir + fields.oldavatar, (err) => {
-				if (err) throw err;
+				if (err) console.log(err);
 				fun_product.edit_avatar(fields.userid, files.image.path.substring(8));
 
 				console.log('successfully deleted /image/' + arrImgDel[i]);
