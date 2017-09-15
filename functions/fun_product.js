@@ -317,7 +317,7 @@ exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 		}
 		console.log("arrCate = " +  regexCategory);
 
-		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1609.34  } },category: {$in: regexCategory}},{comment: 0})
+		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1000  } },category: {$in: regexCategory}},{comment: 0})
 			.populate({path: "user", select : "-listproduct"})
 			.then(products => {
 
