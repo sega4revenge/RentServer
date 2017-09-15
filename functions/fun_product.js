@@ -716,17 +716,5 @@ exports.edit_avatar = (userid, image) =>
 
 			}
 		)
-			.then(userss => {
-
-				if (userss.length === 0) {
-
-					reject({status: 404, message: "User Not Found !"});
-
-				} else {
-
-					resolve({status: 200, user: userss});
-
-				}
-			})
 
 	});
