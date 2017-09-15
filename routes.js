@@ -525,25 +525,24 @@ module.exports = router => {
 
 	});
 	router.post('/changeavatar', function (req, res) {
-		const old = req.oldavatar;
-		console.log("aaaaaaa: "+old);
+		const form = new formidable.IncomingForm();
+		form.multiples = true;
+		form.keepExtensions = true;
+		form.uploadDir = uploadDir;
+		form.parse(req, (err, fields, files) => {
+			if (err) return res.status(500).json({error: err});
+			// console.log("image: "+files.image.path.substring(8));
+			// console.log("oldava: "+fields.oldavatar);
+			// console.log("image: "+fields.userid);
+			fs.unlink(uploadDir + fields.oldavatar, (err) => {
+				if (err) throw err;
+				fun_product.edit_avatar(fields.userid, files.image.path.substring(8));
 
-		// const form = new formidable.IncomingForm();
-		// form.multiples = true;
-		// form.keepExtensions = true;
-		// form.uploadDir = uploadDir;
-		// form.parse(req, (err, fields, files) => {
-		// 	if (err) return res.status(500).json({error: err});
-		// 	console.log("image: "+files.image.path.substring(8));
-		// 	console.log("oldava: "+fields.oldavatar);
-		// 	console.log("image: "+fields.userid);
-		//
-		// 	// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
-		// 	res.status(200).json({uploaded: true, name: fields.user})
-		// });
-		//////////////////////////////
-
-
+				console.log('successfully deleted /image/' + arrImgDel[i]);
+			});
+			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
+			res.status(200).json({uploaded: true, name: fields.user})
+		});
 		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
 		// 	if (err) throw err;
 		// 	console.log('successfully deleted /image/' + arrImgDel[i]);

@@ -703,3 +703,33 @@ exports.uploadproduct = (productid, image) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.edit_avatar = (userid, image) =>
+
+	new Promise((resolve, reject) => {
+
+		console.log(productid);
+
+
+		user.findByIdAndUpdate(
+			userid,
+			{$set: {"photoprofile": image}},
+			{safe: true, upsert: true, new: true},
+			function (err, model) {
+				console.log(err);
+			}
+		)
+			.then(users => {
+
+				if (users.length === 0) {
+
+					reject({status: 404, message: "User Not Found !"});
+
+				} else {
+
+					return users[0];
+
+				}
+			})
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
