@@ -525,8 +525,19 @@ module.exports = router => {
 
 	});
 	router.post('/changeavatar', function (req, res) {
-		const oldava = req.body.oldavatar;
-		console.log(oldava);
+		const form = new formidable.IncomingForm();
+		form.multiples = true;
+		form.keepExtensions = true;
+		form.uploadDir = uploadDir;
+		form.parse(req, (err, fields, files) => {
+			if (err) return res.status(500).json({error: err});
+			console.log("image: "+files.image.path.substring(8));
+			console.log("oldava: "+fields.oldavatar);
+			console.log("image: "+fields.userid);
+
+			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
+			res.status(200).json({uploaded: true, name: fields.user})
+		});
 		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
 		// 	if (err) throw err;
 		// 	console.log('successfully deleted /image/' + arrImgDel[i]);
