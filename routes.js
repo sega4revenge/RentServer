@@ -538,7 +538,7 @@ module.exports = router => {
 			fs.unlink(uploadDir + fields.oldavatar, (err) => {
 				if (err) console.log(err);
 				fun_product.edit_avatar(fields.userid, files.image.path.substring(8))
-				.then(result => res.status(result.status).json({message: result.user}))
+				.then(result => res.status(result.status).json({status: result.status ,message: result.user}))
 
 
 			});
