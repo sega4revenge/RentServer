@@ -66,6 +66,7 @@ module.exports = router => {
 	});
 	router.post('/searchmap', (req, res) =>{
 		const lat = req.body.lat;
+		var keySearch = req.body.keysearch;
 		const lng = req.body.lng;
 		const distance = req.body.distance;
 		const listCategory = req.body.category;
@@ -75,7 +76,7 @@ module.exports = router => {
 		{
 			res.status(400).json({message: 'Your Location Not Found!'});
 		}else{
-			fun_product.SearchMap(lat,lng,distance,listCategory)
+			fun_product.SearchMap(keySearch,lat,lng,distance,listCategory)
 				.then(result => res.json(result))
 
 				.catch(err => res.status(err.status).json({message: err.message}));

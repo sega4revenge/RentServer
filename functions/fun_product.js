@@ -301,10 +301,11 @@ exports.refreshcomment = (productid) =>
 			});
 	});
 //108.255696,15.977939  //1609.34 * 1
-exports.SearchMap = (lat,lng,distance,listCategory) =>
+exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 
 	new Promise((resolve, reject) => {
 		var regexCategory = [];
+		keySearch = new RegExp(keySearch.toLowerCase(), "i");
 		let arrCate = listCategory.split(" , ");
 		if(arrCate)
 		{
@@ -316,7 +317,7 @@ exports.SearchMap = (lat,lng,distance,listCategory) =>
 		}
 		console.log("arrCate = " +  regexCategory);
 
-		product.find( { location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1609.34  } },category: {$in: regexCategory}},{comment: 0})
+		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1609.34  } },category: {$in: regexCategory}},{comment: 0})
 			.populate({path: "user", select : "-listproduct"})
 			.then(products => {
 
