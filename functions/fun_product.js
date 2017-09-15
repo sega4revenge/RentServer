@@ -710,7 +710,7 @@ exports.edit_avatar = (userid, image) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"photoprofile": image}},
-			{safe: true, upsert: true, new: true},
+			{safe: true, upsert: true, new: true,select: "-listproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
