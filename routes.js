@@ -539,9 +539,11 @@ module.exports = router => {
 				if (err) console.log(err);
 				fun_product.edit_avatar(fields.userid, files.image.path.substring(8));
 
-			});
+			})
+				.then(result => res.status(result.status).json({uploaded: true, user: user}))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
 			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
-			res.status(200).json({uploaded: true, user: user})
 		});
 		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
 		// 	if (err) throw err;
