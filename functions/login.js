@@ -7,7 +7,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
     new Promise((resolve,reject) => {
  
-        user.find({email: email, select : "-listproduct"})
+        user.find({email: email})
 
         .then(users => {
  
