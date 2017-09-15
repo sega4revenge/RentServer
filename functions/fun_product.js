@@ -713,7 +713,7 @@ exports.edit_avatar = (userid, image) =>
 			{safe: true, upsert: true, new: true},
 			function (err, model) {
 				console.log(err);
-
+				console.log("model: "+model);
 			}
 		)
 
