@@ -707,9 +707,6 @@ exports.edit_avatar = (userid, image) =>
 
 	new Promise((resolve, reject) => {
 
-		console.log(productid);
-
-
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"photoprofile": image}},
