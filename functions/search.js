@@ -14,6 +14,8 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			for (var i = 0; i < arrLoca.length; i++) {
 				regexLocation[i] = new RegExp(arrLoca[i].toLowerCase(), "i");
 			}
+		}else{
+			regexLocation.push(location);
 		}
 		console.log("arrLoca = " +  regexLocation);
 		let arrCate = category.split(" , ");
@@ -22,6 +24,8 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			for (var i = 0; i < arrCate.length; i++) {
 				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
 			}
+		}else{
+			regexCategory.push(category);
 		}
 		console.log("arrCate = " +  regexCategory);
 

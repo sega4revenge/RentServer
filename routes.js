@@ -64,6 +64,24 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({message: err.message}));
 
 	});
+	router.post('/searchmap', (req, res) =>{
+		const lat = req.body.lat;
+		const lng = req.body.lng;
+		const distance = req.body.distance;
+		const listCategory = req.body.category;
+		console.log(lat,lng,distance,listCategory);
+
+		if(!lat || !lng)
+		{
+			res.status(400).json({message: 'Your Location Not Found!'});
+		}else{
+			fun_product.SearchMap(lat,lng,distance,listCategory)
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+
+	});
 	router.post('/productdetail', (req, res) => {
 		const productid = req.body.productid;
 		const userid = req.body.userid;
