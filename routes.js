@@ -525,7 +525,7 @@ module.exports = router => {
 
 	});
 	router.post('/changeavatar', function (req, res) {
-		const oldava = req.params.oldavatar;
+		const oldava = req.body.oldavatar;
 		console.log(oldava);
 		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
 		// 	if (err) throw err;
