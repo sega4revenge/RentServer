@@ -524,6 +524,15 @@ module.exports = router => {
 				});*/
 
 	});
+	router.post('/changeavatar', function (req, res) {
+		const oldava = req.params.oldavatar;
+		console.log(oldava);
+		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
+		// 	if (err) throw err;
+		// 	console.log('successfully deleted /image/' + arrImgDel[i]);
+		// });
+		// uploadMedia(req, res)
+	});
 	router.post('/users/:id/password', (req, res) => {
 
 		const email = req.params.id;
