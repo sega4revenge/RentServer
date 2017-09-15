@@ -8,6 +8,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 	new Promise((resolve,reject) => {
 		var regexLocation = [];
 		var regexCategory = [];
+		keySearch = new RegExp(keySearch.toLowerCase(), "i");
 		let arrLoca = location.split(" , ");
 		if(arrLoca)
 		{
