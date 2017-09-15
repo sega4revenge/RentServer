@@ -715,6 +715,5 @@ exports.edit_avatar = (userid, image) =>
 				console.log(err);
 			}
 		)
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});

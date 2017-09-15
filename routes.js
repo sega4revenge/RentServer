@@ -538,7 +538,6 @@ module.exports = router => {
 				if (err) console.log(err);
 				fun_product.edit_avatar(fields.userid, files.image.path.substring(8));
 
-				console.log('successfully deleted');
 			});
 			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
 			res.status(200).json({uploaded: true, name: fields.user})
