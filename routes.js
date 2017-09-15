@@ -531,7 +531,8 @@ module.exports = router => {
 		form.uploadDir = uploadDir;
 		form.parse(req, (err, fields, files) => {
 			if (err) return res.status(500).json({error: err});
-			// console.log("image: "+files.image.path.substring(8));
+			console.log("image: "+files.image.path.substring(8));
+			console.log("image: "+files.image.path);
 			// console.log("oldava: "+fields.oldavatar);
 			// console.log("image: "+fields.userid);
 			fs.unlink(uploadDir + fields.oldavatar, (err) => {
