@@ -715,18 +715,6 @@ exports.edit_avatar = (userid, image) =>
 				console.log(err);
 			}
 		)
-			.then(users => {
-
-				if (users.length === 0) {
-
-					reject({status: 404, message: "User Not Found !"});
-
-				} else {
-
-					return users[0];
-
-				}
-			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
