@@ -32,8 +32,8 @@ module.exports = io => {
 			usernames[username] = socket.id;
 			// echo to client they've connected
 			socket.emit('login', {
-				numUsers: 9
-				
+				username: username
+
 			});
 			socket.emit('updatechat', 'SERVER', 'you have connected');
 			// echo to client their username
