@@ -64,7 +64,7 @@ exports.editInfoUser = (userid,newname) =>
 			{$set: {"name": newname}},
 			{safe: true, upsert: true, new: true,select: "-listproduct"},
 			function (err, model) {
-				reject({status: 404, message: "User Not Found !"});
+				console.log(err);
 				resolve({status: 200, user: model});
 			}
 		)
