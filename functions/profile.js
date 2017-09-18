@@ -68,7 +68,4 @@ exports.editInfoUser = (userid,newname) =>
 				resolve({status: 200, user: model});
 			}
 		)
-
-			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
-
 	});
