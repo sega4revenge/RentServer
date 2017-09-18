@@ -52,3 +52,31 @@ exports.getFullProfile = userid =>
 			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
 
 	});
+exports.editInfoUser = (userid,newname) =>
+
+	new Promise((resolve,reject) => {
+
+		let ObjectId;
+		ObjectId = require('mongodb').ObjectID;
+
+		user.findByIdAndUpdate(
+			userid,
+			{$set: {"name": newname}},
+			{safe: true, upsert: true, new: true,select: "-listproduct"},
+			function (err, model) {
+				console.log(err);
+				resolve({status: 200, user: model});
+			}
+		)
+
+
+			.then(users => {
+
+					resolve({status: 201, user : users[0]});
+
+				}
+
+			)
+			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+
+	});
