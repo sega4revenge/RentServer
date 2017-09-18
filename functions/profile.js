@@ -8,7 +8,7 @@ exports.getProfile = userid =>
         let ObjectId;
         ObjectId = require('mongodb').ObjectID;
 
-        user.find({ _id: ObjectId(userid)})
+        user.find({ _id: ObjectId(userid)},{listproduct: 0})
             .exec(function (err, post) {
                 if(err) throw err;
                 console.log(post);
