@@ -22,7 +22,7 @@ exports.allproduct = (type, page,category) =>
 			if(category === 999 )
 			{
 				product.find({}, {comment: 0}).skip(start).limit(limit)
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -44,7 +44,7 @@ exports.allproduct = (type, page,category) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
 				product.find({category: category}, {comment: 0}).skip(start).limit(limit)
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -69,7 +69,7 @@ exports.allproduct = (type, page,category) =>
 		} else {
 			if(category === 999 ) {
 				product.find({}, {comment: 0})
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -91,7 +91,7 @@ exports.allproduct = (type, page,category) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
 				product.find({category: category}, {comment: 0})
-					.populate("user")
+					.populate({path : "user", select : "-listproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -299,6 +299,42 @@ exports.refreshcomment = (productid) =>
 
 				}
 			});
+	});
+//108.255696,15.977939  //1609.34 * 1
+exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
+
+	new Promise((resolve, reject) => {
+		var regexCategory = [];
+		keySearch = new RegExp(keySearch.toLowerCase(), "i");
+		let arrCate = listCategory.split(" , ");
+		if(arrCate)
+		{
+			for (var i = 0; i < arrCate.length; i++) {
+				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
+			}
+		}else{
+			regexCategory.push(listCategory);
+		}
+		console.log("arrCate = " +  regexCategory);
+
+		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1000  } },category: {$in: regexCategory}},{comment: 0})
+			.populate({path: "user", select : "-listproduct"})
+			.then(products => {
+
+				if (products.length === 0) {
+					reject({status: 404, message: "Product Not Found !"});
+
+				} else {
+					console.log("products = " + products);
+					return products;
+
+				}
+			})
+			.then(product => {
+				resolve({status: 200, listproduct: product});
+
+			})
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 	});
 
 exports.deleteProduct = (productid) =>
@@ -564,6 +600,7 @@ exports.productdetail = (productid, userid) =>
 		product.find({_id: ObjectId(productid)})
 			.populate({
 				path: "user comment",
+				select: "-listproduct",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 				populate: {path: "user", select: "_id name photoprofile"}
@@ -664,5 +701,20 @@ exports.uploadproduct = (productid, image) =>
 				product.save();
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+exports.edit_avatar = (userid, image) =>
+
+	new Promise((resolve, reject) => {
+
+		user.findByIdAndUpdate(
+			userid,
+			{$set: {"photoprofile": image}},
+			{safe: true, upsert: true, new: true,select: "-listproduct"},
+			function (err, model) {
+				console.log(err);
+				resolve({status: 200, user: model});
+			}
+		)
 
 	});

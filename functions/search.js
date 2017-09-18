@@ -3,17 +3,20 @@
 const product = new require('../models/product');
 const bcrypt = new require('bcryptjs');
 
-exports.mSearch2 = (location, category,typeArrange) =>
+exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 
 	new Promise((resolve,reject) => {
 		var regexLocation = [];
 		var regexCategory = [];
+		keySearch = new RegExp(keySearch.toLowerCase(), "i");
 		let arrLoca = location.split(" , ");
 		if(arrLoca)
 		{
 			for (var i = 0; i < arrLoca.length; i++) {
 				regexLocation[i] = new RegExp(arrLoca[i].toLowerCase(), "i");
 			}
+		}else{
+			regexLocation.push(location);
 		}
 		console.log("arrLoca = " +  regexLocation);
 		let arrCate = category.split(" , ");
@@ -22,14 +25,15 @@ exports.mSearch2 = (location, category,typeArrange) =>
 			for (var i = 0; i < arrCate.length; i++) {
 				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
 			}
+		}else{
+			regexCategory.push(category);
 		}
 		console.log("arrCate = " +  regexCategory);
-		console.log("typeArrange = " +  typeArrange);
+
 		if(typeArrange === 0)
 		{
-			console.log("products = " +  "ssssssssss");
-			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({view: -1})
-
+			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({view: -1})
+				.populate({path: "user", select : "-listproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -49,8 +53,8 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		}
 		if(typeArrange=== 1)
 		{
-			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({created_at: -1})
-
+			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({created_at: -1})
+				.populate({path: "user", select : "-listproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -70,8 +74,8 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		}
 		if(typeArrange=== 2)
 		{
-			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({price: 1})
-
+			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: 1})
+				.populate({path: "user", select : "-listproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -91,8 +95,8 @@ exports.mSearch2 = (location, category,typeArrange) =>
 		}
 		if(typeArrange=== 3)
 		{
-			product.find( {"location.address": {$in: regexLocation} , "category": {$in: regexCategory}}).sort({price: -1})
-
+			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: -1})
+				.populate({path: "user", select : "-listproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {

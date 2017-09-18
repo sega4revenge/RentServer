@@ -51,17 +51,36 @@ module.exports = router => {
 	console.log("typeArrange = " + typeArrange);*/
 	router.post('/search', (req, res) => {
 		var keySearch = req.body.keysearch;
-		var listaddress = req.body.listaddress;
-		var listcategory = req.body.listcategory;
+		var listaddress = req.body.location;
+		var listcategory = req.body.category;
 		var typeArrange = req.body.typeArrange;
 
 		console.log(listaddress,listcategory,typeArrange);
 
-		search.mSearch2(listaddress,listcategory,typeArrange)
+		search.mSearch2(keySearch,listaddress,listcategory,typeArrange)
 		//search.mSearch1(keysearch,location, category,typeArrange)
 			.then(result => res.json(result))
 
 			.catch(err => res.status(err.status).json({message: err.message}));
+
+	});
+	router.post('/searchmap', (req, res) =>{
+		const lat = req.body.lat;
+		var keySearch = req.body.keysearch;
+		const lng = req.body.lng;
+		const distance = req.body.distance;
+		const listCategory = req.body.category;
+		console.log(lat,lng,distance,listCategory);
+
+		if(!lat || !lng)
+		{
+			res.status(400).json({message: 'Your Location Not Found!'});
+		}else{
+			fun_product.SearchMap(keySearch,lat,lng,distance,listCategory)
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
 
 	});
 	router.post('/productdetail', (req, res) => {
@@ -434,6 +453,24 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
+	router.post('/editinfouser', (req, res) => {
+		const userid = req.body.userid;
+		const newname = req.body.newname;
+
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			profile.editInfoUser(userid,newname)
+
+
+				.then(result => res.status(result.status).json({user: result.user }))
+
+				.catch(err => res.status(err.status).json({ message: err.message }));
+		}
+	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
 		/*		const deviceId = req.body.deviceId;*/
@@ -504,6 +541,33 @@ module.exports = router => {
 					res.status(200).json({ message: 'Success !' });
 				});*/
 
+	});
+	router.post('/changeavatar', function (req, res) {
+		const form = new formidable.IncomingForm();
+		form.multiples = true;
+		form.keepExtensions = true;
+		form.uploadDir = uploadDir;
+		form.parse(req, (err, fields, files) => {
+			if (err) return res.status(500).json({error: err});
+			// console.log("image: "+files.image.path.substring(8));
+			// console.log("image: "+files.image.path.substring(8));
+			// console.log("oldava: "+fields.oldavatar);
+			// console.log("image: "+fields.userid);
+			fs.unlink(uploadDir + fields.oldavatar, (err) => {
+				if (err) console.log(err);
+				fun_product.edit_avatar(fields.userid, files.image.path.substring(8))
+				.then(result => res.status(result.status).json({status: result.status ,user: result.user}))
+
+
+			});
+			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
+			// res.status(200).json({uploaded: true})
+		});
+		// fs.unlink(uploadDir + arrImgDel[i], (err) => {
+		// 	if (err) throw err;
+		// 	console.log('successfully deleted /image/' + arrImgDel[i]);
+		// });
+		// uploadMedia(req, res)
 	});
 	router.post('/users/:id/password', (req, res) => {
 

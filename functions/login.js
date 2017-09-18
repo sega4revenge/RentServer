@@ -7,7 +7,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
     new Promise((resolve,reject) => {
  
-        user.find({email: email})
+        user.find({email: email},{listproduct: 0})
 
         .then(users => {
  
@@ -29,7 +29,6 @@ exports.loginUser = (email, password,tokenfirebase) =>
             if (bcrypt.compareSync(password, hashed_password) && user.status_code === "1") {
                 user.tokenfirebase = tokenfirebase;
                 user.save();
-                console.log("sdfghfh");
                 resolve({ status: 200, user : user });
             } else {
  
