@@ -457,7 +457,7 @@ module.exports = router => {
 		const userid = req.body.userid;
 		const newname = req.body.newname;
 
-		if (!user) {
+		if (!userid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
