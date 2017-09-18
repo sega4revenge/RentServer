@@ -466,7 +466,7 @@ module.exports = router => {
 			profile.editInfoUser(userid,newname)
 
 
-				.then(result => res.status(result.status).json({ message: result.message, user: result.user }))
+				.then(result => res.status(result.status).json({user: result.user }))
 
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}

@@ -69,14 +69,6 @@ exports.editInfoUser = (userid,newname) =>
 			}
 		)
 
-
-			.then(users => {
-
-					resolve({status: 201, user : users[0]});
-
-				}
-
-			)
 			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
 
 	});
