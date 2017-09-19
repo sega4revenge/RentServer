@@ -126,7 +126,11 @@ exports.allproductsaved = (type, page, userid) =>
 
 
 				user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
-					.populate("listsavedproduct user")
+					.populate({
+						path: "listsavedproduct user",
+						// Get friends of friends - populate the 'friends' array for every friend
+						populate: {path : "user", select : "-listproduct -listsavedproduct"}
+					})
 					.then(products => {
 
 						if (products.length === 0) {
