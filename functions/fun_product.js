@@ -648,12 +648,13 @@ exports.productdetail = (productid, userid) =>
 						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, 'id', function(err, save) {
 							if (err) isSaved = false;
 							isSaved = !!save;
-							console.log(isSaved);
+							console.log("trang thai " + isSaved);
 							product.findByIdAndUpdate(
 								productid,
 								{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
 								{safe: true, upsert: true, new: true},
 								function (err, model) {
+									console.log(products[0].statussave + " fhj");
 									resolve({status: 200, product: products[0]});
 								}
 							);
