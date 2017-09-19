@@ -252,7 +252,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 exports.saveproduct = (userid, productid, type) =>
 
 	new Promise((resolve, reject) => {
-	if(type === 0){
+	if(type === "0"){
 		user.findByIdAndUpdate(
 			userid,
 			{$push: {"listproduct": productid}},
