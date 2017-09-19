@@ -140,6 +140,10 @@ exports.allproductsaved = (type, page, userid) =>
 						}
 					})
 
+					.then(product => {
+						resolve({status: 200,  product});
+
+					})
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
