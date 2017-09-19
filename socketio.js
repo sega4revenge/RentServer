@@ -4,6 +4,7 @@
 
 module.exports = io => {
 	const usernames = {};
+	let numUsers =0;
 
 	function check_key(v)
 	{
@@ -28,6 +29,8 @@ module.exports = io => {
 			// we store the username in the socket session for this client
 			socket.username = username;
 			console.log(username + " đã online");
+
+			++numUsers;
 			// add the client's username to the global list
 			usernames[username] = socket.id;
 			// echo to client they've connected
@@ -39,7 +42,10 @@ module.exports = io => {
 			// echo to client their username
 			socket.emit('store_username', username);
 			// echo globally (all clients) that a person has connected
-			socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected: ' + socket.id);
+			socket.broadcast.emit('userconnect', {
+				username: socket.username,
+				numUsers: numUsers
+			});
 			// update the list of users in chat, client-side
 			io.sockets.emit('updateusers', usernames);
 		});
