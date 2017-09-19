@@ -126,7 +126,7 @@ exports.allproductsaved = (type, page, userid) =>
 
 
 				user.findById(userid, {listsavedproduct: 1}).skip(start).limit(limit)
-					.populate({path : "user listsavedproduct"})
+					.populate({path : "listsavedproduct"},{select : "-user -id"})
 					.then(products => {
 
 						if (products.length === 0) {
