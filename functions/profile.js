@@ -33,7 +33,7 @@ exports.getFullProfile = userid =>
 		let ObjectId;
 		ObjectId = require('mongodb').ObjectID;
 
-		user.find({ _id: ObjectId(userid)})
+		user.find({ _id: ObjectId(userid)},{listsavedproduct: 0})
 			.populate({
 				path: "listproduct",
 				select: "-user -comment",
