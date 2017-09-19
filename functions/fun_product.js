@@ -626,7 +626,7 @@ exports.productdetail = (productid, userid) =>
 
 	new Promise((resolve, reject) => {
 
-
+		let isSaved;
 		product.find({_id: ObjectId(productid)})
 			.populate({
 				path: "user comment",
@@ -645,9 +645,14 @@ exports.productdetail = (productid, userid) =>
 					if (products[0].user._id.toString() === userid) {
 					}
 					else {
+						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, 'id', function(err, save) {
+							if (err) isSaved = false;
+							isSaved = !!save;
+							console.log(isSaved)
+						});
 						product.findByIdAndUpdate(
 							productid,
-							{$set: {"view": products[0].view + 1}},
+							{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);

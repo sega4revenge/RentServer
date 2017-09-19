@@ -15,7 +15,6 @@ const productSchema = mongoose.Schema({
     type                : String,
     time                : String,
     created_at          : String,
-	statussave			: String,
 	location: {
 		type: { type: String },
         address : {type : String },
@@ -23,7 +22,8 @@ const productSchema = mongoose.Schema({
 	},
     view                : Number,
     images              : [String],
-	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}]
+	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}],
+	statussave			: JSON
 });
 
 mongoose.Promise = global.Promise;
