@@ -22,7 +22,7 @@ exports.allproduct = (type, page,category) =>
 			if(category === 999 )
 			{
 				product.find({}, {comment: 0}).skip(start).limit(limit)
-					.populate({path : "user", select : "-listproduct"})
+					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -44,7 +44,7 @@ exports.allproduct = (type, page,category) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
 				product.find({category: category}, {comment: 0}).skip(start).limit(limit)
-					.populate({path : "user", select : "-listproduct"})
+					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -69,7 +69,7 @@ exports.allproduct = (type, page,category) =>
 		} else {
 			if(category === 999 ) {
 				product.find({}, {comment: 0})
-					.populate({path : "user", select : "-listproduct"})
+					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -91,7 +91,7 @@ exports.allproduct = (type, page,category) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
 				product.find({category: category}, {comment: 0})
-					.populate({path : "user", select : "-listproduct"})
+					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -348,7 +348,7 @@ exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 		console.log("arrCate = " +  regexCategory);
 
 		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1000  } },category: {$in: regexCategory}},{comment: 0})
-			.populate({path: "user", select : "-listproduct"})
+			.populate({path: "user", select : "-listproduct -listsavedproduct"})
 			.then(products => {
 
 				if (products.length === 0) {
@@ -630,7 +630,7 @@ exports.productdetail = (productid, userid) =>
 		product.find({_id: ObjectId(productid)})
 			.populate({
 				path: "user comment",
-				select: "-listproduct",
+				select: "-listproduct -listsavedproduct",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 				populate: {path: "user", select: "_id name photoprofile"}
@@ -734,7 +734,7 @@ exports.edit_avatar = (userid, image) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"photoprofile": image}},
-			{safe: true, upsert: true, new: true,select: "-listproduct"},
+			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
