@@ -642,9 +642,7 @@ exports.productdetail = (productid, userid) =>
 					reject({status: 404, message: "Product Not Found !"});
 
 				} else {
-					if (products[0].user._id.toString() === userid) {
-					}
-					else {
+					if (products[0].user._id.toString() !== userid) {
 						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, function(err, save) {
 							if (err) isSaved = false;
 							isSaved = !!save;
@@ -654,6 +652,7 @@ exports.productdetail = (productid, userid) =>
 							products[0].save();
 						});
 					}
+
 					resolve({status: 200, product: products[0]});
 				}
 
