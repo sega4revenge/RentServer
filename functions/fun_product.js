@@ -249,6 +249,38 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				}
 			});
 	});
+exports.saveproduct = (userid, productid, type) =>
+
+	new Promise((resolve, reject) => {
+	if(type === 1){
+		user.findByIdAndUpdate(
+			userid,
+			{$push: {"listproduct": productid}},
+			{safe: true, upsert: true, new: true},
+			function (err, model) {
+				console.log(err);
+
+				resolve({status: 201, message: "product save Sucessfully !", user: model});
+
+			}
+		);
+	}
+	else {
+		user.findByIdAndUpdate(
+			userid,
+			{$pull: {"listproduct": productid}},
+			{safe: true, upsert: true, new: true},
+			function (err, model) {
+				console.log(err);
+
+				resolve({status: 201, message: "product unsave Sucessfully !", user: model});
+
+			}
+		);
+	}
+
+
+	});
 exports.push_messtotopic = (productid, msg, userid) =>
 
 	new Promise((resolve, reject) => {

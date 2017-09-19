@@ -28,8 +28,8 @@ const userSchema = mongoose.Schema({
         photoprofile    :String,
         name : String
     },
-    listproduct: [{type: Schema.Types.ObjectId, ref: 'product'}]
-
+    listproduct: [{type: Schema.Types.ObjectId, ref: 'product'}],
+	listsavedproduct: [{type: Schema.Types.ObjectId, ref: 'product'}]
 
 });
 

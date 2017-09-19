@@ -394,6 +394,27 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/saveproduct', (req, res) => {
+		const userid = req.body.userid;
+		const productid = req.body.productid;
+		const status = req.body.status;
+
+
+		if (!userid || !productid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.saveproduct(userid, productid, type)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message, user: result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/addcomment', (req, res) => {
 		const userid = req.body.userid;
 		const productid = req.body.productid;
