@@ -654,8 +654,8 @@ exports.productdetail = (productid, userid) =>
 							products[0].save();
 						});
 					}
+					resolve({status: 200, product: products[0]});
 				}
-				resolve({status: 200, product: products[0]});
 
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
