@@ -278,8 +278,6 @@ exports.saveproduct = (userid, productid, type) =>
 			}
 		);
 	}
-
-
 	});
 exports.push_messtotopic = (productid, msg, userid) =>
 
