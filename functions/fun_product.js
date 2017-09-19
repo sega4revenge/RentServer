@@ -654,13 +654,13 @@ exports.productdetail = (productid, userid) =>
 								{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
 								{safe: true, upsert: true, new: true},
 								function (err, model) {
-									console.log(err + "loi");
+									return products[0];
 								}
 							);
 						});
 
 					}
-					return products[0];
+
 
 				}
 			})
