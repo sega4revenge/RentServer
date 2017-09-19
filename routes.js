@@ -398,8 +398,7 @@ module.exports = router => {
 		const userid = req.body.userid;
 		const productid = req.body.productid;
 		const type = req.body.type;
-
-
+		console.log("saveproduct: "+userid+ " " + productid + " " +type);
 		if (!userid || !productid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
