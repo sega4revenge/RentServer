@@ -126,7 +126,7 @@ exports.allproductsaved = (type, page, userid) =>
 
 
 				user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
-					.populate("listsavedproduct user","-user")
+					.populate("listsavedproduct user")
 					.then(products => {
 
 						if (products.length === 0) {
