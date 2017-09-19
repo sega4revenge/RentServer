@@ -141,7 +141,7 @@ exports.allproductsaved = (type, page, userid) =>
 					})
 
 					.then(product => {
-						resolve({status: 200,  product});
+						resolve({status: 200, product: product});
 
 					})
 

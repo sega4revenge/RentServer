@@ -227,7 +227,7 @@ module.exports = router => {
 			fun_product.allproductsaved(type,page,userid)
 			// .then(result => res.json(result))
 
-				.then(result => res.json(result))
+				.then(result => res.json({user: result.product}))
 
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
