@@ -654,7 +654,7 @@ exports.productdetail = (productid, userid) =>
 								{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
 								{safe: true, upsert: true, new: true},
 								function (err, model) {
-									return products[0];
+									resolve({status: 200, product: product[0]});
 								}
 							);
 						});
@@ -664,14 +664,6 @@ exports.productdetail = (productid, userid) =>
 
 				}
 			})
-
-			.then(product => {
-
-
-				resolve({status: 200, product: product});
-
-			})
-
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
