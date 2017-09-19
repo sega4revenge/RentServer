@@ -645,19 +645,14 @@ exports.productdetail = (productid, userid) =>
 					if (products[0].user._id.toString() === userid) {
 					}
 					else {
-						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, 'id', function(err, save) {
+						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, function(err, save) {
 							if (err) isSaved = false;
 							isSaved = !!save;
 							console.log("trang thai " + isSaved);
-							product.findByIdAndUpdate(
-								productid,
-								{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
-								{safe: true, upsert: true, new: true},
-								function (err, model) {
-									console.log(products[0].statussave + " fhj");
-									resolve({status: 200, product: products[0]});
-								}
-							);
+							products[0].view = products[0].view +1 ;
+							products[0].statussave = isSaved;
+							products[0].save();
+							resolve({status: 200, product: products[0]});
 						});
 
 					}
