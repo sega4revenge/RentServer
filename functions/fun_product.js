@@ -116,6 +116,39 @@ exports.allproduct = (type, page,category) =>
 
 
 	});
+exports.allproductsaved = (type, page, userid) =>
+	new Promise((resolve, reject) => {
+
+		const limit = 10;
+		if(page.is)
+			if(page<1) page = 1;
+		const start =  (limit * page) - limit;
+
+
+				user.findById(userid, {listsavedproduct: 1}).skip(start).limit(limit)
+					.then(products => {
+
+						if (products.length === 0) {
+
+							reject({status: 404, message: "User Not Found !"});
+
+						} else {
+
+							return products;
+
+						}
+					})
+
+					.then(product => {
+						resolve({status: 200, listproduct: product});
+
+					})
+
+					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+
+
+	});
 exports.allproductbyuser = (userid) =>
 
 	new Promise((resolve, reject) => {

@@ -211,6 +211,29 @@ module.exports = router => {
 		}
 
 	});
+	router.post('/allproductsaved', (req, res) => {
+
+		const userid = req.body.userid;
+		const type = req.body.type;
+		const page = req.body.page;
+		// const password = req.body.password;
+		// const tokenfirebase = req.body.tokenfirebase;
+		console.log(category,type,page);
+		if (!type) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.allproductsaved(type,page,userid)
+			// .then(result => res.json(result))
+
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+
+	});
 	router.post('/users', (req, res) => {
 		const id = req.body.token;
 		const token = req.body.token;
