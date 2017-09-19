@@ -255,7 +255,7 @@ exports.saveproduct = (userid, productid, type) =>
 	if(type === "0"){
 		user.findByIdAndUpdate(
 			userid,
-			{$push: {"listproduct": productid}},
+			{$push: {"listsavedproduct": productid}},
 			{safe: true, upsert: true, new: true},
 			function (err, model) {
 				console.log(err);
@@ -268,7 +268,7 @@ exports.saveproduct = (userid, productid, type) =>
 	else {
 		user.findByIdAndUpdate(
 			userid,
-			{$pull: {"listproduct": productid}},
+			{$pull: {"listsavedproduct": productid}},
 			{safe: true, upsert: true, new: true},
 			function (err, model) {
 				console.log(err);
