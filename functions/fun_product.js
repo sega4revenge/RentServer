@@ -260,7 +260,7 @@ exports.saveproduct = (userid, productid, type) =>
 			function (err, model) {
 				console.log(err);
 
-				resolve({status: 201, message: "product save Sucessfully !", user: model});
+				resolve({status: 201, message: "product save Sucessfully !"});
 
 			}
 		);

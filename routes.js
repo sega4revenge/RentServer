@@ -408,7 +408,7 @@ module.exports = router => {
 			fun_product.saveproduct(userid, productid, type)
 
 				.then(result => {
-					res.status(result.status).json({message: result.message, user: result.user})
+					res.status(result.status).json({message: result.message})
 				})
 
 				.catch(err => res.status(err.status).json({message: err.message}));
