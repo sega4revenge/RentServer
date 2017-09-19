@@ -654,7 +654,7 @@ exports.productdetail = (productid, userid) =>
 								{$set: {"view": products[0].view + 1,"statussave" : isSaved}},
 								{safe: true, upsert: true, new: true},
 								function (err, model) {
-									resolve({status: 200, product: product[0]});
+									resolve({status: 200, product: products[0]});
 								}
 							);
 						});
