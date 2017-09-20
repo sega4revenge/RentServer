@@ -22,8 +22,7 @@ const productSchema = mongoose.Schema({
 	},
     view                : Number,
     images              : [String],
-	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}],
-	statussave			: Boolean
+	comment             : [{type: Schema.Types.ObjectId, ref: 'comment'}]
 });
 
 mongoose.Promise = global.Promise;
