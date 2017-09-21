@@ -412,8 +412,10 @@ exports.deleteProduct = (productid) =>
 		comment.deleteMany({product: ObjectId(productid)})
 
 			.then((comment) => {
+			console.log("toi day roi 1");
 				user.findAndModify({}, {$pull: {listproduct: productid}})
 					.then((user) => {
+						console.log("toi day roi 2");
 						product.findByIdAndRemove(productid, function (err, offer) {
 							if (err) {
 								throw err;
@@ -421,11 +423,12 @@ exports.deleteProduct = (productid) =>
 							resolve({status: 200, message: "IS !"});
 						});
 					})
+					.catch(err => reject({status: 500, message: "Internal Server Error 1!"}));
 
 
 
 			})
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			.catch(err => reject({status: 500, message: "Internal Server Error 2!"}));
 	});
 exports.mSaveProduct = (userid,productid) =>
 	new Promise((resolve, reject) =>{
