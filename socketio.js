@@ -24,9 +24,9 @@ module.exports = io => {
 			console.log(userFrom,userTo);
 			console.log("qqqqqq");
 			fun_product.checkRoomChat(userFrom,userTo)
-				.then(result => res.json(result))
+				.then(result => result)
 
-				.catch(err => res.status(err.status).json({message: err.message}));
+				.catch(err => {message: err.message});
 
 		});
 
