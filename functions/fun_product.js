@@ -7,6 +7,7 @@ const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
+const chat = new require("../models/chat_messager");
 exports.allproduct = (type, page,category) =>
 	new Promise((resolve, reject) => {
 		const d = new Date();
@@ -163,6 +164,24 @@ exports.allproductbyuser = (userid) =>
 			.then(product => {
 				resolve({listproduct: product});
 
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+exports.checkRoomChat = (userFrom,userTo) =>
+
+	new Promise((resolve, reject) => {
+		let cod = userFrom+" - "+userTo;
+		let cdo = userTo+" - "+userFrom;
+		chat.find({$and: [ {roomid: cod} , {roomid: cdo} ]})
+			.then(mess => {
+				if(mess.length>0)
+				{
+					resolve({listmess: mess.messages});
+				}else{
+					resolve({listmess: "eo cooo"});
+				}
 			})
 
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));

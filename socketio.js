@@ -18,19 +18,29 @@ module.exports = io => {
 		return val;
 	}
 	io.on('connection', function(socket) {
-		socket.on('sendchat', function (data) {
-			// we tell the client to execute 'updatechat' with 2 parameters
-			io.sockets.emit('updatechat', socket.username, data);
+
+		socket.on('getData', function (userFrom,userTo,message) {
+			//check room  co ton cmn tai k
+			fun_product.checkRoomChat(userFrom,userTo)
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+
 		});
 
+
+
+		// socket.on('sendchat', function (data) {
+		// 	// we tell the client to execute 'updatechat' with 2 parameters
+		// 	io.sockets.emit('updatechat', socket.username, data);
+		// });
+
 		// when the client emits 'adduser', this listens and executes
-		socket.on('add user', function(username,taolao,bidao){
+		socket.on('add user', function(username){
 
 			// we store the username in the socket session for this client
 			socket.username = username;
 			console.log(username + " đã online");
-			console.log(taolao + " đã taolao");
-			console.log(bidao + " đã bidao");
 
 			++numUsers;
 			// add the client's username to the global list
