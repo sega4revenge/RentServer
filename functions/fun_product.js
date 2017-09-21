@@ -169,9 +169,13 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.checkRoomChat = (userFrom,userTo) =>
+exports.checkRoomChat = (userFrom,userTo) =>{
+	let cod = userFrom+" - "+userTo;
+	let cdo = userTo+" - "+userFrom;
+	console.log(cod,cdo);
+}
 
-	new Promise((resolve, reject) => {
+/*	new Promise((resolve, reject) => {
 		let cod = userFrom+" - "+userTo;
 		let cdo = userTo+" - "+userFrom;
 		console.log(cod,cdo);
@@ -190,7 +194,7 @@ exports.checkRoomChat = (userFrom,userTo) =>
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
-	});
+	});*/
 
 exports.EditProduct = (productid, productname, price, time, number, category, address, description, timestamp, listitem) =>
 
