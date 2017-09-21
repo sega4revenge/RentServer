@@ -179,9 +179,12 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 				throw err;
 				return false;
 			}else{
+				console.log("2222");
 				if(result.length === 0){
+					console.log("222233"+result);
 					return result;
 				}else{
+					console.log("2224444");
 					return null;
 				}
 			}
