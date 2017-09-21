@@ -174,6 +174,7 @@ exports.checkRoomChat = (userFrom,userTo) =>
 	new Promise((resolve, reject) => {
 		let cod = userFrom+" - "+userTo;
 		let cdo = userTo+" - "+userFrom;
+		console.log(cod,cdo);
 		chat.find({$and: [ {roomid: cod} , {roomid: cdo} ]})
 			.then(mess => {
 				if(mess.length>0)
