@@ -418,9 +418,9 @@ exports.deleteProduct = (productid) =>
 						console.log("toi day roi 2");
 						product.findByIdAndRemove(productid, function (err, offer) {
 							if (err) {
-								throw err;
+								console.log(err);
+								resolve({status: 200, message: "IS !"});
 							}
-							resolve({status: 200, message: "IS !"});
 						});
 					})
 					.catch(err => reject({status: 500, message: "Internal Server Error 1!"}));
