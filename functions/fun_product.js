@@ -173,7 +173,21 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 	let cod = userFrom+" - "+userTo;
 	let cdo = userTo+" - "+userFrom;
 	console.log(cod,cdo);
-	return cod;
+	chat.find({$and: [ {roomid: cod} , {roomid: cdo} ]} ,
+		function(err, result) {
+			if (err){
+				throw err;
+				return false;
+			}else{
+				if(result.length === 0){
+					return result;
+				}else{
+					return null;
+				}
+			}
+		});
+
+
 }
 
 /*	new Promise((resolve, reject) => {
