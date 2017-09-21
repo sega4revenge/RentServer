@@ -413,7 +413,7 @@ exports.deleteProduct = (productid) =>
 
 			.then((comment) => {
 			console.log("toi day roi 1");
-				user.findAndModify({}, {$pull: {listproduct: productid}})
+				user.update(query, {$pull: {listproduct: productid}})
 					.then((user) => {
 						console.log("toi day roi 2");
 						product.findByIdAndRemove(productid, function (err, offer) {
