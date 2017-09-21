@@ -1,6 +1,6 @@
 'use strict';
 
-
+const fun_product = require('./functions/fun_product');
 
 module.exports = io => {
 	const usernames = {};
@@ -24,11 +24,13 @@ module.exports = io => {
 		});
 
 		// when the client emits 'adduser', this listens and executes
-		socket.on('add user', function(username){
+		socket.on('add user', function(username,taolao,bidao){
 
 			// we store the username in the socket session for this client
 			socket.username = username;
 			console.log(username + " đã online");
+			console.log(taolao + " đã taolao");
+			console.log(bidao + " đã bidao");
 
 			++numUsers;
 			// add the client's username to the global list
