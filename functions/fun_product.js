@@ -185,7 +185,7 @@ exports.checkRoomChat = (userFrom,userTo) =>
 				}
 			})
 			.then(mess => {
-				resolve({status: 200, message: mess});
+				resolve({status: 200, message: "111111111"});
 
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
