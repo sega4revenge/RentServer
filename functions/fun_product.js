@@ -173,6 +173,7 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 	let cod = userFrom+" - "+userTo;
 	let cdo = userTo+" - "+userFrom;
 	console.log(cod,cdo);
+	return cod;
 }
 
 /*	new Promise((resolve, reject) => {

@@ -23,10 +23,8 @@ module.exports = io => {
 			//check room  co ton cmn tai k
 			console.log(userFrom,userTo);
 
-			fun_product.checkRoomChat(userFrom,userTo)
-				.then(result => console.log(result))
-
-				.catch(err => {message: err.message});
+		var ss=	fun_product.checkRoomChat(userFrom,userTo)
+			console.log(ss);
 
 		});
 
