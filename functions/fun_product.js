@@ -412,12 +412,17 @@ exports.deleteProduct = (productid) =>
 		comment.deleteMany({product: ObjectId(productid)})
 
 			.then((comment) => {
-				product.findByIdAndRemove(productid, function (err, offer) {
-					if (err) {
-						throw err;
-					}
-					resolve({status: 200, message: "IS !"});
-				});
+				user.findAndModify({}, {$pull: {listproduct: productid}})
+					.then((user) => {
+						product.findByIdAndRemove(productid, function (err, offer) {
+							if (err) {
+								throw err;
+							}
+							resolve({status: 200, message: "IS !"});
+						});
+					})
+
+
 
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
