@@ -177,14 +177,17 @@ exports.checkRoomChat = (userFrom,userTo) =>
 		console.log(cod,cdo);
 		chat.find({$and: [ {roomid: cod} , {roomid: cdo} ]})
 			.then(mess => {
-				if(mess.length>0)
+				if(mess.length === 0)
 				{
-					resolve({listmess: mess.messages});
-				}else{
 					reject({status: 404, message: "User Not Found !"});
+				}else{
+					return mess;
 				}
 			})
+			.then(mess => {
+				resolve({status: 200, mess: mess});
 
+			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
