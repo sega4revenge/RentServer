@@ -181,7 +181,7 @@ exports.checkRoomChat = (userFrom,userTo) =>
 				{
 					resolve({listmess: mess.messages});
 				}else{
-					resolve({listmess: "eo cooo"});
+					reject({status: 404, message: "User Not Found !"});
 				}
 			})
 
