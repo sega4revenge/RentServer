@@ -14,4 +14,4 @@ const chatSchema = mongoose.Schema({
 
 mongoose.Promise = global.Promise;
 
-module.exports = mongoose.model('chat', userSchema);
+module.exports = mongoose.model('chat', chatSchema);
