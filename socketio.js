@@ -22,9 +22,9 @@ module.exports = io => {
 		socket.on('getData', function (userFrom,userTo,message) {
 			//check room  co ton cmn tai k
 			console.log(userFrom,userTo);
-			console.log("qqqqqq");
+
 			fun_product.checkRoomChat(userFrom,userTo)
-				.then(result => result)
+				.then(result => console.log(result))
 
 				.catch(err => {message: err.message});
 
