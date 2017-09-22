@@ -309,23 +309,14 @@ module.exports = router => {
 		if(listitem != "0")
 		{
 			arrImgDel = listitem.split(" , ");
-			if(arrImgDel){
-				if (arrImgDel.length > 0) {
-					for (var i = 0; i <= (arrImgDel.length - 1); i++) {
-						fs.unlink(uploadDir + arrImgDel[i], (err) => {
-							if (err) throw err;
-							console.log('successfully deleted /image/');
-						});
-					}
+			if (arrImgDel.length > 0) {
+				for (var i = 0; i <= (arrImgDel.length - 1); i++) {
+					fs.unlink(uploadDir + arrImgDel[i], (err) => {
+						if (err) console.log(err);
+						console.log('successfully deleted /image/' + arrImgDel[i]);
+					});
 				}
 			}
-			else{
-				fs.unlink(uploadDir + arrImgDel, (err) => {
-					if (err) throw err;
-					console.log('successfully deleted /image/');
-				});
-			}
-
 		}
 		if (!productid) {
 			res.status(400).json({message: 'Invalid Request !'});
