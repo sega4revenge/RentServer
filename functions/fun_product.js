@@ -180,11 +180,13 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 		message : message,
 		created_at : timestamp
 	};
+	console.log("start...");
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
 		if (err){
 			throw err;
 			return null;
 		}else{
+			console.log("finsh...",userFrom,userTo,result.length);
 			if(result.length === 0){
 				let chatroom = new chat({
 					userfrom             : userFrom,
