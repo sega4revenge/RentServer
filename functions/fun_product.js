@@ -183,7 +183,6 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
 		if (err){
 			throw err;
-			return null;
 		}else{
 			if(result)
 			{
@@ -194,6 +193,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 						messages             : mess
 					});
 					chatroom.save()
+					console.log("fist create222");
 				}else{
 					chat.findByIdAndUpdate(
 						result._id,
@@ -203,10 +203,10 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 							console.log(err);
 						}
 					);
-
+					console.log("second create");
 
 				}
-				return true
+
 			}else{
 				let chatroom = new chat({
 					userfrom             : userFrom,
@@ -215,11 +215,12 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 				});
 				chatroom.save()
 				console.log("fist create");
-				return true
+
 			}
 
 		}
 	});
+	return true
 
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
