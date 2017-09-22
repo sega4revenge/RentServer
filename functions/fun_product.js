@@ -197,7 +197,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 		});
 		chatroom.save()
 	}
-
+	return true
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
 

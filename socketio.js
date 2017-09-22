@@ -20,27 +20,15 @@ module.exports = io => {
 	io.on('connection', function(socket) {
 
 		socket.on('getData', function (userFrom,userTo) {
-		var mUserFrom = "";
-		var mUserTo = "";
-		if(userFrom.localeCompare(userTo)>0)
-		{
-			mUserFrom = userFrom;
-			mUserTo   = userTo;
-		}else if(userFrom.localeCompare(userTo<0)){
-			mUserFrom = userTo;
-			mUserTo   = userFrom;
-		}else{
-			mUserFrom = userFrom;
-			mUserTo   = userTo;
-		}
+
 		//check room  co ton cmn tai k co thi lay du lieu ve
-		var ss=	fun_product.checkRoomChat(mUserFrom,mUserTo)
+		var ss=	fun_product.checkRoomChat(userFrom,userTo)
 
 			if(ss!=null)
 			{
-				socket.emit('data_message_with_id: '+userFrom, ss);
+				socket.emit(userFrom+"-"+userTo, ss);
 			}else{
-				socket.emit('data_message_with_id: '+userFrom, []);
+				socket.emit(userFrom+"-"+userTo, []);
 			}
 
 		});
@@ -66,9 +54,11 @@ module.exports = io => {
 
 			var ss=	fun_product.sendMessChat(id,userFrom,userTo,name,message)
 
-			if(ss!=null)
+			if(ss)
 			{
-				socket.emit('data_message', ss);
+
+				socket.emit('send_message: '+userFrom,userTo, name,message);
+				socket.emit('send_message: '+userTo,userFrom, name,message);
 			}
 
 		});
