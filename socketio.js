@@ -40,6 +40,7 @@ module.exports = io => {
 
 			if(ss)
 			{
+				console.log("222222222222");
 				socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo, name,message);
 				//socket.emit('send_message: '+userFrom+" - "+userTo,userFrom, name,message);
 			}
