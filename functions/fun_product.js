@@ -180,7 +180,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 		message : message,
 		created_at : timestamp
 	};
-	if(id!=null &&!id.empty()){
+	if(id!=="" && !id.empty()){
 		chat.findByIdAndUpdate(
 			id,
 			{$push: {"messages": mess}},
@@ -201,7 +201,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
 
-	chat.find({$or: [ {userfrom: userFrom, userto: userTo} , {userfrom: userTo, userto: userFrom} ]} ,
+	chat.find({userfrom: userFrom, userto: userTo},
 		function(err, result) {
 			if (err){
 				throw err;
