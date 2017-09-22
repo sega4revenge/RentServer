@@ -26,9 +26,9 @@ module.exports = io => {
 
 			if(ss!=null)
 			{
-				socket.emit(userFrom+"-"+userTo, ss);
+				socket.emit(userFrom+" - "+userTo, ss);
 			}else{
-				socket.emit(userFrom+"-"+userTo, []);
+				socket.emit(userFrom+" - "+userTo, []);
 			}
 
 		});
