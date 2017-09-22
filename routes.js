@@ -308,6 +308,7 @@ module.exports = router => {
 		var arrImgDel = [];
 		if(listitem != "0")
 		{
+			console.log(listitem);
 			arrImgDel = listitem.split(" , ");
 			if (arrImgDel.length > 0) {
 				for (var i = 0; i <= (arrImgDel.length - 1); i++) {
