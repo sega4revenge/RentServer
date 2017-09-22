@@ -20,7 +20,7 @@ module.exports = io => {
 	io.on('connection', function(socket) {
 
 		socket.on('getData', function (userFrom,userTo) {
-
+			console.log(userFrom,userTo);
 		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo)
 
