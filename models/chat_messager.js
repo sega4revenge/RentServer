@@ -4,7 +4,8 @@ const mongoose = require("./connect");
 const Schema = require("mongoose/lib/schema");
 
 const chatSchema = mongoose.Schema({
-	roomid             : String,
+	userfrom             : {type: Schema.Types.ObjectId, ref: 'user'},
+	userto             : {type: Schema.Types.ObjectId, ref: 'user'},
 	messages             : [{
 		name: { type: String },
 		message : {type : String },

@@ -169,23 +169,48 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
+	var id = id;
+	var name = name;
+	var message= message;
+	const day = new Date();
+	const timestamp = day.getTime();
+	var mess = {
+		name: name,
+		message : message,
+		created_at : timestamp
+	};
+	if(id!=null &&!id.empty()){
+		chat.findByIdAndUpdate(
+			id,
+			{$push: {"messages": mess}},
+			{safe: true, upsert: true, new: true},
+			function (err, model) {
+				console.log(err);
+			}
+		);
+	}else{
+		let chatroom = new chat({
+			userfrom             : userFrom,
+			userto             : userTo,
+			messages             : mess
+		});
+		chatroom.save()
+	}
+
+}
 exports.checkRoomChat = (userFrom,userTo) =>{
-	let cod = userFrom+" - "+userTo;
-	let cdo = userTo+" - "+userFrom;
 	console.log(cod,cdo);
-	chat.find({$and: [ {roomid: cod} , {roomid: cdo} ]} ,
+	chat.find({$or: [ {userfrom: userFrom, userto: userTo} , {userfrom: userTo, userto: userFrom} ]} ,
 		function(err, result) {
 			if (err){
 				throw err;
-				return false;
+				return null;
 			}else{
-				console.log("2222");
 				if(result.length === 0){
-					console.log("222233"+result);
-					return result;
-				}else{
-					console.log("2224444");
 					return null;
+				}else{
+					return result;
 				}
 			}
 		});

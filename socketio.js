@@ -19,15 +19,31 @@ module.exports = io => {
 	}
 	io.on('connection', function(socket) {
 
-		socket.on('getData', function (userFrom,userTo,message) {
-			//check room  co ton cmn tai k
-			console.log(userFrom,userTo);
+		socket.on('getData', function (userFrom,userTo) {
 
+		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo)
-			console.log(ss);
+
+			if(ss!=null)
+			{
+				socket.emit('data_message_with_id:'+userFrom, ss);
+			}else{
+				socket.emit('data_message_with_id:'+userFrom, []);
+			}
 
 		});
+		socket.on('sendchat', function (id,userFrom,userTo,name,message) {
+			//gui tin nhan len server
+			console.log(id,userFrom,userTo,name,message);
 
+			var ss=	fun_product.sendMessChat(id,userFrom,userTo,name,message)
+
+			if(ss!=null)
+			{
+				socket.emit('data_message', ss);
+			}
+
+		});
 
 
 		// socket.on('sendchat', function (data) {
