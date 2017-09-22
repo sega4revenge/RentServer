@@ -131,7 +131,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 				if (err.code === 11000) {
 					if (type !== 0) {
-						user.find({email: email})
+						user.find({email: email},{listproduct: 0 ,listsavedproduct: 0})
 
 							.then(users => {
 
