@@ -208,7 +208,13 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 				}
 				return true
 			}else{
-				console.log("Nullllllllllll");
+				let chatroom = new chat({
+					userfrom             : userFrom,
+					userto             : userTo,
+					messages             : mess
+				});
+				chatroom.save()
+				console.log("fist create");
 			}
 
 		}
