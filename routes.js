@@ -324,7 +324,7 @@ module.exports = router => {
 			fun_product.deleteProduct(productid)
 				.then(result => {
 
-					res.status(result.status).json({message: result.message,comment: result.comment})
+					res.status(result.status).json(result)
 				})
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
