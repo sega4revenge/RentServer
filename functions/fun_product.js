@@ -200,7 +200,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
-	console.log(cod,cdo);
+
 	chat.find({$or: [ {userfrom: userFrom, userto: userTo} , {userfrom: userTo, userto: userFrom} ]} ,
 		function(err, result) {
 			if (err){
