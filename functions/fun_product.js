@@ -467,8 +467,8 @@ exports.deleteProduct = (productid) =>
 								product.findByIdAndRemove(productid, function (err, offer) {
 									if (err) {
 										console.log(err);
-										resolve({status: 200, message: "DELETE OK!"});
 									}
+									resolve({status: 200, message: "DELETE OK!"});
 								});
 							})
 							.catch(err => reject({status: 500, message: "Internal Server Error 3!"}));
