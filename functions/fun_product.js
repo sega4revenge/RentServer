@@ -185,24 +185,30 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 			throw err;
 			return null;
 		}else{
-			if(result.length === 0){
-				let chatroom = new chat({
-					userfrom             : userFrom,
-					userto             : userTo,
-					messages             : mess
-				});
-				chatroom.save()
+			if(result)
+			{
+				if(result.length === 0){
+					let chatroom = new chat({
+						userfrom             : userFrom,
+						userto             : userTo,
+						messages             : mess
+					});
+					chatroom.save()
+				}else{
+					chat.findByIdAndUpdate(
+						result._id,
+						{$push: {"messages": mess}},
+						{safe: true, upsert: true, new: true},
+						function (err, model) {
+							console.log(err);
+						}
+					);
+				}
+				return true
 			}else{
-				chat.findByIdAndUpdate(
-					result._id,
-					{$push: {"messages": mess}},
-					{safe: true, upsert: true, new: true},
-					function (err, model) {
-						console.log(err);
-					}
-				);
+				console.log("Nullllllllllll");
 			}
-			return true
+
 		}
 	});
 
