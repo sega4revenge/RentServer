@@ -186,7 +186,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 			throw err;
 			return null;
 		}else{
-			console.log("finsh...",userFrom,userTo,result.length);
+			console.log("finsh...",userFrom,userTo,result);
 			if(result.length === 0){
 				let chatroom = new chat({
 					userfrom             : userFrom,
@@ -195,10 +195,8 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 				});
 				chatroom.save()
 			}else{
-				var data = result[0];
-
 				chat.findByIdAndUpdate(
-					data._id,
+					result._id,
 					{$push: {"messages": mess}},
 					{safe: true, upsert: true, new: true},
 					function (err, model) {
