@@ -180,23 +180,34 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 		message : message,
 		created_at : timestamp
 	};
-	if(id!=="" && !id.empty()){
-		chat.findByIdAndUpdate(
-			id,
-			{$push: {"messages": mess}},
-			{safe: true, upsert: true, new: true},
-			function (err, model) {
-				console.log(err);
+	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
+		if (err){
+			throw err;
+			return null;
+		}else{
+			if(result.length === 0){
+				let chatroom = new chat({
+					userfrom             : userFrom,
+					userto             : userTo,
+					messages             : mess
+				});
+				chatroom.save()
+			}else{
+				var data = result[0];
+
+				chat.findByIdAndUpdate(
+					data._id,
+					{$push: {"messages": mess}},
+					{safe: true, upsert: true, new: true},
+					function (err, model) {
+						console.log(err);
+					}
+				);
 			}
-		);
-	}else{
-		let chatroom = new chat({
-			userfrom             : userFrom,
-			userto             : userTo,
-			messages             : mess
-		});
-		chatroom.save()
-	}
+		}
+	});
+
+
 	return true
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
