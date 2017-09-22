@@ -35,30 +35,13 @@ module.exports = io => {
 		socket.on('sendchat', function (id,userFrom,userTo,name,message) {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);
-			var mUserFrom = "";
-			var mUserTo = "";
-			if(id==="")
-			{
-				if(userFrom.localeCompare(userTo)>0)
-				{
-					mUserFrom = userFrom;
-					mUserTo   = userTo;
-				}else if(userFrom.localeCompare(userTo<0)){
-					mUserFrom = userTo;
-					mUserTo   = userFrom;
-				}else{
-					mUserFrom = userFrom;
-					mUserTo   = userTo;
-				}
-			}
 
 			var ss=	fun_product.sendMessChat(id,userFrom,userTo,name,message)
 
 			if(ss)
 			{
-
-				socket.emit('send_message: '+userFrom,userTo, name,message);
-				socket.emit('send_message: '+userTo,userFrom, name,message);
+				socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo, name,message);
+				//socket.emit('send_message: '+userFrom+" - "+userTo,userFrom, name,message);
 			}
 
 		});
