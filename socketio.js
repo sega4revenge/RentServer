@@ -27,10 +27,10 @@ module.exports = io => {
 			if(ss!=null)
 			{
 				console.log('data_message_with_id:'+userFrom+"111111");
-				socket.emit('data_message_with_id:'+userFrom, ss);
+				socket.emit('data_message_with_id:'+userFrom, "11111113");
 			}else{
 				console.log('data_message_with_id:'+userFrom+"222222");
-				socket.emit('data_message_with_id:'+userFrom, []);
+				socket.emit('data_message_with_id:'+userFrom, "2222222223");
 			}
 
 		});
