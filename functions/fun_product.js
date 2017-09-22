@@ -215,6 +215,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 				});
 				chatroom.save()
 				console.log("fist create");
+				return true
 			}
 
 		}
