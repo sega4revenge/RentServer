@@ -459,9 +459,9 @@ exports.deleteProduct = (productid) =>
 			.then((comment) => {
 			console.log("toi day roi 1");
 				user.update({}, {$pull: {listproduct: ObjectId(productid)}},{ multi: true })
-					.then((user) => {
+					.then((users) => {
 						console.log("toi day roi 2");
-						user.update({}, {$pull: {listproduct: ObjectId(productid)}},{ multi: true })
+						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}},{ multi: true })
 							.then((user) => {
 								console.log("toi day roi 3");
 								product.findByIdAndRemove(productid, function (err, offer) {
