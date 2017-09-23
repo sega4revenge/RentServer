@@ -24,7 +24,7 @@ module.exports = io => {
 		console.log(userFrom,userTo);
 		console.log(userIdOnline + " đã online");
 		rooms[userIdOnline] = socket.id;
-		console.log(rooms[userIdOnline] + " đã online2");
+		console.log(rooms[userIdOnline][0] + " đã online2");
 
 
 
