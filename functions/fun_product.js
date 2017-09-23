@@ -247,7 +247,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 					console.log("ress23");
 					mResult = null;
 				}
-				console.log("ress3"+mResult);
+
 			}
 		});
 	if(mResult !== null)
