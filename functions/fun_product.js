@@ -228,6 +228,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 exports.checkRoomChat = (userFrom,userTo,socket) =>{
 	console.log(userFrom,userTo);
 	let mResult;
+
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
 		function(err, result) {
 
@@ -252,7 +253,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 				}
 
 			}
-		});
+		}).populate({path : "user", select : "-listproduct -listsavedproduct"});
 
 
 
