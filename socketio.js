@@ -23,7 +23,7 @@ module.exports = io => {
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
 		console.log(userIdOnline + " đã online");
-		rooms[userFrom+"-"+userTo].add(userIdOnline)
+		rooms[userFrom+"-"+userTo] = userIdOnline;
 		console.log(rooms[userFrom+"-"+userTo].length + " đã online");
 
 
