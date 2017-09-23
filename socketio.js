@@ -23,8 +23,7 @@ module.exports = io => {
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
 
-		if(rooms.length>0)
-		{
+
 			if(rooms.indexOf(userIdOnline)> -1)
 			{
 				console.log( userIdOnline+ " đã ton tai");
@@ -32,7 +31,6 @@ module.exports = io => {
 				rooms.push(userIdOnline);
 				console.log(userIdOnline + " đã online");
 			}
-		}
 
 		console.log(rooms.length + "nguoi đã online");
 
