@@ -223,7 +223,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 	return true
 
 }
-exports.checkRoomChat = (userFrom,userTo) =>{
+exports.checkRoomChat = (userFrom,userTo,socket) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
@@ -250,7 +250,14 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 				console.log("ress3"+mResult);
 			}
 		});
-	return mResult;
+	if(mResult !== null)
+	{
+		console.log("255555");
+		socket.emit(userFrom+" - "+userTo, mResult);
+	}else{
+		console.log("232333333");
+		socket.emit(userFrom+" - "+userTo, []);
+	}
 
 }
 
