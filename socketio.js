@@ -4,7 +4,7 @@ const fun_product = require('./functions/fun_product');
 
 module.exports = io => {
 	const usernames = {};
-	var rooms = {};
+	const rooms = {};
 	let numUsers =0;
 
 	function check_key(v)
@@ -23,8 +23,8 @@ module.exports = io => {
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
 		console.log(userIdOnline + " đã online");
-		rooms[userFrom+"-"+userTo] = userIdOnline;
-		console.log(rooms[userFrom+"-"+userTo].get(0) + " đã online2");
+		rooms[userIdOnline] = socket.id;
+		console.log(rooms[userIdOnline] + " đã online2");
 
 
 
