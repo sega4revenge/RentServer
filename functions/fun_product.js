@@ -225,26 +225,27 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
 	console.log(userFrom,userTo);
+	let mResult;
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
 		function(err, result) {
 			console.log(result+"ress");
 			if (err){
 				throw err;
-				return null;
+				mResult = null;
 			}else{
 				if(result){
 					if(result.length === 0){
-						return null;
+						mResult = null;
 					}else{
-						return result;
+						mResult = result;
 					}
 				}else{
-					return null;
+					mResult = null;
 				}
 
 			}
 		});
-
+	return mResult;
 
 }
 
