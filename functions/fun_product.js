@@ -231,11 +231,16 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 				throw err;
 				return null;
 			}else{
-				if(result.length === 0){
-					return null;
+				if(result){
+					if(result.length === 0){
+						return null;
+					}else{
+						return result;
+					}
 				}else{
-					return result;
+					return null;
 				}
+
 			}
 		});
 
