@@ -4,6 +4,7 @@ const fun_product = require('./functions/fun_product');
 
 module.exports = io => {
 	const usernames = {};
+	const rooms = {};
 	let numUsers =0;
 
 	function check_key(v)
@@ -19,8 +20,15 @@ module.exports = io => {
 	}
 	io.on('connection', function(socket) {
 
-		socket.on('getData', function (userFrom,userTo) {
-			console.log(userFrom,userTo);
+		socket.on('getData', function (userFrom,userTo,userIdOnline) {
+		console.log(userFrom,userTo);
+		console.log(userIdOnline + " đã online");
+		rooms[userFrom+"-"+userTo].push(userIdOnline)
+		console.log(rooms[userFrom+"-"+userTo].length + " đã online");
+
+
+
+
 		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo)
 
