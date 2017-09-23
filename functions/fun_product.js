@@ -232,31 +232,27 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 			if (err){
 				throw err;
 				mResult = null;
-				console.log("ress1");
+				socket.emit(userFrom+" - "+userTo, []);
 			}else{
-				console.log("ress2");
+
 				if(result){
 					if(result.length === 0){
-						console.log("ress21");
 						mResult = null;
+						socket.emit(userFrom+" - "+userTo, []);
 					}else{
-						console.log("ress22");
 						mResult = result;
+						socket.emit(userFrom+" - "+userTo, mResult);
 					}
 				}else{
 					console.log("ress23");
 					mResult = null;
+					socket.emit(userFrom+" - "+userTo, []);
 				}
 
 			}
 		});
-	if(mResult !== null)
-	{
-		console.log("255555");
-		socket.emit(userFrom+" - "+userTo, mResult);
-	}else{
-		console.log("232333333");
-		socket.emit(userFrom+" - "+userTo, []);
+
+
 	}
 
 }
