@@ -42,8 +42,10 @@ module.exports = io => {
 
 			if(ss!=null)
 			{
+				console.log("222222322");
 				socket.emit(userFrom+" - "+userTo, ss);
 			}else{
+				console.log("232");
 				socket.emit(userFrom+" - "+userTo, []);
 			}
 
