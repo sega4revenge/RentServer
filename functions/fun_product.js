@@ -228,21 +228,26 @@ exports.checkRoomChat = (userFrom,userTo) =>{
 	let mResult;
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
 		function(err, result) {
-			console.log(result+"ress");
+
 			if (err){
 				throw err;
 				mResult = null;
+				console.log("ress1");
 			}else{
+				console.log("ress2");
 				if(result){
 					if(result.length === 0){
+						console.log("ress21");
 						mResult = null;
 					}else{
+						console.log("ress22");
 						mResult = result;
 					}
 				}else{
+					console.log("ress23");
 					mResult = null;
 				}
-
+				console.log("ress3"+mResult);
 			}
 		});
 	return mResult;

@@ -40,7 +40,7 @@ module.exports = io => {
 		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo)
 
-			if(ss!=null)
+			if(ss !== null)
 			{
 				console.log("222222322");
 				socket.emit(userFrom+" - "+userTo, ss);
