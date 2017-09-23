@@ -169,13 +169,15 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
+exports.sendMessChat = (id,userFrom,userTo,email,name,message) =>{
 	var id = id;
+	var email = email;
 	var name = name;
 	var message= message;
 	const day = new Date();
 	const timestamp = day.getTime();
 	var mess = {
+		email: email,
 		name: name,
 		message : message,
 		created_at : timestamp
@@ -217,7 +219,7 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 				console.log("fist create");
 
 			}
-
+			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
 		}
 	});
 	return true

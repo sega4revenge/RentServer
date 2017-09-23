@@ -42,18 +42,13 @@ module.exports = io => {
 
 
 		});
-		socket.on('sendchat', function (id,userFrom,userTo,name,message) {
+		socket.on('sendchat', function (id,userFrom,userTo,email,name,message) {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);
 
-			var ss=	fun_product.sendMessChat(id,userFrom,userTo,name,message)
+			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket)
 
-			if(ss)
-			{
-				console.log("222222222222");
-				socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo, name,message);
-				//socket.emit('send_message: '+userFrom+" - "+userTo,userFrom, name,message);
-			}
+
 
 		});
 
