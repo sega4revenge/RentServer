@@ -230,7 +230,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 	let mResult;
 
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)})
-		.populate({path : "user", select : "-listproduct -listsavedproduct"}).exec(
+		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 
 			if (err){
