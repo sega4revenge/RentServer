@@ -224,8 +224,8 @@ exports.sendMessChat = (id,userFrom,userTo,name,message) =>{
 
 }
 exports.checkRoomChat = (userFrom,userTo) =>{
-
-	chat.find({userfrom: userFrom, userto: userTo},
+	//console.log(userFrom,userTo);
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
 		function(err, result) {
 			if (err){
 				throw err;
