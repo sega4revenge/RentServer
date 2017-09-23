@@ -229,7 +229,8 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)},
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)})
+		.populate({path : "user", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 
 			if (err){
@@ -253,7 +254,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 				}
 
 			}
-		}).populate({path : "user", select : "-listproduct -listsavedproduct"});
+		});
 
 
 
