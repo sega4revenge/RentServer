@@ -169,7 +169,7 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.sendMessChat = (id,userFrom,userTo,email,name,message) =>{
+exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	var id = id;
 	var email = email;
 	var name = name;
