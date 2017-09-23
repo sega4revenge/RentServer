@@ -4,7 +4,7 @@ const fun_product = require('./functions/fun_product');
 
 module.exports = io => {
 	const usernames = {};
-	const rooms = {};
+	var rooms = [];
 	let numUsers =0;
 
 	function check_key(v)
@@ -22,9 +22,19 @@ module.exports = io => {
 
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
-		console.log(userIdOnline + " đã online");
-		rooms[userIdOnline] = socket.id;
-		console.log(rooms[userIdOnline][0] + " đã online2");
+
+		if(rooms.length>0)
+		{
+			if(rooms.indexOf(userIdOnline)> -1)
+			{
+				console.log( userIdOnline+ " đã ton tai");
+			}else{
+				rooms.push(userIdOnline);
+				console.log(userIdOnline + " đã online");
+			}
+		}
+
+		console.log(rooms.length + "nguoi đã online");
 
 
 
