@@ -246,6 +246,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 						socket.emit(userFrom+" - "+userTo, []);
 					}else{
 						mResult = result;
+						console.log(userFrom+" - "+userTo+"ress33");
 						socket.emit(userFrom+" - "+userTo, mResult);
 					}
 				}else{
