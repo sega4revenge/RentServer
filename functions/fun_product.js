@@ -221,6 +221,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 			}
 			console.log('sendchat: '+userFrom+" - "+userTo);
 			socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
+			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
 		}
 	});
 	return true
