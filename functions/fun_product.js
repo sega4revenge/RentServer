@@ -219,6 +219,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 				console.log("fist create");
 
 			}
+			console.log('sendchat: '+userFrom+" - "+userTo);
 			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
 		}
 	});
