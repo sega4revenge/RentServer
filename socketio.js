@@ -30,12 +30,13 @@ module.exports = io => {
 				//var index = rooms.indexOf(id);
 				delete rooms[id];
 				console.log( id+ " đã offline");
+				console.log(rooms.length + "nguoi đã online");
 			}else{
 			//	rooms.push(id);
 			//	console.log(id + " đã online");
 			}
 
-			console.log(rooms.length + "nguoi đã online");
+
 
 
 		});
