@@ -25,8 +25,8 @@ module.exports = io => {
 
 			if(rooms.indexOf(id)> -1)
 			{
-				var index = rooms.indexOf(id);
-				delete rooms[index];
+				//var index = rooms.indexOf(id);
+				delete rooms[id];
 				console.log( id+ " đã offline");
 			}else{
 			//	rooms.push(id);
@@ -76,7 +76,7 @@ module.exports = io => {
 			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket);
 
 			if(ss)
-			{   console.log("reunnnnnnnnnn")
+			{
 				var from = 0;
 				var to = 0;
 				if(rooms.indexOf(userFrom)< 0)
