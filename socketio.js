@@ -27,8 +27,8 @@ module.exports = io => {
 			console.log(rooms.indexOf(id));
 			if(rooms.indexOf(id)> -1)
 			{
-				//var index = rooms.indexOf(id);
-				delete rooms[id];
+				var index = rooms.indexOf(id);
+				delete rooms[index];
 				console.log( id+ " đã offline");
 				console.log(rooms.length + "nguoi đã online");
 			}else{
