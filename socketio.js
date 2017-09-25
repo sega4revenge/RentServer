@@ -20,6 +20,22 @@ module.exports = io => {
 	}
 	io.on('connection', function(socket) {
 
+
+		socket.on('disconnected', function (id) {
+
+			if(rooms.indexOf(id)> -1)
+			{
+				rooms.remove(id)
+				console.log( id+ " đã offline");
+			}else{
+			//	rooms.push(id);
+			//	console.log(id + " đã online");
+			}
+
+			console.log(rooms.length + "nguoi đã online");
+
+
+		});
 		socket.on('connected', function (id) {
 
 			if(rooms.indexOf(id)> -1)
