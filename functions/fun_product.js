@@ -193,6 +193,7 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 			} else {
 				var mResult = result[0];
 				tokencode = mResult.tokenfirebase;
+				console.log(tokencode);
 				if (tokencode) {
 					const m = {
 						to: tokencode,

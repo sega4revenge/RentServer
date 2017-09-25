@@ -34,12 +34,8 @@ module.exports = io => {
 
 		console.log(rooms.length + "nguoi đã online");
 
-
-
-
 		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket);
-
 
 		});
 		socket.on('sendchat', function (id,userFrom,userTo,email,name,message) {
