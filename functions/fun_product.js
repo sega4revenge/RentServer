@@ -155,6 +155,20 @@ exports.allproductsaved = (type, page, userid) =>
 
 
 	});
+exports.mInboxChat = (userid) =>
+
+	new Promise((resolve, reject) => {
+
+		chat.find({$or: [{userfrom: ObjectId(userid)},{userto: ObjectId(userid)}]})
+
+			.then(room => {
+				resolve({listproduct: room});
+
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
 exports.allproductbyuser = (userid) =>
 
 	new Promise((resolve, reject) => {

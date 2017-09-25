@@ -188,6 +188,24 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/getInbox', (req, res) => {
+
+		const userid = req.body.userid;
+
+		console.log(userid);
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.mInboxChat(userid)
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+
+	});
 	router.post('/allproduct', (req, res) => {
 
 		const category = req.body.category;
