@@ -160,7 +160,7 @@ exports.mInboxChat = (userid) =>
 	new Promise((resolve, reject) => {
 
 		chat.find({$or: [{userfrom: ObjectId(userid)},{userto: ObjectId(userid)}]})
-			.populate({path : "userfrom userto"})
+			.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"})
 			.then(room => {
 				resolve({listproduct: room});
 
