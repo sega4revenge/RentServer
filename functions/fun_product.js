@@ -191,6 +191,17 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 			if (err) {
 				throw err;
 			} else {
+				var usersend = "";
+				var avata = "";
+				user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
+					if (err) {
+						throw err;
+					}else{
+						var mResultUser = UserResult[0];
+						usersend = mResultUser.name;
+						avata    = mResultUser.photoprofile;
+					}
+				});
 				var mResult = result[0];
 				tokencode = mResult.tokenfirebase;
 				console.log(tokencode);
@@ -200,7 +211,9 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 
 						data: {
 							userto: userto,
-							msg: msg,
+							name: usersend,
+							messager: msg,
+							avata: avata,
 							userfrom: userfrom
 						}
 					};
