@@ -197,14 +197,17 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 					if (err) {
 						throw err;
 					}else{
-						var mResultUser = UserResult[0];
-						usersend = mResultUser.name;
-						avata    = mResultUser.photoprofile;
+						if(UserResult){
+							var mResultUser = UserResult[0];
+							usersend = mResultUser.name;
+							avata    = mResultUser.photoprofile;
+						}
+
 					}
 				});
 				var mResult = result[0];
 				tokencode = mResult.tokenfirebase;
-				console.log(tokencode);
+				console.log(tokencode,usersend,avata);
 				if (tokencode) {
 					const m = {
 						to: tokencode,
