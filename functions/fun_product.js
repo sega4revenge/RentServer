@@ -202,38 +202,39 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 							usersend = mResultUser.name;
 							avata    = mResultUser.photoprofile;
 							console.log(usersend,avata);
-						}
 
+						}
+						var mResult = result[0];
+						tokencode = mResult.tokenfirebase;
+						console.log(tokencode,usersend,avata);
+						if (tokencode) {
+							const m = {
+								to: tokencode,
+
+								data: {
+									userto: userto,
+									name: usersend,
+									messager: msg,
+									avata: avata,
+									userfrom: userfrom
+								}
+							};
+							console.log("push mess: " + msg);
+
+							fcm.send(m, function (err, response) {
+								if (err) {
+									console.log(err);
+									reject({status: 409, message: "MessToTopic Error !"});
+								} else {
+									console.log(response);
+									resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
+
+								}
+							});
+						}
 					}
 				});
-				var mResult = result[0];
-				tokencode = mResult.tokenfirebase;
-				console.log(tokencode,usersend,avata);
-				if (tokencode) {
-					const m = {
-						to: tokencode,
 
-						data: {
-							userto: userto,
-							name: usersend,
-							messager: msg,
-							avata: avata,
-							userfrom: userfrom
-						}
-					};
-					console.log("push mess: " + msg);
-
-					fcm.send(m, function (err, response) {
-						if (err) {
-							console.log(err);
-							reject({status: 409, message: "MessToTopic Error !"});
-						} else {
-							console.log(response);
-							resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
-
-						}
-					});
-				}
 			}
 		});
 	});
