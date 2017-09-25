@@ -20,6 +20,20 @@ module.exports = io => {
 	}
 	io.on('connection', function(socket) {
 
+		socket.on('connected', function (id) {
+
+			if(rooms.indexOf(id)> -1)
+			{
+				console.log( id+ " đã ton tai");
+			}else{
+				rooms.push(id);
+				console.log(id + " đã online");
+			}
+
+			console.log(rooms.length + "nguoi đã online");
+
+
+		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
 
