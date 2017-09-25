@@ -38,7 +38,7 @@ module.exports = io => {
 
 
 		//check room  co ton cmn tai k co thi lay du lieu ve
-		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket)
+		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket);
 
 
 		});
@@ -46,8 +46,29 @@ module.exports = io => {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);
 
-			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket)
+			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket);
 
+			if(ss)
+			{
+				var from = 0;
+				var to = 0;
+				if(rooms.indexOf(userFrom)< 0)
+				{
+					from =1;
+				}
+				if(rooms.indexOf(userTo)< 0)
+				{
+					to =1;
+				}
+				if(from !== 0)
+				{
+					fun_product.push_notification_chat(userFrom,message,userTo);
+				}
+				if(to !== 0)
+				{
+					fun_product.push_notification_chat(userTo,message,userFrom);
+				}
+			}
 
 
 		});

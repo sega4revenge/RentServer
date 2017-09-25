@@ -183,12 +183,49 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.push_notification_chat= (userto, msg, userfrom) =>
+
+	new Promise((resolve, reject) => {
+		var tokencode;
+		user.find({_id: ObjectId(userto)}, function (err, result) {
+			if (err) {
+				throw err;
+			} else {
+				var mResult = result[0];
+				tokencode = mResult.tokenfirebase;
+				if (tokencode) {
+					const m = {
+						to: tokencode,
+
+						data: {
+							userto: userto,
+							msg: msg,
+							userfrom: userfrom
+						}
+					};
+					console.log("push mess: " + msg);
+
+					fcm.send(m, function (err, response) {
+						if (err) {
+							console.log(err);
+							reject({status: 409, message: "MessToTopic Error !"});
+						} else {
+							console.log(response);
+							resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
+
+						}
+					});
+				}
+			}
+		});
+	});
 exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	var id = id;
 	var email = email;
 	var name = name;
 	var message= message;
 	const day = new Date();
+	var mResult = true;
 	const timestamp = day.getTime();
 	var mess = {
 		email: email,
@@ -199,6 +236,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
 		if (err){
 			throw err;
+			mResult = false;
 		}else{
 			if(result)
 			{
@@ -209,7 +247,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 						messages             : mess
 					});
 					chatroom.save()
-					console.log("fist create222");
+					console.log("fist create2");
 				}else{
 					chat.findByIdAndUpdate(
 						result._id,
@@ -233,12 +271,11 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 				console.log("fist create");
 
 			}
-			console.log('sendchat: '+userFrom+" - "+userTo);
 			socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
 			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
 		}
 	});
-	return true
+	return mResult;
 
 }
 exports.checkRoomChat = (userFrom,userTo,socket) =>{
