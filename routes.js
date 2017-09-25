@@ -532,6 +532,24 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
+	router.post('/editphonenumber', (req, res) => {
+		const userid = req.body.userid;
+		const phone = req.body.phone;
+
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			profile.editPhoneNumber(userid,phone)
+
+
+				.then(result => res.status(result.status).json({user: result.user }))
+
+				.catch(err => res.status(err.status).json({ message: err.message }));
+		}
+	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
 		/*		const deviceId = req.body.deviceId;*/
