@@ -54,15 +54,15 @@ module.exports = io => {
 		console.log(userFrom,userTo);
 
 
-			if(rooms.indexOf(userIdOnline)> -1)
-			{
-				console.log( userIdOnline+ " đã ton tai");
-			}else{
-				rooms.push(userIdOnline);
-				console.log(userIdOnline + " đã online");
-			}
-
-		console.log(rooms.length + "nguoi đã online");
+		// 	if(rooms.indexOf(userIdOnline)> -1)
+		// 	{
+		// 		console.log( userIdOnline+ " đã ton tai");
+		// 	}else{
+		// 		rooms.push(userIdOnline);
+		// 		console.log(userIdOnline + " đã online");
+		// 	}
+		//
+		// console.log(rooms.length + "nguoi đã online");
 
 		//check room  co ton cmn tai k co thi lay du lieu ve
 		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket);
