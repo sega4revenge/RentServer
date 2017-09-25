@@ -201,6 +201,7 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 							var mResultUser = UserResult[0];
 							usersend = mResultUser.name;
 							avata    = mResultUser.photoprofile;
+							console.log(usersend,avata);
 						}
 
 					}
