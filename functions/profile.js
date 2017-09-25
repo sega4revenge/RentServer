@@ -69,3 +69,20 @@ exports.editInfoUser = (userid,newname) =>
 			}
 		)
 	});
+exports.editPhoneNumber = (userid,phone) =>
+
+	new Promise((resolve,reject) => {
+
+		let ObjectId;
+		ObjectId = require('mongodb').ObjectID;
+
+		user.findByIdAndUpdate(
+			userid,
+			{$set: {"phone": phone}},
+			{safe: true, upsert: true, new: true,select: "-listproduct"},
+			function (err, model) {
+				console.log(err);
+				resolve({status: 200, user: model});
+			}
+		)
+	});
