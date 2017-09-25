@@ -23,6 +23,8 @@ module.exports = io => {
 
 		socket.on('disconnected', function (id) {
 
+			console.log(id);
+			console.log(rooms.indexOf(id));
 			if(rooms.indexOf(id)> -1)
 			{
 				//var index = rooms.indexOf(id);
