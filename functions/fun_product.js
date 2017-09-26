@@ -969,15 +969,15 @@ exports.uploadproduct = (productid, image) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.UpImageChat = (userfrom,userto,email,name,img) =>
+exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
 
 	new Promise((resolve, reject) => {
 	//	var id = id;
 		console.log(email,name);
 		var userFrom = userfrom;
 		var userTo = userto;
-		var email = email;
-		var name = name;
+		var email = mEmail;
+		var name = mName;
 		var message = ""
 		var photoprofile= img;
 		const day = new Date();
