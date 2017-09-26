@@ -995,6 +995,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 			.then(chat => {
 				console.log("333333333");
 					if(chat.length === 0){
+						console.log("666666");
 						let chatroom = new chat({
 							userfrom             : userFrom,
 							userto             : userTo,
@@ -1004,6 +1005,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						console.log("fist create2");
 						resolve({status: 404, message: "ADD SUCCESS !"});
 					}else{
+						console.log("777777777");
 						chat.findByIdAndUpdate(
 							chat._id,
 							{$push: {"messages": mess}},
