@@ -973,6 +973,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 
 	new Promise((resolve, reject) => {
 	//	var id = id;
+		console.log("1111111");
 		var userFrom = userFrom;
 		var userTo = userto;
 		var email = email;
@@ -989,8 +990,10 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 			photoprofile : photoprofile,
 			created_at : timestamp
 		};
+		console.log("2222222");
 		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
 			.then(chat => {
+				console.log("333333333");
 					if(chat.length === 0){
 						let chatroom = new chat({
 							userfrom             : userFrom,
@@ -999,7 +1002,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						});
 						chatroom.save()
 						console.log("fist create2");
-						reject({status: 404, message: "ADD SUCCESS !"});
+						resolve({status: 404, message: "ADD SUCCESS !"});
 					}else{
 						chat.findByIdAndUpdate(
 							chat._id,
@@ -1007,12 +1010,13 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
-								reject({status: 404, message: "ADD SUCCESS !"});
+								resolve({status: 404, message: "ADD SUCCESS !"});
 							}
 						);
 						console.log("second create");
 					}
-				reject({status: 404, message: "ADD SUCCESS !"});
+				console.log("444444444");
+				resolve({status: 404, message: "ADD SUCCESS !"});
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
