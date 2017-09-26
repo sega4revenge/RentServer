@@ -1002,24 +1002,20 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 							messages             : mess
 						});
 						chatroom.save()
-						console.log("fist create2");
-						resolve({status: 404, message: "ADD SUCCESS !"});
+						resolve({status: 404, listchat: chatroom});
 					}else{
-						console.log("777777777::"+chat._id);
+
 						chat.findByIdAndUpdate(
 							chat._id,
 							{$push: {"messages": mess}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
-								resolve({status: 200, message: "ADD SUCCESS !"});
+								resolve({status: 200, listchat: model});
 							}
 						);
-						console.log("second create");
-						resolve({status: 404, message: "ADD SUCCESS !"});
+
 					}
-				console.log("444444444");
-				resolve({status: 404, message: "ADD SUCCESS !"});
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
