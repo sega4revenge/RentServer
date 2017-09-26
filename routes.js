@@ -629,12 +629,10 @@ module.exports = router => {
 		form.uploadDir = uploadDir;
 		form.parse(req, (err, fields, files) => {
 			if (err) return res.status(500).json({error: err});
-
-			fun_product.UpImageChat(fields.userid, files.image.path.substring(8))
+			console.log(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8));
+			fun_product.UpImageChat(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8))
 				.then(result => res.status(result.status).json({status: result.status, user: result.user}))
 
-			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
-			// res.status(200).json({uploaded: true})
 		});
 	});
 	router.post('/changeavatar', function (req, res) {

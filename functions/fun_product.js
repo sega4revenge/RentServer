@@ -243,12 +243,14 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	var email = email;
 	var name = name;
 	var message= message;
+	var photoprofile = "";
 	const day = new Date();
 	var mResult = true;
 	const timestamp = day.getTime();
 	var mess = {
 		email: email,
 		name: name,
+		photoprofile: photoprofile,
 		message : message,
 		created_at : timestamp
 	};
@@ -290,8 +292,8 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 				console.log("fist create");
 
 			}
-			socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
-			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message);
+			socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
+			socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 		}
 	});
 	return mResult;
@@ -967,19 +969,68 @@ exports.uploadproduct = (productid, image) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.UpImageChat = (userid, image) =>
+exports.UpImageChat = (userfrom,userto,email,name,img) =>
 
 	new Promise((resolve, reject) => {
+	//	var id = id;
+		var userFrom = userFrom;
+		var userTo = userto;
+		var email = email;
+		var name = name;
+		var message = ""
+		var photoprofile= img;
+		const day = new Date();
+		var mResult = true;
+		const timestamp = day.getTime();
+		var mess = {
+			email: email,
+			name: name,
+			message: message,
+			photoprofile : photoprofile,
+			created_at : timestamp
+		};
+		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
+			if (err){
+				throw err;
+				mResult = false;
+			}else{
+				if(result)
+				{
+					if(result.length === 0){
+						let chatroom = new chat({
+							userfrom             : userFrom,
+							userto             : userTo,
+							messages             : mess
+						});
+						chatroom.save()
+						console.log("fist create2");
+					}else{
+						chat.findByIdAndUpdate(
+							result._id,
+							{$push: {"messages": mess}},
+							{safe: true, upsert: true, new: true},
+							function (err, model) {
+								console.log(err);
+							}
+						);
+						console.log("second create");
 
-		user.findByIdAndUpdate(
-			userid,
-			{$set: {"photoprofile": image}},
-			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
-			function (err, model) {
-				console.log(err);
-				resolve({status: 200, user: model});
+					}
+
+				}else{
+					let chatroom = new chat({
+						userfrom             : userFrom,
+						userto             : userTo,
+						messages             : mess
+					});
+					chatroom.save()
+					console.log("fist create");
+
+				}
+				socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
+				socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 			}
-		)
+		});
 
 	});
 exports.edit_avatar = (userid, image) =>
