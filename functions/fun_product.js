@@ -973,7 +973,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 
 	new Promise((resolve, reject) => {
 	//	var id = id;
-		console.log("1111111");
+		console.log(email,name);
 		var userFrom = userfrom;
 		var userTo = userto;
 		var email = email;
