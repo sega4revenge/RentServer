@@ -1005,17 +1005,17 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						console.log("fist create2");
 						resolve({status: 404, message: "ADD SUCCESS !"});
 					}else{
-						console.log("777777777");
+						console.log("777777777::"+chat._id);
 						chat.findByIdAndUpdate(
 							chat._id,
 							{$push: {"messages": mess}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
-								resolve({status: 404, message: "ADD SUCCESS !"});
 							}
 						);
 						console.log("second create");
+						resolve({status: 404, message: "ADD SUCCESS !"});
 					}
 				console.log("444444444");
 				resolve({status: 404, message: "ADD SUCCESS !"});
