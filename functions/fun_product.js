@@ -990,19 +990,16 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 			photoprofile : photoprofile,
 			created_at : timestamp
 		};
-		console.log("2222222");
 		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
 			.then(chatResult => {
-				console.log("333333333");
 					if(!chatResult){
-						console.log("666666");
 						let chatroom = new chat({
 							userfrom             : userFrom,
 							userto             : userTo,
 							messages             : mess
 						});
 						chatroom.save()
-						resolve({status: 404, listchat: chatroom});
+						resolve({status: 200, listchat: chatroom});
 					}else{
 
 						chat.findByIdAndUpdate(
