@@ -1005,9 +1005,9 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						console.log("fist create2");
 						resolve({status: 404, message: "ADD SUCCESS !"});
 					}else{
-						console.log("777777777::"+chat._id);
+						console.log("777777777::"+chat);
 						chat.findByIdAndUpdate(
-							chat._id,
+							chat[0]._id,
 							{$push: {"messages": mess}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
