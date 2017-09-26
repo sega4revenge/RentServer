@@ -974,7 +974,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 	new Promise((resolve, reject) => {
 	//	var id = id;
 		console.log("1111111");
-		var userFrom = userFrom;
+		var userFrom = userfrom;
 		var userTo = userto;
 		var email = email;
 		var name = name;
@@ -994,7 +994,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
 			.then(chat => {
 				console.log("333333333");
-					if(chat){
+					if(!chat){
 						console.log("666666");
 						let chatroom = new chat({
 							userfrom             : userFrom,
