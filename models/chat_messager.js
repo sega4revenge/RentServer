@@ -7,6 +7,7 @@ const chatSchema = mongoose.Schema({
 	userfrom             : {type: Schema.Types.ObjectId, ref: 'user'},
 	userto             : {type: Schema.Types.ObjectId, ref: 'user'},
 	messages             : [{
+		photoprofile: { type: String },
 		email: { type: String },
 		name: { type: String },
 		message : {type : String },

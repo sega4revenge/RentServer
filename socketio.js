@@ -67,6 +67,11 @@ module.exports = io => {
 
 
 		});
+
+		socket.on('sendchatimage', function (userFrom,userTo,email,name,message) {
+
+		});
+
 		socket.on('sendchat', function (id,userFrom,userTo,email,name,message) {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);

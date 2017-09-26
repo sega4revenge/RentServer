@@ -952,9 +952,9 @@ exports.uploadproduct = (productid, image) =>
 					reject({status: 404, message: "User Not Found !"});
 
 				} else {
-
+					console.log("1111122");
 					return products[0];
-
+					console.log("2221111");
 				}
 			})
 
