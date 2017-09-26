@@ -1012,6 +1012,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
+								resolve({status: 200, message: "ADD SUCCESS !"});
 							}
 						);
 						console.log("second create");
