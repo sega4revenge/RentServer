@@ -994,7 +994,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
 			.then(chat => {
 				console.log("333333333");
-					if(chat.length === 0){
+					if(chat){
 						console.log("666666");
 						let chatroom = new chat({
 							userfrom             : userFrom,
