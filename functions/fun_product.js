@@ -992,9 +992,9 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 		};
 		console.log("2222222");
 		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
-			.then(chat => {
+			.then(chatResult => {
 				console.log("333333333");
-					if(!chat){
+					if(!chatResult){
 						console.log("666666");
 						let chatroom = new chat({
 							userfrom             : userFrom,
@@ -1006,7 +1006,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 					}else{
 
 						chat.findByIdAndUpdate(
-							chat._id,
+							chatResult._id,
 							{$push: {"messages": mess}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
