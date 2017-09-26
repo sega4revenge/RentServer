@@ -989,14 +989,9 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 			photoprofile : photoprofile,
 			created_at : timestamp
 		};
-		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
-			if (err){
-				throw err;
-				mResult = false;
-			}else{
-				if(result)
-				{
-					if(result.length === 0){
+		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
+			.then(chat => {
+					if(chat.length === 0){
 						let chatroom = new chat({
 							userfrom             : userFrom,
 							userto             : userTo,
@@ -1004,33 +999,21 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						});
 						chatroom.save()
 						console.log("fist create2");
+						reject({status: 404, message: "ADD SUCCESS !"});
 					}else{
 						chat.findByIdAndUpdate(
-							result._id,
+							chat._id,
 							{$push: {"messages": mess}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
+								reject({status: 404, message: "ADD SUCCESS !"});
 							}
 						);
 						console.log("second create");
-
 					}
-
-				}else{
-					let chatroom = new chat({
-						userfrom             : userFrom,
-						userto             : userTo,
-						messages             : mess
-					});
-					chatroom.save()
-					console.log("fist create");
-
-				}
-				socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
-				socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
-			}
-		});
+			})
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
 exports.edit_avatar = (userid, image) =>
