@@ -297,7 +297,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	return mResult;
 
 }
-exports.checkRoomChat = (userFrom,userTo,socket) =>{
+exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 
@@ -317,7 +317,7 @@ exports.checkRoomChat = (userFrom,userTo,socket) =>{
 						socket.emit(userFrom+" - "+userTo, []);
 					}else{
 						mResult = result;
-						socket.emit(userFrom+" - "+userTo, mResult);
+						socket.emit(userFrom+" - "+userTo, mResult,type);
 					}
 				}else{
 					console.log("ress23");

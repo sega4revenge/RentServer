@@ -55,20 +55,16 @@ module.exports = io => {
 		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 		console.log(userFrom,userTo);
+		var id = "";
+		var type =0;
+		if(userIdOnline === userFrom)
+		{id = userTo;}else{id=userTo;}
+		if(rooms.indexOf(id)> -1)
+		{
+			type =1;
+		}
+		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket,type);
 
-
-		// 	if(rooms.indexOf(userIdOnline)> -1)
-		// 	{
-		// 		console.log( userIdOnline+ " đã ton tai");
-		// 	}else{
-		// 		rooms.push(userIdOnline);
-		// 		console.log(userIdOnline + " đã online");
-		// 	}
-		//
-		// console.log(rooms.length + "nguoi đã online");
-
-		//check room  co ton cmn tai k co thi lay du lieu ve
-		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket);
 
 		});
 		socket.on('sendchat', function (id,userFrom,userTo,email,name,message) {
