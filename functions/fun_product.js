@@ -1012,6 +1012,7 @@ exports.UpImageChat = (userfrom,userto,email,name,img) =>
 						);
 						console.log("second create");
 					}
+				reject({status: 404, message: "ADD SUCCESS !"});
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
