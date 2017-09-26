@@ -621,6 +621,22 @@ module.exports = router => {
 				});*/
 
 	});
+
+	router.post('/sendimagechat', function (req, res) {
+		const form = new formidable.IncomingForm();
+		form.multiples = true;
+		form.keepExtensions = true;
+		form.uploadDir = uploadDir;
+		form.parse(req, (err, fields, files) => {
+			if (err) return res.status(500).json({error: err});
+
+			fun_product.UpImageChat(fields.userid, files.image.path.substring(8))
+				.then(result => res.status(result.status).json({status: result.status, user: result.user}))
+
+			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
+			// res.status(200).json({uploaded: true})
+		});
+	});
 	router.post('/changeavatar', function (req, res) {
 		const form = new formidable.IncomingForm();
 		form.multiples = true;

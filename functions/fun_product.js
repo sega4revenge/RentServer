@@ -308,13 +308,13 @@ exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 			if (err){
 				throw err;
 				mResult = null;
-				socket.emit(userFrom+" - "+userTo, []);
+				socket.emit(userFrom+" - "+userTo, [],type);
 			}else{
 
 				if(result){
 					if(result.length === 0){
 						mResult = null;
-						socket.emit(userFrom+" - "+userTo, []);
+						socket.emit(userFrom+" - "+userTo, [],type);
 					}else{
 						mResult = result;
 						socket.emit(userFrom+" - "+userTo, mResult,type);
@@ -322,7 +322,7 @@ exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 				}else{
 					console.log("ress23");
 					mResult = null;
-					socket.emit(userFrom+" - "+userTo, []);
+					socket.emit(userFrom+" - "+userTo, [],type);
 				}
 
 			}
@@ -952,17 +952,34 @@ exports.uploadproduct = (productid, image) =>
 					reject({status: 404, message: "User Not Found !"});
 
 				} else {
-					console.log("1111122");
+
 					return products[0];
-					console.log("2221111");
+
 				}
 			})
 
 			.then(product => {
+				console.log("1111122");
+				console.log("2221111");
 				product.images.push(image);
 				product.save();
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+exports.UpImageChat = (userid, image) =>
+
+	new Promise((resolve, reject) => {
+
+		user.findByIdAndUpdate(
+			userid,
+			{$set: {"photoprofile": image}},
+			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
+			function (err, model) {
+				console.log(err);
+				resolve({status: 200, user: model});
+			}
+		)
 
 	});
 exports.edit_avatar = (userid, image) =>
