@@ -629,8 +629,11 @@ module.exports = router => {
 		form.uploadDir = uploadDir;
 		form.parse(req, (err, fields, files) => {
 			if (err) return res.status(500).json({error: err});
+
 			console.log(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8));
+			console.log("bbbbbbb");
 			fun_product.UpImageChat(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8))
+
 				.then(result => res.status(result.status).json({status: result.status, user: result.user}))
 
 		});
