@@ -362,7 +362,7 @@ exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 
 	});*/
 
-exports.EditProduct = (productid, productname, price, time, number, category, address, description, timestamp, listitem) =>
+exports.EditProduct = (productid, productname, price, time, number, category, address, description, status, timestamp, listitem) =>
 
 	new Promise((resolve, reject) => {
 
@@ -376,6 +376,7 @@ exports.EditProduct = (productid, productname, price, time, number, category, ad
 				productss.category = category;
 				productss.location.address = address;
 				productss.description = description;
+				productss.status = status;
 				productss.timestamp = timestamp;
 				if (listitem.length !== 0) {
 					for (var i = 0; i <= (listitem.length - 1); i++) {
@@ -420,6 +421,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 					coordinates: [lot,lat]
 				},
 				created_at: timestamp,
+				status: "0",
 				view: 0,
 				type: type
 			});
@@ -440,6 +442,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 					coordinates: [lot,lat]
 				},
 				created_at: timestamp,
+				status: "0",
 				view: 0,
 				type: type
 			});

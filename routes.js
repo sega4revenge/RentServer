@@ -372,6 +372,7 @@ module.exports = router => {
 		const category = req.body.category;
 		const address = req.body.address;
 		const description = req.body.description;
+		const status = req.body.status;
 		var listitem = req.body.listimgdel;
 		var arrImgDel = [];
 		if(listitem != "0")
@@ -394,7 +395,7 @@ module.exports = router => {
 
 		} else {
 
-			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, timestamp,arrImgDel)
+			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, status, timestamp,arrImgDel)
 				.then(result => {
 					res.status(result.status).json({message: result.message, product: result.product})
 				})

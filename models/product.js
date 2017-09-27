@@ -15,6 +15,7 @@ const productSchema = mongoose.Schema({
     type                : String,
     time                : String,
     created_at          : String,
+	status				: String,
 	location: {
 		type: { type: String },
         address : {type : String },
