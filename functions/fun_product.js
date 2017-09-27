@@ -999,6 +999,7 @@ exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
 							messages             : mess
 						});
 						chatroom.save()
+						console.log(chatroom);
 						resolve({status: 200, listchat: chatroom});
 					}else{
 
@@ -1008,6 +1009,7 @@ exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
+								console.log(model);
 								resolve({status: 200, listchat: model});
 							}
 						);
