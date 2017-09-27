@@ -961,8 +961,6 @@ exports.uploadproduct = (productid, image) =>
 			})
 
 			.then(product => {
-				console.log("1111122");
-				console.log("2221111");
 				product.images.push(image);
 				product.save();
 			})
