@@ -1009,7 +1009,9 @@ exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								console.log(err);
-								console.log(model);
+								let mess = model.messages.length;
+								mess -= 1;
+								console.log(model.messages[mess]);
 								resolve({status: 200, listchat: model});
 							}
 						);
