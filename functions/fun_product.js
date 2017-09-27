@@ -164,11 +164,9 @@ exports.mInboxChat = (userid) =>
 			.then(room => {
 				if(room.length>0)
 				{
-
-
 					resolve({listinbox: room});
 				}else{
-					resolve({listinbox: []});
+					reject({status: 200, message: "Not Found !"});
 				}
 
 
