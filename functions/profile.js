@@ -15,7 +15,6 @@ exports.getProfile = userid =>
 
 
             })
-
             .then(users => {
 
 					resolve(users[0]);
