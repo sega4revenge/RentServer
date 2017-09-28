@@ -28,7 +28,7 @@ exports.allproduct = (type, page,category) =>
 
 						if (products.length === 0) {
 
-							resolve({status: 404, message: "Product Not Found !"});
+							reject({status: 404, message: "Product Not Found !"});
 
 						} else {
 
@@ -50,7 +50,7 @@ exports.allproduct = (type, page,category) =>
 
 						if (products.length === 0) {
 
-							resolve({status: 404, message: "Product Not Found !"});
+							reject({status: 404, message: "Product Not Found !"});
 
 						} else {
 
@@ -75,7 +75,7 @@ exports.allproduct = (type, page,category) =>
 
 						if (products.length === 0) {
 
-							resolve({status: 404, message: "Product Not Found !"});
+							reject({status: 404, message: "Product Not Found !"});
 
 						} else {
 
@@ -97,7 +97,7 @@ exports.allproduct = (type, page,category) =>
 
 						if (products.length === 0) {
 
-							resolve({status: 404, message: "Product Not Found !"});
+							reject({status: 404, message: "Product Not Found !"});
 
 						} else {
 
