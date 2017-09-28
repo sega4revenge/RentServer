@@ -62,7 +62,7 @@ exports.editInfoUser = (userid,newname,newphone) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"name": newname, "phone": newphone}},
-			{safe: true, upsert: true, new: true,select: "-listproduct"},
+			{safe: true, upsert: true, new: true,select: "-listproduct, -listsavedproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
