@@ -61,7 +61,7 @@ exports.editInfoUser = (userid,newname,newphone) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"name": newname, "phone": newphone}},
-			{safe: true, upsert: true, new: true,select: "-listproduct, -listsavedproduct"},
+			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
@@ -78,7 +78,7 @@ exports.editPhoneNumber = (userid,phone) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"phone": phone}},
-			{safe: true, upsert: true, new: true,select: "-listproduct, -listsavedproduct"},
+			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
