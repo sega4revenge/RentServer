@@ -52,7 +52,7 @@ exports.getFullProfile = userid =>
 			.catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
 
 	});
-exports.editInfoUser = (userid,newname) =>
+exports.editInfoUser = (userid,newname,newphone) =>
 
 	new Promise((resolve,reject) => {
 
@@ -61,7 +61,7 @@ exports.editInfoUser = (userid,newname) =>
 
 		user.findByIdAndUpdate(
 			userid,
-			{$set: {"name": newname}},
+			{$set: {"name": newname, "phone": newphone}},
 			{safe: true, upsert: true, new: true,select: "-listproduct"},
 			function (err, model) {
 				console.log(err);

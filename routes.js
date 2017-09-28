@@ -518,6 +518,7 @@ module.exports = router => {
 	router.post('/editinfouser', (req, res) => {
 		const userid = req.body.userid;
 		const newname = req.body.newname;
+		const newphone = req.body.newphone;
 
 		if (!userid) {
 
@@ -525,7 +526,7 @@ module.exports = router => {
 
 		} else {
 
-			profile.editInfoUser(userid,newname)
+			profile.editInfoUser(userid,newname,newphone)
 
 
 				.then(result => res.status(result.status).json({user: result.user }))
