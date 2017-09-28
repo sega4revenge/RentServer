@@ -33,7 +33,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 		if(typeArrange === 0)
 		{
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({view: -1})
-				.populate({path: "user", select : "-listproduct"})
+				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -54,7 +54,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 		if(typeArrange=== 1)
 		{
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({created_at: -1})
-				.populate({path: "user", select : "-listproduct"})
+				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -75,7 +75,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 		if(typeArrange=== 2)
 		{
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: 1})
-				.populate({path: "user", select : "-listproduct"})
+				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
@@ -96,7 +96,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 		if(typeArrange=== 3)
 		{
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: -1})
-				.populate({path: "user", select : "-listproduct"})
+				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
 					console.log("products = " +  category);
 					if (products.length === 0) {
