@@ -22,7 +22,7 @@ exports.allproduct = (type, page,category) =>
 		if (type === 1) {
 			if(category === 999 )
 			{
-				product.find({}, {comment: 0}).sort({created_at: -1}).skip(start).limit(limit)
+				product.find({}, {comment: 0}).skip(start).limit(limit)
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -43,8 +43,8 @@ exports.allproduct = (type, page,category) =>
 					})
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-			}else{
-				product.find({category: category}, {comment: 0}).sort({created_at: -1}).skip(start).limit(limit)
+			}else{	
+				product.find({category: category}, {comment: 0}).skip(start).limit(limit)
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -69,7 +69,7 @@ exports.allproduct = (type, page,category) =>
 
 		} else {
 			if(category === 999 ) {
-				product.find({}, {comment: 0}).sort({created_at: -1})
+				product.find({}, {comment: 0})
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -91,7 +91,7 @@ exports.allproduct = (type, page,category) =>
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
-				product.find({category: category}, {comment: 0}).sort({created_at: -1})
+				product.find({category: category}, {comment: 0})
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -525,7 +525,7 @@ exports.push_messtotopic = (productid, msg, userid) =>
 				useridcmt: userid
 			}
 		};
-		console.log("push mess: " + msg);
+		console.log("push mess: " + msg);	
 
 		fcm.send(m, function (err, response) {
 			if (err) {
