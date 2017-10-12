@@ -305,7 +305,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	return mResult;
 
 }
-exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
+exports.checkRoomChat = (userFrom,userTo,socket,type,io) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 
@@ -315,22 +315,22 @@ exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 
 			if (err){
 				throw err;
-				mResult = null;
-				socket.emit(userFrom+" - "+userTo, [],type);
+				mResult = null; //socket.emit(userFrom+" - "+userTo, [],type);
+				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
 			}else{
 
 				if(result){
 					if(result.length === 0){
 						mResult = null;
-						socket.emit(userFrom+" - "+userTo, [],type);
+						io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
 					}else{
 						mResult = result;
-						socket.emit(userFrom+" - "+userTo, mResult,type);
+						io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type);
 					}
 				}else{
 					console.log("ress23");
 					mResult = null;
-					socket.emit(userFrom+" - "+userTo, [],type);
+					io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
 				}
 
 			}

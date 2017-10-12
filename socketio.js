@@ -54,18 +54,17 @@ module.exports = io => {
 
 		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
-		console.log(userFrom,userTo);
-		var id = "";
-		var type =0;
-		if(userIdOnline === userFrom)
-		{id = userTo;}else{id=userTo;}
-		if(rooms.indexOf(id)> -1)
-		{
-			type =1;
-		}
-		var ss=	fun_product.checkRoomChat(userFrom,userTo,socket,type);
-
-
+			console.log(userFrom,userTo);
+			var id = "";
+			var type =0;
+			if(userIdOnline === userFrom)
+			{id = userTo;}else{id=userTo;}
+			if(rooms.indexOf(id)> -1)
+			{
+				type =1;
+			}
+			socket.join(userFrom+" - "+userTo);
+			var ss=	fun_product.checkRoomChat(userFrom,userTo,socket,type,io);
 		});
 
 		socket.on('sendchatimage', function (userFrom,userTo,email,name,message) {
