@@ -53,6 +53,10 @@ module.exports = io => {
 
 
 		});
+		socket.on('outroom', function (userFrom,userTo) {
+			console.log("outroom: "+userFrom+" - "+userTo);
+			socket.leave(userFrom+" - "+userTo);
+		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
 			console.log(userFrom,userTo);
 			var id = "";
@@ -63,6 +67,7 @@ module.exports = io => {
 			{
 				type =1;
 			}
+			console.log(userIdOnline+" joinroom: "+userFrom+" - "+userTo);
 			socket.join(userFrom+" - "+userTo);
 			var ss=	fun_product.checkRoomChat(userFrom,userTo,socket,type,io);
 		});
