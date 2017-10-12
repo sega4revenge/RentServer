@@ -62,7 +62,7 @@ module.exports = io => {
 			var id = "";
 			var type =0;
 			if(userIdOnline === userFrom)
-			{id = userTo;}else{id=userTo;}
+			{id = userTo;}else{id=userFrom;}
 			if(rooms.indexOf(id)> -1)
 			{
 				type =1;
@@ -80,7 +80,7 @@ module.exports = io => {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);
 
-			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket);
+			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket,io);
 
 			if(ss)
 			{
