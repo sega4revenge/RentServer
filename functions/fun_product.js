@@ -190,17 +190,45 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.push_notification_chat= (userto, msg, userfrom) =>
+exports.push_notification_chat= (id,userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
 		var tokencode;
-		user.find({_id: ObjectId(userto)}, function (err, result) {
+		user.find({_id: ObjectId(id)}, function (err, result) {
 			if (err) {
 				throw err;
 			} else {
-				var usersend = "";
-				var avata = "";
-				user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
+				var mResult = result[0];
+				var usersend = mResult.name;
+				var avata = mResult.photoprofile;
+				tokencode = mResult.tokenfirebase;
+				console.log(tokencode,usersend,avata);
+				if (tokencode) {
+					const m = {
+						to: tokencode,
+
+						data: {
+							userto: userto,
+							name: usersend,
+							messager: msg,
+							avata: avata,
+							userfrom: userfrom
+						}
+					};
+					console.log("push mess: " + msg);
+
+					fcm.send(m, function (err, response) {
+						if (err) {
+							console.log(err);
+							reject({status: 409, message: "MessToTopic Error !"});
+						} else {
+							console.log(response);
+							resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
+
+						}
+					});
+				}
+			/*	user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
 					if (err) {
 						throw err;
 					}else{
@@ -240,7 +268,7 @@ exports.push_notification_chat= (userto, msg, userfrom) =>
 							});
 						}
 					}
-				});
+				});*/
 
 			}
 		});

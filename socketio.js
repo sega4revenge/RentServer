@@ -84,7 +84,7 @@ module.exports = io => {
 
 			if(ss)
 			{
-				fun_product.push_notification_chat(id,message,userTo);
+				fun_product.push_notification_chat(id,userFrom,message,userTo);
 			////	var from = 0;
 			/*	var to = 0;
 				if(rooms.indexOf(userFrom)< 0)
