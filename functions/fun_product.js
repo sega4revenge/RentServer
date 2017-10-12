@@ -126,7 +126,7 @@ exports.allproductsaved = (type, page, userid) =>
 		const start =  (limit * page) - limit;
 
 
-				user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
+				user.findById(userid, {listsavedproduct: 1,comment : 0, _id: 0}).skip(start).limit(limit)
 					.populate({
 						path: "listsavedproduct user",
 						// Get friends of friends - populate the 'friends' array for every friend
