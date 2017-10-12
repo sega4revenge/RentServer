@@ -22,7 +22,7 @@ exports.allproduct = (type, page,category) =>
 		if (type === 1) {
 			if(category === 999 )
 			{
-				product.find({}, {comment: 0}).sort({created_at: -1}).skip(start).limit(limit)
+				product.find({}, {comment: 0}).skip(start).limit(limit)
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -43,8 +43,8 @@ exports.allproduct = (type, page,category) =>
 					})
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-			}else{
-				product.find({category: category}, {comment: 0}).sort({created_at: -1}).skip(start).limit(limit)
+			}else{	
+				product.find({category: category}, {comment: 0}).skip(start).limit(limit)
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -69,7 +69,7 @@ exports.allproduct = (type, page,category) =>
 
 		} else {
 			if(category === 999 ) {
-				product.find({}, {comment: 0}).sort({created_at: -1})
+				product.find({}, {comment: 0})
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -91,7 +91,7 @@ exports.allproduct = (type, page,category) =>
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 			}else{
-				product.find({category: category}, {comment: 0}).sort({created_at: -1})
+				product.find({category: category}, {comment: 0})
 					.populate({path : "user", select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
@@ -129,6 +129,7 @@ exports.allproductsaved = (type, page, userid) =>
 				user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
 					.populate({
 						path: "listsavedproduct user",
+						select: "-comment",
 						// Get friends of friends - populate the 'friends' array for every friend
 						populate: {path : "user", select : "-listproduct -listsavedproduct"}
 					})
@@ -305,7 +306,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket) =>{
 	return mResult;
 
 }
-exports.checkRoomChat = (userFrom,userTo,socket,type,io) =>{
+exports.checkRoomChat = (userFrom,userTo,socket,type) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 
@@ -315,22 +316,22 @@ exports.checkRoomChat = (userFrom,userTo,socket,type,io) =>{
 
 			if (err){
 				throw err;
-				mResult = null; //socket.emit(userFrom+" - "+userTo, [],type);
-				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+				mResult = null;
+				socket.emit(userFrom+" - "+userTo, [],type);
 			}else{
 
 				if(result){
 					if(result.length === 0){
 						mResult = null;
-						io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+						socket.emit(userFrom+" - "+userTo, [],type);
 					}else{
 						mResult = result;
-						io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type);
+						socket.emit(userFrom+" - "+userTo, mResult,type);
 					}
 				}else{
 					console.log("ress23");
 					mResult = null;
-					io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+					socket.emit(userFrom+" - "+userTo, [],type);
 				}
 
 			}
@@ -525,7 +526,7 @@ exports.push_messtotopic = (productid, msg, userid) =>
 				useridcmt: userid
 			}
 		};
-		console.log("push mess: " + msg);
+		console.log("push mess: " + msg);	
 
 		fcm.send(m, function (err, response) {
 			if (err) {
