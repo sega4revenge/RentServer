@@ -58,7 +58,7 @@ module.exports = io => {
 			socket.leave(userFrom+" - "+userTo);
 		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline) {
-			console.log(userFrom,userTo);
+		//	console.log(userFrom,userTo);
 			var id = "";
 			var type =0;
 			if(userIdOnline === userFrom)
@@ -78,7 +78,7 @@ module.exports = io => {
 
 		socket.on('sendchat', function (idsend,idrec,userFrom,userTo,email,name,message) {
 			//gui tin nhan len server
-			console.log(userFrom,userTo,name,message);
+		//	console.log(userFrom,userTo,name,message);
 
 			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io);
 
