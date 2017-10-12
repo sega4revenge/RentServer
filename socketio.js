@@ -78,7 +78,7 @@ module.exports = io => {
 
 		socket.on('sendchat', function (idsend,idrec,userFrom,userTo,email,name,message) {
 			//gui tin nhan len server
-			console.log(id,userFrom,userTo,name,message);
+			console.log(userFrom,userTo,name,message);
 
 			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io);
 
