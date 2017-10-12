@@ -190,44 +190,55 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.push_notification_chat= (id,userfrom, msg, userto) =>
+exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
 		var tokencode;
-		user.find({_id: ObjectId(id)}, function (err, result) {
+		user.find({_id: ObjectId(idsend)}, function (err, result) {
 			if (err) {
 				throw err;
 			} else {
 				var mResult = result[0];
 				var usersend = mResult.name;
 				var avata = mResult.photoprofile;
-				tokencode = mResult.tokenfirebase;
+				user.find({_id: ObjectId(idrec)}, function (err, UserResult) {
+					if (err) {
+						throw err;
+					}else{
+						if(UserResult){
+							var mResultUser = UserResult[0];
+							tokencode = mResultUser.tokenfirebase;
+							if (tokencode) {
+								const m = {
+									to: tokencode,
+
+									data: {
+										userto: userto,
+										name: usersend,
+										messager: msg,
+										avata: avata,
+										userfrom: userfrom
+									}
+								};
+								console.log("push mess: " + msg);
+
+								fcm.send(m, function (err, response) {
+									if (err) {
+										console.log(err);
+										reject({status: 409, message: "MessToTopic Error !"});
+									} else {
+										console.log(response);
+										resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
+
+									}
+								});
+							}
+						}
+					}
+				});
+
 				console.log(tokencode,usersend,avata);
-				if (tokencode) {
-					const m = {
-						to: tokencode,
 
-						data: {
-							userto: userto,
-							name: usersend,
-							messager: msg,
-							avata: avata,
-							userfrom: userfrom
-						}
-					};
-					console.log("push mess: " + msg);
-
-					fcm.send(m, function (err, response) {
-						if (err) {
-							console.log(err);
-							reject({status: 409, message: "MessToTopic Error !"});
-						} else {
-							console.log(response);
-							resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
-
-						}
-					});
-				}
 			/*	user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
 					if (err) {
 						throw err;

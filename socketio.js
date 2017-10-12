@@ -76,15 +76,15 @@ module.exports = io => {
 
 		});
 
-		socket.on('sendchat', function (id,userFrom,userTo,email,name,message) {
+		socket.on('sendchat', function (idsend,idrec,userFrom,userTo,email,name,message) {
 			//gui tin nhan len server
 			console.log(id,userFrom,userTo,name,message);
 
-			var ss=	fun_product.sendMessChat(id,userFrom,userTo,email,name,message,socket,io);
+			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io);
 
 			if(ss)
 			{
-				fun_product.push_notification_chat(id,userFrom,message,userTo);
+				fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
 			////	var from = 0;
 			/*	var to = 0;
 				if(rooms.indexOf(userFrom)< 0)
