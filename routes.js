@@ -575,7 +575,7 @@ module.exports = router => {
 	});
 	router.get('/data/:id', (req, res) => {
 
-
+		console.log("getDetailUser"+req.params.id);
 		const id = req.params.id;
 		profile.getProfile(id)
 
