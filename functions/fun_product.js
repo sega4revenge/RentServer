@@ -353,7 +353,12 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io) =>{
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)})
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
-
+			var id = "";
+			if(userIdOnline === userFrom){
+				id = userTo;
+			}else{
+				id = userFrom;
+			}
 			if (err){
 				throw err;
 				mResult = null;
@@ -363,15 +368,18 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io) =>{
 				if(result){
 					if(result.length === 0){
 						mResult = null;
-						io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
+						user.find({_id: ObjectId(id)}, function (err, UserResult) {
+							if (err) {
+								throw err;
+							}else{
+								if(UserResult){
+									io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+								}
+							}
+						});
+
 					}else{
 						mResult = result;
-						var id = "";
-						if(userIdOnline === userFrom){
-							id = userTo;
-						}else{
-							id = userFrom;
-						}
 						user.find({_id: ObjectId(id)}, function (err, UserResult) {
 							if (err) {
 								throw err;
@@ -384,7 +392,15 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io) =>{
 					}
 				}else{
 					mResult = null;
-					io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
+					user.find({_id: ObjectId(id)}, function (err, UserResult) {
+						if (err) {
+							throw err;
+						}else{
+							if(UserResult){
+								io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+							}
+						}
+					});
 				}
 
 			}
