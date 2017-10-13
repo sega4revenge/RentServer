@@ -346,7 +346,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io) =>{
 	return mResult;
 
 }
-exports.checkRoomChat = (userFrom,userTo,socket,type,io) =>{
+exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io) =>{
 	console.log(userFrom,userTo);
 	let mResult;
 
@@ -357,21 +357,34 @@ exports.checkRoomChat = (userFrom,userTo,socket,type,io) =>{
 			if (err){
 				throw err;
 				mResult = null;
-				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
 			}else{
 
 				if(result){
 					if(result.length === 0){
 						mResult = null;
-						io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+						io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
 					}else{
 						mResult = result;
-						io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type);
+						var id = "";
+						if(userIdOnline === userFrom){
+							id = userTo;
+						}else{
+							id = userFrom;
+						}
+						user.find({_id: ObjectId(id)}, function (err, UserResult) {
+							if (err) {
+								throw err;
+							}else{
+								if(UserResult){
+									io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
+								}
+							}
+						});
 					}
 				}else{
-					console.log("ress23");
 					mResult = null;
-					io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type);
+					io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
 				}
 
 			}

@@ -69,7 +69,7 @@ module.exports = io => {
 			}
 			console.log(userIdOnline+" joinroom: "+userFrom+" - "+userTo);
 			socket.join(userFrom+" - "+userTo);
-			var ss=	fun_product.checkRoomChat(userFrom,userTo,socket,type,io);
+			var ss=	fun_product.checkRoomChat(userFrom,userTo,userIdOnline,socket,type,io);
 		});
 
 		socket.on('sendchatimage', function (userFrom,userTo,email,name,message) {
