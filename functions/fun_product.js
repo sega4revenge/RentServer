@@ -363,7 +363,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 	console.log("limit"+limit);
 	console.log("start"+start);
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [1,10] }})
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [-1,-10] }})
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 
