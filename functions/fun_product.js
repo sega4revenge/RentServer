@@ -354,22 +354,26 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 		if(page<1) page = 1;
 	const start =  (limit * page) - limit;
 
+	var id = "";
+	if(userIdOnline === userFrom){
+		id = userTo;
+	}else{
+		id = userFrom;
+	}
 
+	console.log("limit"+limit);
+	console.log("start"+start);
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}).skip(start).limit(limit)
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
-			var id = "";
-			if(userIdOnline === userFrom){
-				id = userTo;
-			}else{
-				id = userFrom;
-			}
+
 			if (err){
 				throw err;
+				console.log("limit11111");
 				mResult = null;
 				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
 			}else{
-
+				console.log("limit2222222");
 				if(result){
 					if(result.length === 0){
 						mResult = null;
@@ -378,6 +382,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 								throw err;
 							}else{
 								if(UserResult){
+									console.log("limit333333333");
 									io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
 								}
 							}
@@ -389,6 +394,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 							if (err) {
 								throw err;
 							}else{
+								console.log("limit44444444");
 								if(UserResult){
 									io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
 								}
@@ -401,6 +407,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 						if (err) {
 							throw err;
 						}else{
+							console.log("limit555555");
 							if(UserResult){
 								io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
 							}
