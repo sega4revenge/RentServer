@@ -387,6 +387,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 					}else{
 						mResult = result;
+						console.log(mResult)
 						user.find({_id: ObjectId(id)}, function (err, UserResult) {
 							if (err) {
 								throw err;
