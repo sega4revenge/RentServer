@@ -363,7 +363,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 	console.log("limit"+limit);
 	console.log("start"+start);
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [-start,limit] }})
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [ - start,limit] }})
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 
@@ -387,7 +387,6 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 					}else{
 						mResult = result;
-						console.log(mResult)
 						user.find({_id: ObjectId(id)}, function (err, UserResult) {
 							if (err) {
 								throw err;
