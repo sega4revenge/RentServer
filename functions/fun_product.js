@@ -353,7 +353,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	if(page.is)
 		if(page<1) page = 1;
 	const start =  (limit * page) - limit;
-	console.log("TIMESTAMP: " + timeStamp);
+
 
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}).skip(start).limit(limit)
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
