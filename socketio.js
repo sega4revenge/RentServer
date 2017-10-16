@@ -68,7 +68,7 @@ module.exports = io => {
 				type =1;
 			}
 			console.log(userIdOnline+" joinroom: "+userFrom+" - "+userTo);
-			if(page === 0)
+			if(page === 1)
 			{socket.join(userFrom+" - "+userTo);}
 			var ss=	fun_product.checkRoomChat(userFrom,userTo,userIdOnline,socket,type,io,page);
 		});
