@@ -352,7 +352,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	const limit = 10;
 	if(page.is)
 		if(page<1) page = 1;
-	const start =  (limit * page) - limit;
+	const start =  -((limit * page) - limit);
 
 	var id = "";
 	if(userIdOnline === userFrom){
@@ -363,7 +363,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 	console.log("limit"+limit);
 	console.log("start"+start);
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [ - start,limit] }})
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [start,limit] }})
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 
