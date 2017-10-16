@@ -146,6 +146,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									users[0].tokenfirebase = tokenfirebase;
 									users[0].save();
 									users[0].hashed_password = "co";
+									console.log(users[0]);
 									resolve({status: 201, message: "User Registered Sucessfully !", user: users[0]});
 
 								} else {
