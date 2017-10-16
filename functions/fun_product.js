@@ -373,7 +373,6 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 				mResult = null;
 				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
 			}else{
-				console.log("limit2222222");
 				if(result){
 					if(result.length === 0){
 						mResult = null;
@@ -394,7 +393,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 							if (err) {
 								throw err;
 							}else{
-								console.log("limit44444444");
+								console.log("limit44444444"+mResult);
 								if(UserResult){
 									io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
 								}
