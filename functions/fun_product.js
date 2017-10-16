@@ -346,11 +346,16 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io) =>{
 	return mResult;
 
 }
-exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io) =>{
+exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	console.log(userFrom,userTo);
 	let mResult;
+	const limit = 10;
+	if(page.is)
+		if(page<1) page = 1;
+	const start =  (limit * page) - limit;
+	console.log("TIMESTAMP: " + timeStamp);
 
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)})
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}).skip(start).limit(limit)
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {
 			var id = "";

@@ -57,7 +57,7 @@ module.exports = io => {
 			console.log("outroom: "+userFrom+" - "+userTo);
 			socket.leave(userFrom+" - "+userTo);
 		});
-		socket.on('getData', function (userFrom,userTo,userIdOnline) {
+		socket.on('getData', function (userFrom,userTo,userIdOnline,page) {
 		//	console.log(userFrom,userTo);
 			var id = "";
 			var type =0;
@@ -68,8 +68,9 @@ module.exports = io => {
 				type =1;
 			}
 			console.log(userIdOnline+" joinroom: "+userFrom+" - "+userTo);
-			socket.join(userFrom+" - "+userTo);
-			var ss=	fun_product.checkRoomChat(userFrom,userTo,userIdOnline,socket,type,io);
+			if(page === 0)
+			{socket.join(userFrom+" - "+userTo);}
+			var ss=	fun_product.checkRoomChat(userFrom,userTo,userIdOnline,socket,type,io,page);
 		});
 
 		socket.on('sendchatimage', function (userFrom,userTo,email,name,message) {
