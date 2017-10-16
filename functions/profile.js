@@ -1,6 +1,8 @@
 'use strict';
 const user = new require('../models/user');
 const fun_product = require('./fun_product');
+
+
 exports.getProfile = userid =>
 
     new Promise((resolve,reject) => {
@@ -8,7 +10,7 @@ exports.getProfile = userid =>
         let ObjectId;
         ObjectId = require('mongodb').ObjectID;
 
-        user.find({ _id: ObjectId(userid)},{listproduct: 0})
+        user.find({ _id: ObjectId(userid)},{listproduct: 0,listsavedproduct: 0})
             .exec(function (err, post) {
                 if(err) throw err;
                 console.log(post);
