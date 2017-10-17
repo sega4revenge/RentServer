@@ -20,6 +20,7 @@ exports.changePassword = (userid, password, newPassword) =>
             if(password === ""){
 				const salt = bcrypt.genSaltSync(10);
 				user.hashed_password = bcrypt.hashSync(newPassword, salt);
+				user.status_code = "1";
 				return user.save();
 			} else
             {
