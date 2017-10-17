@@ -501,7 +501,7 @@ module.exports = router => {
 		const oldpass = req.body.oldpass;
 		const newpass = req.body.newpass;
 
-		if (!user || !oldpass || !newpass) {
+		if (!user || !newpass) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
