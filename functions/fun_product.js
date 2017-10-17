@@ -305,6 +305,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 			message : message,
 			created_at : timestamp
 		};
+
 	}else{
 		// Messager with only image
 		mess = {
@@ -314,6 +315,8 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 			message : photoprofile,
 			created_at : timestamp
 		};
+		photoprofile = message;
+		message = ""
 	}
 
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
