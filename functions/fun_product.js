@@ -405,7 +405,8 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 								throw err;
 							}else{
 								if(UserResult){
-									io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+								//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+									socket.emit("getDataMessage", [],type,UserResult);
 								}
 							}
 						});
@@ -417,7 +418,8 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 								throw err;
 							}else{
 								if(UserResult){
-									io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
+									//io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
+									socket.emit("getDataMessage",mResult,type,UserResult);
 								}
 							}
 						});
@@ -429,7 +431,8 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 							throw err;
 						}else{
 							if(UserResult){
-								io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+							//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+								socket.emit("getDataMessage", [],type,UserResult);
 							}
 						}
 					});
