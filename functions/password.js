@@ -17,7 +17,11 @@ exports.changePassword = (userid, password, newPassword) =>
 
             let user = users[0];
             const hashed_password = user.hashed_password;
-
+            if(password = null){
+				user.hashed_password = newPassword;
+				return user.save();
+			} else
+            {
             if (bcrypt.compareSync(password, hashed_password)) {
 
                 const salt = bcrypt.genSaltSync(10);
@@ -29,6 +33,7 @@ exports.changePassword = (userid, password, newPassword) =>
 
                 reject({ status: 401, message: 'Invalid Old Password !' });
             }
+			}
         })
  
         .then(user => resolve({ status: 200, message: 'Password Updated Sucessfully !' }))
