@@ -85,25 +85,17 @@ module.exports = io => {
 
 			if(ss)
 			{
-				fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
-			////	var from = 0;
-			/*	var to = 0;
-				if(rooms.indexOf(userFrom)< 0)
-				{
-					from =1;
+				console.log("///////////////////////");
+				var listclient= fun_product.roomSockets(userFrom+" - "+userTo,io)
+				if(listclient){
+					if(listclient.length >0)
+					{
+						for (var clientId in listclient) {
+								console.log(clientId);
+						}
+					}
 				}
-				if(rooms.indexOf(userTo)< 0)
-				{
-					to =1;
-				}
-		/*		if(from !== 0)
-				{
-					fun_product.push_notification_chat(userFrom,message,userTo);
-				}
-				if(to !== 0)
-				{
-					fun_product.push_notification_chat(userTo,message,userFrom);
-				} */
+			//	fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
 			}
 
 

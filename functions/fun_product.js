@@ -365,6 +365,14 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 	return mResult;
 
 }
+
+exports.roomSockets = (roomId,io) =>{
+	console.log(roomId);
+	var clients = io.sockets.adapter.rooms[roomId],
+		sockets = [];
+	for (var clientId in clients) sockets.push(io.sockets.connected[clientId]);
+	return sockets;
+}
 exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	console.log(userFrom,userTo);
 	let mResult;
@@ -578,6 +586,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				}
 			});
 	});
+
 exports.saveproduct = (userid, productid, type) =>
 
 	new Promise((resolve, reject) => {
