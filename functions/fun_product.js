@@ -284,7 +284,8 @@ exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 			}
 		});
 	});
-exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io) =>{
+exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>{
+	var mType = type;
 	var id = id;
 	var email = email;
 	var name = name;
@@ -293,13 +294,28 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io) =>{
 	const day = new Date();
 	var mResult = true;
 	const timestamp = day.getTime();
-	var mess = {
-		email: email,
-		name: name,
-		photoprofile: photoprofile,
-		message : message,
-		created_at : timestamp
-	};
+	var mess = {};
+	if(mType==0)
+	{
+		// Messager with only text
+		mess = {
+			email: email,
+			name: name,
+			photoprofile: photoprofile,
+			message : message,
+			created_at : timestamp
+		};
+	}else{
+		// Messager with only image
+		mess = {
+			email: email,
+			name: name,
+			photoprofile: message,
+			message : photoprofile,
+			created_at : timestamp
+		};
+	}
+
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
 		if (err){
 			throw err;
@@ -361,8 +377,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 		id = userFrom;
 	}
 
-	console.log("limit"+limit);
-	console.log("start"+start);
+
 	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [ start,10] }})
 		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
 		function(err, result) {

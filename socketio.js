@@ -77,11 +77,11 @@ module.exports = io => {
 
 		});
 
-		socket.on('sendchat', function (idsend,idrec,userFrom,userTo,email,name,message) {
+		socket.on('sendchat', function (idsend,idrec,userFrom,userTo,email,name,message,type) {
 			//gui tin nhan len server
 		//	console.log(userFrom,userTo,name,message);
 
-			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io);
+			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io,type);
 
 			if(ss)
 			{
