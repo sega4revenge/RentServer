@@ -91,7 +91,7 @@ module.exports = io => {
 					if(listclient.length >0)
 					{
 						for (var clientId in listclient) {
-								console.log(listclient);
+								console.log(clientId);
 							console.log("/////");
 						}
 					}

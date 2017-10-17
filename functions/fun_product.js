@@ -368,9 +368,10 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 
 exports.roomSockets = (roomId,io) =>{
 	console.log(roomId);
-	var clients = io.sockets.adapter.rooms[roomId],
-		sockets = [];
-	for (var clientId in clients) sockets.push(io.sockets.connected[clientId]);
+	var clients = io.sockets.adapter.rooms[roomId];
+	console.log(clients);
+	var sockets = [];
+	for (var clientId in clients) sockets.push(io.sockets.connected[sessionid]);
 	return sockets;
 }
 exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
