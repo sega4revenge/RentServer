@@ -18,10 +18,9 @@ exports.changePassword = (userid, password, newPassword) =>
             let user = users[0];
 			const hashed_password = user.hashed_password;
 
-			if(password === null ){
+			if(password === null || password.equals("")){
 				user.hashed_password = newPassword;
 				return user.save();
-
 			}
             else {
 
