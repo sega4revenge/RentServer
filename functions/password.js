@@ -10,35 +10,25 @@ const ObjectId = require("mongodb").ObjectID;
 exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
-		console.log(":"+userid +":"+ password +":"+ newPassword+":");
+
         user.find({ _id: Object(userid) })
  
         .then(users => {
- 
+
             let user = users[0];
-			const hashed_password = user.hashed_password;
+            const hashed_password = user.hashed_password;
 
-			if(password === null || password.equals("")){
-				console.log("den day roi 1");
-				user.hashed_password = newPassword;
-				return user.save();
-			}
-            else {
-				console.log("den day roi 2");
+            if (bcrypt.compareSync(password, hashed_password)) {
 
-				if (bcrypt.compareSync(password, hashed_password)) {
+                const salt = bcrypt.genSaltSync(10);
+                user.hashed_password = bcrypt.hashSync(newPassword, salt);
 
-					const salt = bcrypt.genSaltSync(10);
-					user.hashed_password = bcrypt.hashSync(newPassword, salt);
+                return user.save();
 
-					return user.save();
+            } else {
 
-				} else {
-
-					reject({ status: 401, message: 'Invalid Old Password !' });
-				}
+                reject({ status: 401, message: 'Invalid Old Password !' });
             }
-
         })
  
         .then(user => resolve({ status: 200, message: 'Password Updated Sucessfully !' }))
