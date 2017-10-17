@@ -85,20 +85,14 @@ module.exports = io => {
 
 			if(ss)
 			{
-				console.log("///////////////////////");
+
 				var listclient= fun_product.roomSockets(userFrom+" - "+userTo,io)
 				if(listclient){
-					if(listclient.length >0)
-					{
-						for (var clientId in listclient) {
-								console.log(clientId);
-							console.log("/////");
-						}
+					if(listclient !== 2){
+						fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
 					}
 				}
-				console.log("////////////333::"+socket.id);
-				console.log("///////////////////////2");
-			//	fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
+
 			}
 
 

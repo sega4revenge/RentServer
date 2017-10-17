@@ -370,10 +370,7 @@ exports.roomSockets = (roomId,io) =>{
 	console.log(roomId);
 	var clients = io.sockets.adapter.rooms[roomId],sockets = [];
 	console.log(clients.length);
-	console.log(sockets);
-	//var ;
-	for (var clientId in clients) sockets.push(io.sockets.connected[clientId]);
-	return sockets;
+	return clients.length;
 }
 exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	console.log(userFrom,userTo);
