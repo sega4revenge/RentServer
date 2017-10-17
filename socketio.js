@@ -87,6 +87,7 @@ module.exports = io => {
 			{
 
 				var listclient= fun_product.roomSockets(userFrom+" - "+userTo,io)
+				console.log("/////"+listclient);
 				if(listclient){
 					if(listclient !== 2){
 						fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
