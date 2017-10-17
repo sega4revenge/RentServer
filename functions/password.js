@@ -19,10 +19,12 @@ exports.changePassword = (userid, password, newPassword) =>
 			const hashed_password = user.hashed_password;
 
 			if(password === null || password.equals("")){
+				console.log("den day roi 1");
 				user.hashed_password = newPassword;
 				return user.save();
 			}
             else {
+				console.log("den day roi 2");
 
 				if (bcrypt.compareSync(password, hashed_password)) {
 
