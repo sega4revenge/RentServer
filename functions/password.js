@@ -11,7 +11,7 @@ exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
 
-        user.find({ _id: Object(userid) })
+        user.find({ _id: Object(userid) },{listsavedproduct : 0, listproduct :0})
  
         .then(users => {
 
