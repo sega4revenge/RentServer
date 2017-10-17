@@ -10,7 +10,7 @@ const ObjectId = require("mongodb").ObjectID;
 exports.changePassword = (userid, password, newPassword) =>
  
     new Promise((resolve, reject) => {
-
+		console.log(":"+userid +":"+ password +":"+ newPassword+":");
         user.find({ _id: Object(userid) })
  
         .then(users => {
