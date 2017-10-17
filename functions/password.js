@@ -36,9 +36,10 @@ exports.changePassword = (userid, password, newPassword) =>
                 reject({ status: 401, message: 'Invalid Old Password !' });
             }
 			}
+			console.log(users)
         })
  
-        .then(user => resolve({ status: 200, message: 'Password Updated Sucessfully !' }))
+        .then(user => resolve({ status: 200, message: 'Password Updated Sucessfully !', user : user }))
  
         .catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
  

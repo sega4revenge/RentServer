@@ -510,7 +510,7 @@ module.exports = router => {
 			password.changePassword(user,oldpass,newpass)
 
 
-				.then(result => res.status(result.status).json({ message: result.message }))
+				.then(result => res.status(result.status).json({ message: result.message, user: result.user }))
 
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
