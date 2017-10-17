@@ -96,6 +96,7 @@ module.exports = io => {
 						}
 					}
 				}
+				console.log("////////////333::"+socket.id);
 				console.log("///////////////////////2");
 			//	fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
 			}
