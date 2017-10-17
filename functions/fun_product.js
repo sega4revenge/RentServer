@@ -369,7 +369,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 exports.roomSockets = (roomId,io) =>{
 	console.log(roomId);
 	var clients = io.sockets.adapter.rooms[roomId],sockets = [];
-	console.log(clients.sockets);
+	console.log(clients.sockets.get(0));
 	console.log(sockets);
 	//var ;
 	for (var clientId in clients) sockets.push(io.sockets.connected[clientId]);
