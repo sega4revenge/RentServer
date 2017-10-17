@@ -92,9 +92,11 @@ module.exports = io => {
 					{
 						for (var clientId in listclient) {
 								console.log(clientId);
+							console.log("/////");
 						}
 					}
 				}
+				console.log("///////////////////////2");
 			//	fun_product.push_notification_chat(idsend,idrec,userFrom,message,userTo);
 			}
 
