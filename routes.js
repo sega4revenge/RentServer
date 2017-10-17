@@ -633,7 +633,7 @@ module.exports = router => {
 			if (err) return res.status(500).json({error: err});
 
 			console.log(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8));
-			res.status(200).json({message: "succecc"})
+			res.status(200).json({message: files.image.path.substring(8)})
 
 		//	fun_product.UpImageChat(fields.userfrom,fields.userto,fields.email,fields.name, files.image.path.substring(8))
 // {
