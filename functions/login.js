@@ -32,7 +32,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
                 resolve({ status: 200, user : user });
             } else {
  
-                reject({ status: 401, message: 'Invalid Credentials !' });
+                reject({ status: 401, message: 'Incorrect password !' });
             }
         })
  

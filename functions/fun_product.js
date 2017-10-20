@@ -23,7 +23,7 @@ exports.allproduct = (type, page,category) =>
 			if(category === 999 )
 			{
 				product.find({}, {comment: 0}).skip(start).limit(limit)
-					.populate({path : "user", select : "-listproduct -listsavedproduct"})
+					.populate({path : "user",options: {sort: {"created_at": -1}}, select : "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
