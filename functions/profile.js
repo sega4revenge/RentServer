@@ -37,14 +37,14 @@ exports.getFullProfile = userid =>
 		user.find({ _id: ObjectId(userid)},{listsavedproduct: 0})
 			.populate({
 				path: "listproduct",
-				select: "-comment",
+				select: "-user -comment",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 			})
 
 
 			.then(users => {
-
+				console.log(users[0]);
 				resolve({status: 201, user : users[0]});
 
 				}
