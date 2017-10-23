@@ -39,8 +39,10 @@ exports.getFullProfile = userid =>
 				path: "listproduct",
 				select: "-comment",
 				options: {sort: {"time": -1}},
+				populate: {path: "user", select: "-listproduct -listsavedproduct"}
 				// Get friends of friends - populate the 'friends' array for every friend
 			})
+
 
 
 			.then(users => {
