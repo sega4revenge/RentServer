@@ -987,7 +987,7 @@ exports.productdetail = (productid, userid) =>
 				select: "-listproduct -listsavedproduct",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
-				populate: {path: "user", select: "_id name photoprofile"}
+				populate: {path: "user", select: "_id name email photoprofile"}
 			})
 
 			.then(products => {
