@@ -34,10 +34,10 @@ exports.getFullProfile = userid =>
 		let ObjectId;
 		ObjectId = require('mongodb').ObjectID;
 
-		user.find({ _id: ObjectId(userid)},{listsavedproduct: 0})
+		user.find({ _id: ObjectId(userid)},{listproduct: 1 })
 			.populate({
 				path: "listproduct",
-				select: "-user.user -comment",
+				select: "-comment",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 			})
