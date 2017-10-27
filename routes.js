@@ -144,6 +144,9 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.get('/link', (req, res) => {
+		res.redirect('http://google.com')
+	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
 
