@@ -35,12 +35,12 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({view: -1})
 				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
-					console.log("products = " +  category);
+					//.log("products = " +  category);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
 					} else {
-						console.log("products = " + products);
+						//console.log("products = " + products);
 						return products;
 
 					}
@@ -56,12 +56,12 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({created_at: -1})
 				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
-					console.log("products = " +  category);
+					///console.log("products = " +  category);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
 					} else {
-						console.log("products = " + products);
+					//	console.log("products = " + products);
 						return products;
 
 					}
@@ -77,12 +77,12 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: 1})
 				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
-					console.log("products = " +  category);
+					//console.log("products = " +  category);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
 					} else {
-						console.log("products = " + products);
+						//console.log("products = " + products);
 						return products;
 
 					}
@@ -98,12 +98,12 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 			product.find( {productname: {$regex: keySearch },"location.address": {$in: regexLocation} , "category": {$in: regexCategory}},{comment: 0}).sort({price: -1})
 				.populate({path: "user", select : "-listproduct -listsavedproduct"})
 				.then(products => {
-					console.log("products = " +  category);
+					//console.log("products = " +  category);
 					if (products.length === 0) {
 						reject({status: 404, message: "Product Not Found !"});
 
 					} else {
-						console.log("products = " + products);
+						//console.log("products = " + products);
 						return products;
 
 					}
