@@ -33,7 +33,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 	new Promise((resolve, reject) => {
 		const random = randomstring.generate({
-			length : 8,
+			length : 6,
 			charset : 'hex'
 		});
 		let hash, code;

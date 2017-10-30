@@ -48,8 +48,10 @@ exports.changePassword = (userid, password, newPassword) =>
 exports.resetPasswordInit = email =>
     new Promise((resolve, reject) => {
 		console.log("Init");
-		const random = randomstring.generate(8);
- 
+		const random = randomstring.generate({
+			length : 6,
+			charset : 'hex'
+		});
         user.find({ email: email })
  
         .then(users => {

@@ -600,7 +600,7 @@ exports.saveproduct = (userid, productid, type) =>
 			function (err, model) {
 				console.log(err);
 
-				resolve({status: 201, message: "product save Sucessfully !"});
+				resolve({status: 201, message: "product save Successfully !"});
 
 			}
 		);
@@ -613,7 +613,7 @@ exports.saveproduct = (userid, productid, type) =>
 			function (err, model) {
 				console.log(err);
 
-				resolve({status: 201, message: "product unsave Sucessfully !", user: model});
+				resolve({status: 201, message: "product unsave Successfully !", user: model});
 
 			}
 		);
@@ -703,7 +703,7 @@ exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 			.then(product => {
 				resolve({status: 200, listproduct: product});
 
-			})
+			})	
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 	});
 
