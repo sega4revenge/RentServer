@@ -39,6 +39,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 		let hash, code;
 		let newUser;
 		console.log(type);
+
 		if (type === 1) {
 			newUser = new user({
 				name: name,
@@ -57,7 +58,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				}
 			});
 
-			console.log("abc");
 		}
 		else if (type === 2) {
 			newUser = new user({
@@ -99,6 +99,89 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 			});
 
 		}
+		user.find({email: email},{listproduct: 0 ,listsavedproduct: 0})
+			.then(users => {
+				if(users.length !== 0)
+				{
+					if (type !== 0) {
+						if (type === 1) {
+							users[0].facebook.name = name;
+							users[0].facebook.id = id;
+							users[0].facebook.token = token;
+							users[0].facebook.photoprofile = photoprofile;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].save();
+
+							resolve({status: 201, message: "User Update Sucessfully !", user: users[0]});
+
+						} else {
+							users[0].google.name = name;
+							users[0].google.id = id;
+							users[0].google.token = token;
+							users[0].google.photoprofile = photoprofile;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].save();
+
+							resolve({status: 201, message: "User Update Sucessfully !", user: users[0]});
+
+						}
+					}else{
+						if (users[0].status_code === "0") {
+							const salt = bcrypt.genSaltSync(10);
+							hash = bcrypt.hashSync(password, salt);
+							code = bcrypt.hashSync(random, salt);
+
+							users[0].name = name;
+							users[0].email = email;
+							users[0].photoprofile = token;
+							users[0].hashed_password = hash;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].created_at = new Date();
+							users[0].temp_password = code;
+							users[0].temp_password_time = new Date();
+							users[0].status = "0";
+							users[0].save();
+
+							const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
+
+							const mailOptions = {
+
+								from: `"${config.name}" <${config.email}>`,
+								to: email,
+								subject: "Verify Email Request ",
+								html: `Hello ${name},
+
+                     Your verification  is <b>${random}</b>.
+                The verification is valid for only 5 minutes.
+
+                Thanks,
+                Sega Gò Vấp.`
+
+							};
+							console.log("Gui mail 2");
+							transporter.sendMail(mailOptions);
+							resolve({
+								status: 201,
+								message: "User Registered Sucessfully + check mail!",
+								user: users[0]
+							});
+
+						} else {
+							reject({status: 409, message: "User Already Registered !"});
+						}
+					}
+
+				}else{
+					newUser.save()
+					resolve({status: 201, message: "User Registered Sucessfully + check mail!", user: users[0]
+					});
+				}
+
+			})
+		.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+		});
+	/*
+
 
 
 		newUser.save()
@@ -114,10 +197,10 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							to: email,
 							subject: "Verify Email Request ",
 							html: `Hello ${name},
- 
-                     Your verification  is <b>${random}</b>.  
+
+                     Your verification  is <b>${random}</b>.
                 The verification is valid for only 5 minutes.
- 
+
                 Thanks,
                 Sega Gò Vấp.`
 
@@ -189,10 +272,10 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 										to: email,
 										subject: "Verify Email Request ",
 										html: `Hello ${name},
- 
-                     Your verification  is <b>${random}</b>.  
+
+                     Your verification  is <b>${random}</b>.
                 The verification is valid for only 5 minutes.
- 
+
                 Thanks,
                 Sega Gò Vấp.`
 
@@ -225,8 +308,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 					throw err;
 
 				}
-			});
-	});
+			}); */
+	//});
 exports.registerFinish = (email, code) =>
 	new Promise((resolve, reject) => {
 		console.log("Finish");
