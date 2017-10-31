@@ -16,12 +16,15 @@ exports.loginUser = (email, password,tokenfirebase) =>
                 reject({ status: 404, message: 'User Not Found !' });
  
             } else {
-                if(users[0].status_code !== 0)
-                {
+                if(users[0].status_code !==0){
+                    console.log("aaaaaaaaaaa")
 					return users[0];
                 }else{
+					console.log("bbbbbbb")
 					reject({ status: 403, message: 'Email not authenticated !' });
                 }
+
+
             }
         })
  
@@ -34,7 +37,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
                 user.save();
                 resolve({ status: 200, user : user });
             } else {
- 
+
                 reject({ status: 401, message: 'Incorrect password !' });
             }
         })
