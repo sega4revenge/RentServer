@@ -20,7 +20,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
                 {
 					return users[0];
                 }else{
-					reject({ status: 404, message: 'Email not authenticated !' });
+					reject({ status: 403, message: 'Email not authenticated !' });
                 }
             }
         })
