@@ -173,7 +173,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 				}else{
 					newUser.save()
-					resolve({status: 201, message: "User Registered Sucessfully + check mail!", user: users[0]
+					resolve({status: 201, message: "User Registered Sucessfully + check mail!", user: newUser
 					});
 				}
 
