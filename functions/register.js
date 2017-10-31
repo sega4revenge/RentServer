@@ -133,7 +133,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 							users[0].name = name;
 							users[0].email = email;
-							users[0].photoprofile = token;
+							users[0].photoprofile = "no_avatar.png";
 							users[0].hashed_password = hash;
 							users[0].tokenfirebase = tokenfirebase;
 							users[0].created_at = new Date();
