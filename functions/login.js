@@ -17,7 +17,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
             } else {
                 if(users[0].status_code !==0){
-                    console.log("aaaaaaaaaaa")
+                    console.log(users[0].status_code+"aaa")
 					return users[0];
                 }else{
 					console.log("bbbbbbb")
