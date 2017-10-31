@@ -16,7 +16,7 @@ exports.loginUser = (email, password,tokenfirebase) =>
                 reject({ status: 404, message: 'User Not Found !' });
  
             } else {
-                if(users[0].status_code === 0){
+                if(users[0].status_code == 0){
 					console.log("bbbbbbb")
 					reject({ status: 403, message: 'Email not authenticated !' });
                 }else{
