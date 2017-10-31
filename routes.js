@@ -654,17 +654,20 @@ module.exports = router => {
 		form.uploadDir = uploadDir;
 		form.parse(req, (err, fields, files) => {
 			if (err) return res.status(500).json({error: err});
-			// console.log("image: "+files.image.path.substring(8));
-			// console.log("image: "+files.image.path.substring(8));
-			// console.log("oldava: "+fields.oldavatar);
-			// console.log("image: "+fields.userid);
-			fs.unlink(uploadDir + fields.oldavatar, (err) => {
-				if (err) console.log(err);
+			if(fields.oldavatar !== "no_avatar.png")
+			{
+				fs.unlink(uploadDir + fields.oldavatar, (err) => {
+					if (err) console.log(err);
+					fun_product.edit_avatar(fields.userid, files.image.path.substring(8))
+						.then(result => res.status(result.status).json({status: result.status ,user: result.user}))
+
+
+				});
+			}else{
 				fun_product.edit_avatar(fields.userid, files.image.path.substring(8))
-				.then(result => res.status(result.status).json({status: result.status ,user: result.user}))
+					.then(result => res.status(result.status).json({status: result.status ,user: result.user}))
+			}
 
-
-			});
 			// fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
 			// res.status(200).json({uploaded: true})
 		});
