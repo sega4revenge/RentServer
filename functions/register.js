@@ -88,7 +88,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				name: name,
 				email: email,
 				photoprofile: "",
-				phone: "",
+				phone: "no_avatar.png",
 				hashed_password: hash,
 				tokenfirebase: tokenfirebase,
 				created_at: new Date(),
