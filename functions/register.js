@@ -87,8 +87,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 			newUser = new user({
 				name: name,
 				email: email,
-				photoprofile: "",
-				phone: "no_avatar.png",
+				photoprofile: "no_avatar.png",
+				phone: "",
 				hashed_password: hash,
 				tokenfirebase: tokenfirebase,
 				created_at: new Date(),
