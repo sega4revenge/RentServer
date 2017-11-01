@@ -171,6 +171,9 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].facebook.token = token;
 							users[0].facebook.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
+							users[0].facebook.temp_password = code;
+							users[0].facebook.temp_password_time = new Date();
+							users[0].facebook.status_code = "0";
 							users[0].save();
 							speedsms.sendsms(phone, random, "", "", 1);
 							resolve({
