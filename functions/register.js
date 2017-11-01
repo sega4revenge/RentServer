@@ -120,7 +120,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 		code = bcrypt.hashSync(random, salt);
 
 		console.log(type);
-		if (type === "1") {
+		if (type == "1") {
 
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
@@ -215,7 +215,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				})
 				.catch(err => {reject({status: 500, message: err.message})});
 		}
-		else if( type ==="2")
+		else if( type =="2")
 		{
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
