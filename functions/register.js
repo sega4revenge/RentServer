@@ -112,7 +112,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 		let newUser;
 		const random = randomstring.generate({
 			length: 6,
-			charset: "hex"
+			charset: "numeric"
 		});
 
 		const salt = bcrypt.genSaltSync(10);
