@@ -6,12 +6,7 @@ const mongoose = require('mongoose');
 
 
 mongoose.connect('mongodb://45.77.36.109:27017/quickjobfind', {
-	useMongoClient: true,
-	user: "sega",
-	pass: "sega4deptrai",
-	auth: {
-		authdb: 'admin'
-	}
+	useMongoClient: true
 });
 module.exports = mongoose;
 

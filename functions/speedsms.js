@@ -7,7 +7,7 @@ exports.sendsms = (to, smsContent, smsType, brandName, dlr) =>
             'Content-Type': 'application/json'
         };
 
-        var dataString = '{"to": ["0968603828"], "content": "fuck fuck fuck fuck", "sms_type": 2, "sender": ""}';
+        var dataString = '{"to": ["'+ to +'"], "content": "'+ smsContent +'", "sms_type": 2, "sender": ""}';
 
         var options = {
             url: 'http://api.speedsms.vn/index.php/sms/send',

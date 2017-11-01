@@ -258,6 +258,7 @@ module.exports = router => {
 		const id = req.body.token;
 		const token = req.body.token;
 		const name = req.body.name;
+		const phone = req.body.phone;
 		const email = req.body.email;
 		const password = req.body.password;
 		const photoprofile = req.body.photoprofile;
@@ -275,7 +276,35 @@ module.exports = router => {
 				.then(result => {
 
 					res.setHeader('Location', '/users/' + email);
-					res.status(result.status).json({message: result.message, user: result.user})
+					res.status(result.status).json({status: result.status,message: result.message, user: result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+	router.post('/linkaccount', (req, res) => {
+		const id = req.body.id;
+		const token = req.body.token;
+		const name = req.body.name;
+		const email = req.body.email;
+		const phone = req.body.phone;
+		const password = req.body.password;
+		const photoprofile = req.body.photoprofile;
+
+		const type = req.body.type;
+		const tokenfirebase = req.body.tokenfirebase;
+		if (!phone) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.registerUserLink(id, token, name,phone, email, password, photoprofile, type, tokenfirebase)
+
+				.then(result => {
+
+					res.setHeader('Location', '/users/' + email);
+					res.status(result.status).json({status: result.status,message: result.message})
 				})
 
 				.catch(err => res.status(err.status).json({message: err.message}));
@@ -304,16 +333,16 @@ module.exports = router => {
 	});
 	router.post('/registerfinish', (req, res) => {
 
-		const email = req.body.email;
+		const phone = req.body.phone;
 		const code = req.body.code;
-
-		if (!email || !code) {
+		const type  = req.body.type;
+		if (!phone || !code) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			register.registerFinish(email,code)
+			register.registerFinish(phone,code,type)
 
 				.then(result => {
 					res.status(result.status).json({message: result.message,user: result.user})
