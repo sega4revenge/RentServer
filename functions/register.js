@@ -282,6 +282,10 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 					}
 					else {
+						if(photoprofile == null){
+							console.log("profile null");
+							photoprofile = "no_avatar.png"
+						}
 
 						newUser = new user({
 							name: name,
@@ -333,7 +337,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						{
 							users[0].name = name;
 							users[0].email = email;
-							users[0].photoprofile = photoprofile;
+							users[0].photoprofile = "no_avatar.png";
 							users[0].created_at = new Date();
 							users[0].status_code = "0";
 							users[0].hashed_password = undefined;
@@ -354,7 +358,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						newUser = new user({
 							name: name,
 							email: email,
-							photoprofile: "",
+							photoprofile: "no_avatar.png",
 							phone: phone,
 							hashed_password: hash,
 							tokenfirebase: tokenfirebase,
