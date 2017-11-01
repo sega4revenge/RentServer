@@ -263,6 +263,9 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].google.token = token;
 							users[0].google.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
+							users[0].google.temp_password = code;
+							users[0].google.temp_password_time = new Date();
+							users[0].google.status_code = "0";
 							users[0].save();
 							speedsms.sendsms(phone, random, "", "", 1);
 							resolve({
