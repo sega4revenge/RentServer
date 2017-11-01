@@ -120,7 +120,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 		code = bcrypt.hashSync(random, salt);
 
 		console.log(type);
-		if (type == "1") {
+		if (type === 1) {
 
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
@@ -168,6 +168,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].hashed_password = undefined;
 							users[0].facebook.name = name;
 							users[0].facebook.id = id;
+							users[0].facebook.email= id;
 							users[0].facebook.token = token;
 							users[0].facebook.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
@@ -215,7 +216,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				})
 				.catch(err => {reject({status: 500, message: err.message})});
 		}
-		else if( type =="2")
+		else if( type === 2)
 		{
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
@@ -264,6 +265,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].hashed_password = undefined;
 							users[0].google.name = name;
 							users[0].google.id = id;
+							users[0].google.email= id;
 							users[0].google.token = token;
 							users[0].google.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
