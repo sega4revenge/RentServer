@@ -320,12 +320,34 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 				.then(users => {
 
-					if (users.length !=0  && 	users[0].status_code === "1") {
-						reject({
-							status: 409,
-							message: "Da Ton Tai"
+					if (users.length !=0) {
+						if(users[0].status_code === "1")
+						{
+							reject({
+								status: 409,
+								message: "Da Ton Tai"
 
-						});
+							});
+						}
+						else
+						{
+							users[0].name = name;
+							users[0].email = email;
+							users[0].photoprofile = photoprofile;
+							users[0].created_at = new Date();
+							users[0].status_code = "0";
+							users[0].hashed_password = undefined;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].temp_password = code;
+							users[0].temp_password_time = new Date();
+							users[0].status_code = "0";
+							users[0].save();
+							speedsms.sendsms(phone, random, "", "", 1);
+							resolve({
+								status: 202,
+								message: "Check code !"
+							});
+						}
 					}
 					else {
 						const  hash = bcrypt.hashSync(password, salt);
