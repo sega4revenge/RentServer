@@ -282,7 +282,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 					}
 					else {
-						if(photoprofile == null){
+						if(photoprofile == "null"){
 							console.log("profile null");
 							photoprofile = "no_avatar.png"
 						}
