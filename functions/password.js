@@ -5,6 +5,7 @@ const bcrypt = new require('bcryptjs');
 const nodemailer = new require('nodemailer');
 const randomstring = new require("randomstring");
 const config = new require('../config/config.json');
+const speedsms = new require("../functions/speedsms");
 const ObjectId = require("mongodb").ObjectID;
 
 exports.changePassword = (userid, password, newPassword) =>
@@ -45,14 +46,14 @@ exports.changePassword = (userid, password, newPassword) =>
  
     });
  
-exports.resetPasswordInit = email =>
+exports.resetPasswordInit = phone =>
     new Promise((resolve, reject) => {
 		console.log("Init");
 		const random = randomstring.generate({
 			length : 6,
-			charset : 'hex'
+			charset : 'numeric'
 		});
-        user.find({ email: email })
+        user.find({ phone: phone })
  
         .then(users => {
  
@@ -75,32 +76,13 @@ exports.resetPasswordInit = email =>
         })
  
         .then(user => {
- 
-            const transporter = nodemailer.createTransport(`smtps://${config.email}:${config.password}@smtp.gmail.com`);
- 
-            const mailOptions = {
- 
-                from: `"${config.name}" <${config.email}>`,
-                to: email,  
-                subject: 'Reset Password Request ', 
-                html: `Hello ${user.name},
- 
-                     Your reset password token is <b>${random}</b>.  
-                The token is valid for only 5 minutes.
- 
-                Thanks,
-                Sega Gò Vấp.`
- 
-            };
- 
-            return transporter.sendMail(mailOptions);
- 
-        })
+			speedsms.sendsms(user.phone, random, "", "", 1);
+		})
  
         .then(info => {
  
             console.log(info);
-            resolve({ status: 200, message: 'Check mail for instructions' })
+            resolve({ status: 200, message: 'Check phone for instructions' })
         })
  
         .catch(err => {

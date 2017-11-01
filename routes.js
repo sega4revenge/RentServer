@@ -730,12 +730,12 @@ module.exports = router => {
 	});
 	router.post('/forgotpassword', (req, res) => {
 
-		const email = req.body.email;
+		const phone = req.body.phone;
 		const code = req.body.code
 		const newPassword = req.body.password;
 
 		if (!newPassword) {
-			password.resetPasswordInit(email)
+			password.resetPasswordInit(phone)
 
 				.then(result => res.status(result.status).json({message: result.message}))
 
