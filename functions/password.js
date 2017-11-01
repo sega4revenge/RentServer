@@ -93,11 +93,11 @@ exports.resetPasswordInit = phone =>
         });
     });
  
-exports.resetPasswordFinish = (email, code, newPassword) =>
+exports.resetPasswordFinish = (phone, code, newPassword) =>
     new Promise((resolve, reject) => {
 		console.log("Finish");
 
-		user.find({ email: email })
+		user.find({ phone: phone })
  
         .then(users => {
  

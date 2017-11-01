@@ -743,7 +743,7 @@ module.exports = router => {
 
 		} else {
 
-			password.resetPasswordFinish(email, code, newPassword)
+			password.resetPasswordFinish(phone, code, newPassword)
 
 				.then(result => res.status(result.status).json({message: result.message}))
 
