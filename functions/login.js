@@ -3,11 +3,11 @@
 const user = new require('../models/user');
 const bcrypt = new require('bcryptjs');
  
-exports.loginUser = (email, password,tokenfirebase) =>
+exports.loginUser = (phone, password,tokenfirebase) =>
  
     new Promise((resolve,reject) => {
  
-        user.find({email: email},{listproduct: 0, listsavedproduct: 0})
+        user.find({phone: phone},{listproduct: 0, listsavedproduct: 0})
 
         .then(users => {
  
@@ -17,11 +17,11 @@ exports.loginUser = (email, password,tokenfirebase) =>
  
             } else {
                 if(users[0].status_code !== "0"){
-                    console.log(users[0].status_code+"aaa")
+                    console.log(users[0].status_code+"aaa");
 					return users[0];
                 }else{
 					console.log("bbbbbbb")
-					reject({ status: 403, message: 'Email not authenticated !' });
+					reject({ status: 403, message: 'Phone not authenticated !' });
                 }
 
 

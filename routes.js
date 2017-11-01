@@ -169,20 +169,20 @@ module.exports = router => {
 	router.post('/authenticate', (req, res) => {
 
 
-		const email = req.body.email;
+		const phone = req.body.phone;
 		const password = req.body.password;
 		const tokenfirebase = req.body.tokenfirebase;
 
-		if (!email || !password || !tokenfirebase) {
+		if (!phone || !password || !tokenfirebase) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			login.loginUser(email, password, tokenfirebase)
+			login.loginUser(phone, password, tokenfirebase)
 
 				.then(result => {
-					res.setHeader('Location', '/users/' + email);
+					res.setHeader('Location', '/users/' + phone);
 					res.status(result.status).json({message: result.message, user: result.user});
 					console.log(user)
 
