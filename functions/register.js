@@ -129,7 +129,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 					if (users.length !== 0) {
 						if(users[0].status_code === "1")
 						{
-							console.log(users[0].facebook.status_code);
+							console.log(" da co ");
 							if(users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined)
 							{
 
@@ -168,7 +168,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].hashed_password = undefined;
 							users[0].facebook.name = name;
 							users[0].facebook.id = id;
-							users[0].facebook.email= id;
+							users[0].facebook.email= email;
 							users[0].facebook.token = token;
 							users[0].facebook.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
