@@ -114,7 +114,10 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 			length: 6,
 			charset: "numeric"
 		});
-
+		if(photoprofile == "null" || photoprofile == ""){
+			console.log("profile null");
+			photoprofile = "no_avatar.png"
+		}
 		const salt = bcrypt.genSaltSync(10);
 
 		code = bcrypt.hashSync(random, salt);
@@ -282,10 +285,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 					}
 					else {
-						if(photoprofile == "null"){
-							console.log("profile null");
-							photoprofile = "no_avatar.png"
-						}
+
 
 						newUser = new user({
 							name: name,
