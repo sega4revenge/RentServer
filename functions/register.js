@@ -47,7 +47,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 					}
 					else {
-						if(user[0].status_code == 0)
+						if(user[0].status_code === 0)
 						{
 							console.log("abc");
 							resolve({status: 201, message: "Dont link any account !"});
