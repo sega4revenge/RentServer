@@ -207,6 +207,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							photoprofile: photoprofile,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
+							status_code: "0",
 							facebook: {
 								id: id,
 								token: token,
