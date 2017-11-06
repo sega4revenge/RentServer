@@ -182,7 +182,7 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
-	router.post('/loginfinish', (req, res) => {
+	router.post('/authenticatefinish', (req, res) => {
 
 		const phone = req.body.phone;
 		const code = req.body.code;
