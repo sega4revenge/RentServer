@@ -193,20 +193,20 @@ exports.allproductbyuser = (userid) =>
 exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
-		var tokencode;
+		let tokencode;
 		user.find({_id: ObjectId(idsend)}, function (err, result) {
 			if (err) {
 				throw err;
 			} else {
-				var mResult = result[0];
-				var usersend = mResult.name;
-				var avata = mResult.photoprofile;
+				const mResult = result[0];
+				const usersend = mResult.name;
+				const avata = mResult.photoprofile;
 				user.find({_id: ObjectId(idrec)}, function (err, UserResult) {
 					if (err) {
 						throw err;
 					}else{
 						if(UserResult){
-							var mResultUser = UserResult[0];
+							const mResultUser = UserResult[0];
 							tokencode = mResultUser.tokenfirebase;
 							if (tokencode) {
 								const m = {
@@ -285,23 +285,19 @@ exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 		});
 	});
 exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>{
-	var mType = type;
-	var id = id;
-	var email = email;
-	var name = name;
-	var message= message;
-	var photoprofile = "";
+
+	let photoprofile = "";
 	const day = new Date();
-	var mResult = true;
+	let mResult = true;
 	const timestamp = day.getTime();
-	var mess = {};
-	if(mType==0)
+	let mess = {};
+	if(type==0)
 	{
 		// Messager with only text
 		mess = {
 			email: email,
 			name: name,
-			photoprofile: photoprofile,
+			photoprofile: "",
 			message : message,
 			created_at : timestamp
 		};
@@ -321,8 +317,9 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 
 	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
 		if (err){
-			throw err;
+
 			mResult = false;
+			throw err;
 		}else{
 			if(result)
 			{
@@ -332,14 +329,14 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 						userto             : userTo,
 						messages             : mess
 					});
-					chatroom.save()
+					chatroom.save();
 					console.log("fist create2");
 				}else{
 					chat.findByIdAndUpdate(
 						result._id,
 						{$push: {"messages": mess}},
 						{safe: true, upsert: true, new: true},
-						function (err, model) {
+						function (err) {
 							console.log(err);
 						}
 					);
@@ -353,7 +350,7 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 					userto             : userTo,
 					messages             : mess
 				});
-				chatroom.save()
+				chatroom.save();
 				console.log("fist create");
 
 			}
@@ -364,14 +361,14 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 	});
 	return mResult;
 
-}
+};
 
 exports.roomSockets = (roomId,io) =>{
 	console.log(roomId);
-	var clients = io.sockets.adapter.rooms[roomId],sockets = [];
+	const clients = io.sockets.adapter.rooms[roomId];
 	console.log(clients.length);
 	return clients.length;
-}
+};
 exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 	console.log(userFrom,userTo);
 	let mResult;
@@ -380,7 +377,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 		if(page<1) page = 1;
 	const start =  -(limit * page);
 
-	var id = "";
+	let id = "";
 	if(userIdOnline === userFrom){
 		id = userTo;
 	}else{
@@ -393,9 +390,10 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 		function(err, result) {
 
 			if (err){
-				throw err;
+
 				mResult = null;
 				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
+				throw err;
 			}else{
 				if(result){
 					if(result.length === 0){
@@ -444,7 +442,7 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 
 
-}
+};
 
 /*	new Promise((resolve, reject) => {
 		let cod = userFrom+" - "+userTo;
@@ -562,7 +560,7 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 					userid,
 					{$push: {"listproduct": newproduct._id}},
 					{safe: true, upsert: true, new: true},
-					function (err, model) {
+					function (err) {
 						console.log(err);
 						newproduct.populate("user", "_id name email images", function (err) {
 
@@ -713,13 +711,13 @@ exports.deleteProduct = (productid) =>
 
 		comment.deleteMany({product: ObjectId(productid)})
 
-			.then((comment) => {
+			.then(() => {
 			console.log("toi day roi 1");
 				user.update({}, {$pull: {listproduct: ObjectId(productid)}},{ multi: true })
-					.then((users) => {
+					.then(() => {
 						console.log("toi day roi 2");
 						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}},{ multi: true })
-							.then((user) => {
+							.then(() => {
 								console.log("toi day roi 3");
 								product.findByIdAndRemove(productid, function (err, offer) {
 									if (err) {
@@ -754,7 +752,7 @@ exports.mSaveProduct = (userid,productid) =>
 					const saveProduct2 = new saveProduct({
 						productid : productid,
 						user : userid
-					})
+					});
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
 				}else {
@@ -787,41 +785,7 @@ exports.mSaveProduct = (userid,productid) =>
 
 						})
 						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));
-				/*	const mData = sav[0];
-					for(var i=0;i<mData.productid.length;i++)
-					{
-						if(mData.productid[i] === productid)
-						{
 
-						}
-					}*/
-				/*	saveProduct.find({"productid":ObjectId(productid)})
-						.then(get =>{
-							if (get.length === 0) {
-								saveProduct.findByIdAndUpdate({user: ObjectId(userid)},
-									{$push: {"productid":productid}},
-									function (err, offer) {
-										if (err) {
-											throw err;
-										}
-									}
-								);
-								console.log("run3333");
-								resolve({status: 201, message: "ok"});
-							} else {
-								saveProduct.findOneAndRemove({user: ObjectId(userid)},
-									{$pull: {"productid": productid}},
-									function (err, offer) {
-										if (err) {
-											throw err;
-										}
-									}
-								);
-								console.log("run444");
-								resolve({status: 201, message: "ok"});
-							}
-						})
-						.catch(err => reject({status: 500, message: "loi may chu noi bo"}));*/
 				}
 
 			})
@@ -935,28 +899,6 @@ exports.addcomment = (userid, productid, content, time) =>
 						}
 					});
 
-
-				// let ObjectId;
-				// ObjectId = require("mongodb").ObjectID;
-				// comment.find({productid: ObjectId(productid)})
-				// 	.populate("user", "_id name photoprofile" )
-				// 	.then(comments => {
-				//
-				// 		if (comments.length === 0) {
-				//
-				// 			reject({status: 404, message: "Product Not Found !"});
-				//
-				// 		} else {
-				//
-				// 			return comments;
-				//
-				// 		}
-				// 	})
-				// 	.then(comment => {
-				//
-				//
-				//
-				// 	});
 
 
 			})

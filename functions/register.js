@@ -2,11 +2,10 @@
 
 const user = new require("../models/user");
 const bcrypt = new require("bcryptjs");
-const password = new require("../functions/password");
 const speedsms = new require("../functions/speedsms");
 const randomstring = new require("randomstring");
 const nodemailer = new require("nodemailer");
-const config = new require("../config/config.json");
+
 
 exports.verifyemail = (email) =>
 
@@ -26,7 +25,10 @@ exports.verifyemail = (email) =>
 				}
 			})
 
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			.catch(err => {
+				console.log(err.message);
+				reject({status: 500, message: err.message})
+			});
 
 	});
 
@@ -132,7 +134,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 		code = bcrypt.hashSync(random, salt);
 
-		console.log(type);
 		if (type === 1) {
 
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
@@ -142,7 +143,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 					if (users.length !== 0) {
 						if(users[0].status_code === "1")
 						{
-							console.log(" da co ");
 							if(users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined)
 							{
 
@@ -228,7 +228,10 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						});
 					}
 				})
-				.catch(err => {reject({status: 500, message: err.message})});
+				.catch(err => {
+					console.log(err.message);
+					reject({status: 500, message: err.message})
+				});
 		}
 		else if( type === 2)
 		{
@@ -239,7 +242,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 					if (users.length !== 0) {
 						if(users[0].status_code === "1")
 						{
-							console.log("den day ro i");
 							if(users[0].google.status_code === "0" || users[0].google.status_code === undefined)
 							{
 
@@ -270,7 +272,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 						}
 						else {
-							console.log("den day roi");
 							users[0].name = name;
 							users[0].email = email;
 							users[0].photoprofile = photoprofile;
@@ -327,7 +328,10 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						});
 					}
 				})
-				.catch(err => {reject({status: 500, message: err.message})});
+				.catch(err => {
+					console.log(err.message);
+					reject({status: 500, message: err.message})
+				});
 
 
 		}
@@ -397,7 +401,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 	});
 exports.registerFinish = (phone, code, type) =>
 	new Promise((resolve, reject) => {
-		console.log("Finish");
 
 		user.find({phone: phone})
 
@@ -408,14 +411,14 @@ exports.registerFinish = (phone, code, type) =>
 					diff = new Date() - new Date(users[0].temp_password_time);
 				}
 				else if (type === 1) {
-					console.log(users[0].facebook.temp_password_time);
+
 					diff = new Date() - new Date(users[0].facebook.temp_password_time);
 				}
 				else {
 					diff = new Date() - new Date(users[0].google.temp_password_time);
 				}
 				const seconds = Math.floor(diff / 1000);
-				console.log(`Seconds : ${seconds}`);
+
 
 				if (seconds < 300) {
 					return users[0];
@@ -437,8 +440,7 @@ exports.registerFinish = (phone, code, type) =>
 				}
 			}
 			else if (type === 1) {
-				console.log(phone);
-				console.log(usertemp);
+
 				if (bcrypt.compareSync(code, usertemp.facebook.temp_password)) {
 
 					usertemp.facebook.temp_password = undefined;
