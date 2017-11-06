@@ -163,24 +163,41 @@ module.exports = router => {
 
 
 		const phone = req.body.phone;
-		const password = req.body.password;
-		const tokenfirebase = req.body.tokenfirebase;
 
-		if (!phone || !password || !tokenfirebase) {
+
+		if (!phone) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			login.loginUser(phone, password, tokenfirebase)
+			login.loginUser(phone)
 
 				.then(result => {
-					res.setHeader('Location', '/users/' + phone);
-					res.status(result.status).json({message: result.message, user: result.user});
-					console.log(user)
 
+					res.setHeader('Location', '/users/' + phone);
+					res.status(result.status).json({status: result.status,message: result.message})
 				})
 
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+	router.post('/loginfinish', (req, res) => {
+
+		const phone = req.body.phone;
+		const code = req.body.code;
+		const tokenfirebase = req.body.tokenfirebase;
+		if (!phone || !code) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			login.loginFinish(phone,code,tokenfirebase)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message,user: result.user})
+				})
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
