@@ -459,6 +459,7 @@ exports.registerFinish = (phone, code, type) =>
 					usertemp.google.temp_password = undefined;
 					usertemp.google.temp_password_time = undefined;
 					usertemp.google.status_code = "1";
+					usertemp.status_code = "1";
 					return usertemp.save();
 				} else {
 
