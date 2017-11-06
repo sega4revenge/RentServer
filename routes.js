@@ -41,14 +41,7 @@ module.exports = router => {
 	router.get('/sendsms', (req, res) => {
 		sms.sendsms("0906448076","abc","","",1)
 	});
-	/*	const keysearch = req.body.keysearch;
-	const category = req.body.category;
-	const location = req.body.location;
-	const typeArrange = req.body.typeArrange;
-	console.log("keysearch = " + keysearch);
-	console.log("category = " + category);
-	console.log("location = " + location);
-	console.log("typeArrange = " + typeArrange);*/
+
 	router.post('/search', (req, res) => {
 		var keySearch = req.body.keysearch;
 		var listaddress = req.body.location;
@@ -424,9 +417,7 @@ module.exports = router => {
 		if (!productid) {
 
 			res.status(400).json({message: 'Invalid Request !'});
-
 		} else {
-
 			fun_product.EditProduct(productid, productname, price, time, number, category, address,  description, status, timestamp,arrImgDel)
 				.then(result => {
 					res.status(result.status).json({message: result.message, product: result.product})

@@ -701,8 +701,11 @@ exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 			.then(product => {
 				resolve({status: 200, listproduct: product});
 
-			})	
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			})
+			.catch(err => {
+				console.log(err.message);
+				reject({status: 500, message: err.message})
+			});
 	});
 
 exports.deleteProduct = (productid) =>
