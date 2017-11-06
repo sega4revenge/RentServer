@@ -8,22 +8,21 @@ const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
 const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
 const chat = new require("../models/chat_messager");
-exports.allproduct = (type, page,category) =>
+exports.allproduct = (type, page, category) =>
 	new Promise((resolve, reject) => {
 		const d = new Date();
 		const timeStamp = d.getTime();
 		const limit = 10;
-		if(page.is)
-			if(page<1) page = 1;
-		const start =  (limit * page) - limit;
+		if (page.is)
+			if (page < 1) page = 1;
+		const start = (limit * page) - limit;
 		console.log("TIMESTAMP: " + timeStamp);
 
 
 		if (type === 1) {
-			if(category === 999 )
-			{
+			if (category === 999) {
 				product.find({}, {comment: 0}).sort({"created_at": -1}).skip(start).limit(limit)
-					.populate({path : "user", select : "-listproduct -listsavedproduct"})
+					.populate({path: "user", select: "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -43,9 +42,9 @@ exports.allproduct = (type, page,category) =>
 					})
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-			}else{	
+			} else {
 				product.find({category: category}, {comment: 0}).sort({"created_at": -1}).skip(start).limit(limit)
-					.populate({path : "user", select : "-listproduct -listsavedproduct"})
+					.populate({path: "user", select: "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -68,9 +67,9 @@ exports.allproduct = (type, page,category) =>
 			}
 
 		} else {
-			if(category === 999 ) {
+			if (category === 999) {
 				product.find({}, {comment: 0}).sort({"created_at": -1})
-					.populate({path : "user", select : "-listproduct -listsavedproduct"})
+					.populate({path: "user", select: "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -90,9 +89,9 @@ exports.allproduct = (type, page,category) =>
 					})
 
 					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-			}else{
+			} else {
 				product.find({category: category}, {comment: 0}).sort({"created_at": -1})
-					.populate({path : "user", select : "-listproduct -listsavedproduct"})
+					.populate({path: "user", select: "-listproduct -listsavedproduct"})
 					.then(products => {
 
 						if (products.length === 0) {
@@ -121,38 +120,37 @@ exports.allproductsaved = (type, page, userid) =>
 	new Promise((resolve, reject) => {
 
 		const limit = 10;
-		if(page.is)
-			if(page<1) page = 1;
-		const start =  (limit * page) - limit;
+		if (page.is)
+			if (page < 1) page = 1;
+		const start = (limit * page) - limit;
 
 
-				user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
-					.populate({
-						path: "listsavedproduct user",
-						select: "-comment",
-						// Get friends of friends - populate the 'friends' array for every friend
-						populate: {path : "user", select : "-listproduct -listsavedproduct"}
-					})
-					.then(products => {
+		user.findById(userid, {listsavedproduct: 1, _id: 0}).skip(start).limit(limit)
+			.populate({
+				path: "listsavedproduct user",
+				select: "-comment",
+				// Get friends of friends - populate the 'friends' array for every friend
+				populate: {path: "user", select: "-listproduct -listsavedproduct"}
+			})
+			.then(products => {
 
-						if (products.length === 0) {
+				if (products.length === 0) {
 
-							reject({status: 404, message: "User Not Found !"});
+					reject({status: 404, message: "User Not Found !"});
 
-						} else {
+				} else {
 
-							return products;
+					return products;
 
-						}
-					})
+				}
+			})
 
-					.then(product => {
-						resolve({status: 200, product: product});
+			.then(product => {
+				resolve({status: 200, product: product});
 
-					})
+			})
 
-					.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 
 	});
@@ -160,13 +158,12 @@ exports.mInboxChat = (userid) =>
 
 	new Promise((resolve, reject) => {
 
-		chat.find({$or: [{userfrom: ObjectId(userid)},{userto: ObjectId(userid)}]})
-			.populate({path : "userfrom userto", select : "_id name email photoprofile"})
+		chat.find({$or: [{userfrom: ObjectId(userid)}, {userto: ObjectId(userid)}]})
+			.populate({path: "userfrom userto", select: "_id name email photoprofile"})
 			.then(room => {
-				if(room.length>0)
-				{
+				if (room.length > 0) {
 					resolve({listinbox: room});
-				}else{
+				} else {
 					reject({status: 500, message: "Not Found !"});
 				}
 
@@ -190,7 +187,7 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
+exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
 		let tokencode;
@@ -204,10 +201,59 @@ exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 				user.find({_id: ObjectId(idrec)}, function (err, UserResult) {
 					if (err) {
 						throw err;
-					}else{
-						if(UserResult){
+					} else {
+						if (UserResult) {
 							const mResultUser = UserResult[0];
 							tokencode = mResultUser.tokenfirebase;
+							if (tokencode) {
+								const m = {
+									to: tokencode,
+
+									data: {
+										userto: userto,
+										name: usersend,
+										messager: msg,
+										avata: avata,
+										userfrom: userfrom
+									}
+								};
+								console.log("push mess: " + msg);
+
+								fcm.send(m, function (err, response) {
+									if (err) {
+										console.log(err);
+										reject({status: 409, message: "MessToTopic Error !"});
+									} else {
+										console.log(response);
+										resolve({
+											status: 201,
+											message: "MessToTopic Sucessfully !",
+											response: response
+										});
+
+									}
+								});
+							}
+						}
+					}
+				});
+
+				console.log(tokencode, usersend, avata);
+
+				/*	user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
+						if (err) {
+							throw err;
+						}else{
+							if(UserResult){
+								var mResultUser = UserResult[0];
+								usersend = mResultUser.name;
+								avata    = mResultUser.photoprofile;
+								console.log(usersend,avata);
+
+							}
+							var mResult = result[0];
+							tokencode = mResult.tokenfirebase;
+							console.log(tokencode,usersend,avata);
 							if (tokencode) {
 								const m = {
 									to: tokencode,
@@ -234,104 +280,57 @@ exports.push_notification_chat= (idsend,idrec,userfrom, msg, userto) =>
 								});
 							}
 						}
-					}
-				});
-
-				console.log(tokencode,usersend,avata);
-
-			/*	user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
-					if (err) {
-						throw err;
-					}else{
-						if(UserResult){
-							var mResultUser = UserResult[0];
-							usersend = mResultUser.name;
-							avata    = mResultUser.photoprofile;
-							console.log(usersend,avata);
-
-						}
-						var mResult = result[0];
-						tokencode = mResult.tokenfirebase;
-						console.log(tokencode,usersend,avata);
-						if (tokencode) {
-							const m = {
-								to: tokencode,
-
-								data: {
-									userto: userto,
-									name: usersend,
-									messager: msg,
-									avata: avata,
-									userfrom: userfrom
-								}
-							};
-							console.log("push mess: " + msg);
-
-							fcm.send(m, function (err, response) {
-								if (err) {
-									console.log(err);
-									reject({status: 409, message: "MessToTopic Error !"});
-								} else {
-									console.log(response);
-									resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
-
-								}
-							});
-						}
-					}
-				});*/
+					});*/
 
 			}
 		});
 	});
-exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>{
+exports.sendMessChat = (id, userFrom, userTo, email, name, message, socket, io, type) => {
 
 	let photoprofile = "";
 	const day = new Date();
 	let mResult = true;
 	const timestamp = day.getTime();
 	let mess = {};
-	if(type==0)
-	{
+	if (type == 0) {
 		// Messager with only text
 		mess = {
 			email: email,
 			name: name,
 			photoprofile: "",
-			message : message,
-			created_at : timestamp
+			message: message,
+			created_at: timestamp
 		};
 
-	}else{
+	} else {
 		// Messager with only image
 		mess = {
 			email: email,
 			name: name,
 			photoprofile: message,
-			message : photoprofile,
-			created_at : timestamp
+			message: photoprofile,
+			created_at: timestamp
 		};
 		photoprofile = message;
-		message = ""
+		message = "";
 	}
 
-	chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)},	function(err, result) {
-		if (err){
+	chat.findOne({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, function (err, result) {
+		if (err) {
 
 			mResult = false;
 			throw err;
-		}else{
-			if(result)
-			{
-				if(result.length === 0){
+		} else {
+			if (result) {
+				if (result.length === 0) {
 					let chatroom = new chat({
-						userfrom             : userFrom,
-						userto             : userTo,
-						messages             : mess
+						userfrom: userFrom,
+						userto: userTo,
+						messages: mess
 					});
 					chatroom.save();
 					console.log("fist create2");
-				}else{
+				} else {
 					chat.findByIdAndUpdate(
 						result._id,
 						{$push: {"messages": mess}},
@@ -344,17 +343,17 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 
 				}
 
-			}else{
+			} else {
 				let chatroom = new chat({
-					userfrom             : userFrom,
-					userto             : userTo,
-					messages             : mess
+					userfrom: userFrom,
+					userto: userTo,
+					messages: mess
 				});
 				chatroom.save();
 				console.log("fist create");
 
 			}
-			io.to(userFrom+" - "+userTo).emit("sendchat",userFrom,userTo,email, name,message,photoprofile);
+			io.to(userFrom + " - " + userTo).emit("sendchat", userFrom, userTo, email, name, message, photoprofile);
 			//socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 			//socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 		}
@@ -363,74 +362,74 @@ exports.sendMessChat = (id,userFrom,userTo,email,name,message,socket,io,type) =>
 
 };
 
-exports.roomSockets = (roomId,io) =>{
+exports.roomSockets = (roomId, io) => {
 	console.log(roomId);
 	const clients = io.sockets.adapter.rooms[roomId];
 	console.log(clients.length);
 	return clients.length;
 };
-exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
-	console.log(userFrom,userTo);
+exports.checkRoomChat = (userFrom, userTo, userIdOnline, socket, type, io, page) => {
+	console.log(userFrom, userTo);
 	let mResult;
 	const limit = 10;
-	if(page.is)
-		if(page<1) page = 1;
-	const start =  -(limit * page);
+	if (page.is)
+		if (page < 1) page = 1;
+	const start = -(limit * page);
 
 	let id = "";
-	if(userIdOnline === userFrom){
+	if (userIdOnline === userFrom) {
 		id = userTo;
-	}else{
+	} else {
 		id = userFrom;
 	}
 
 
-	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages:{ $slice: [ start,10] }})
-		.populate({path : "userfrom userto", select : "-listproduct -listsavedproduct"}).exec(
-		function(err, result) {
+	chat.find({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)}, {messages: {$slice: [start, 10]}})
+		.populate({path: "userfrom userto", select: "-listproduct -listsavedproduct"}).exec(
+		function (err, result) {
 
-			if (err){
+			if (err) {
 
 				mResult = null;
-				io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,[]);
+				io.to(userFrom + " - " + userTo).emit("getDataMessage", [], type, []);
 				throw err;
-			}else{
-				if(result){
-					if(result.length === 0){
+			} else {
+				if (result) {
+					if (result.length === 0) {
 						mResult = null;
 						user.find({_id: ObjectId(id)}, function (err, UserResult) {
 							if (err) {
 								throw err;
-							}else{
-								if(UserResult){
-								//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
-									socket.emit("getDataMessage", [],type,UserResult);
+							} else {
+								if (UserResult) {
+									//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+									socket.emit("getDataMessage", [], type, UserResult);
 								}
 							}
 						});
 
-					}else{
+					} else {
 						mResult = result;
 						user.find({_id: ObjectId(id)}, function (err, UserResult) {
 							if (err) {
 								throw err;
-							}else{
-								if(UserResult){
+							} else {
+								if (UserResult) {
 									//io.to(userFrom+" - "+userTo).emit("getDataMessage", mResult,type,UserResult);
-									socket.emit("getDataMessage",mResult,type,UserResult);
+									socket.emit("getDataMessage", mResult, type, UserResult);
 								}
 							}
 						});
 					}
-				}else{
+				} else {
 					mResult = null;
 					user.find({_id: ObjectId(id)}, function (err, UserResult) {
 						if (err) {
 							throw err;
-						}else{
-							if(UserResult){
-							//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
-								socket.emit("getDataMessage", [],type,UserResult);
+						} else {
+							if (UserResult) {
+								//	io.to(userFrom+" - "+userTo).emit("getDataMessage", [],type,UserResult);
+								socket.emit("getDataMessage", [], type, UserResult);
 							}
 						}
 					});
@@ -438,8 +437,6 @@ exports.checkRoomChat = (userFrom,userTo,userIdOnline,socket,type,io,page) =>{
 
 			}
 		});
-
-
 
 
 };
@@ -519,9 +516,9 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 				category: category,
 				description: description,
 				location: {
-					type: 'Point',
-					address : address,
-					coordinates: [lot,lat]
+					type: "Point",
+					address: address,
+					coordinates: [lot, lat]
 				},
 				created_at: timestamp,
 				status: "0",
@@ -540,9 +537,9 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 
 				description: description,
 				location: {
-					type: 'Point',
-					address : address,
-					coordinates: [lot,lat]
+					type: "Point",
+					address: address,
+					coordinates: [lot, lat]
 				},
 				created_at: timestamp,
 				status: "0",
@@ -590,32 +587,32 @@ exports.createproduct = (userid, prodctname, price, time, number, category, addr
 exports.saveproduct = (userid, productid, type) =>
 
 	new Promise((resolve, reject) => {
-	if(type === "0"){
-		user.findByIdAndUpdate(
-			userid,
-			{$push: {"listsavedproduct": productid}},
-			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
-			function (err, model) {
-				console.log(err);
+		if (type === "0") {
+			user.findByIdAndUpdate(
+				userid,
+				{$push: {"listsavedproduct": productid}},
+				{safe: true, upsert: true, new: true, select: "-listproduct -listsavedproduct"},
+				function (err, model) {
+					console.log(err);
 
-				resolve({status: 201, message: "product save Successfully !"});
+					resolve({status: 201, message: "product save Successfully !"});
 
-			}
-		);
-	}
-	else {
-		user.findByIdAndUpdate(
-			userid,
-			{$pull: {"listsavedproduct": productid}},
-			{safe: true, upsert: true, new: true},
-			function (err, model) {
-				console.log(err);
+				}
+			);
+		}
+		else {
+			user.findByIdAndUpdate(
+				userid,
+				{$pull: {"listsavedproduct": productid}},
+				{safe: true, upsert: true, new: true},
+				function (err, model) {
+					console.log(err);
 
-				resolve({status: 201, message: "product unsave Successfully !", user: model});
+					resolve({status: 201, message: "product unsave Successfully !", user: model});
 
-			}
-		);
-	}
+				}
+			);
+		}
 	});
 exports.push_messtotopic = (productid, msg, userid) =>
 
@@ -629,7 +626,7 @@ exports.push_messtotopic = (productid, msg, userid) =>
 				useridcmt: userid
 			}
 		};
-		console.log("push mess: " + msg);	
+		console.log("push mess: " + msg);
 
 		fcm.send(m, function (err, response) {
 			if (err) {
@@ -669,24 +666,32 @@ exports.refreshcomment = (productid) =>
 			});
 	});
 //108.255696,15.977939  //1609.34 * 1
-exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
+exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 
 	new Promise((resolve, reject) => {
 		var regexCategory = [];
 		keySearch = new RegExp(keySearch.toLowerCase(), "i");
 		let arrCate = listCategory.split(" , ");
-		if(arrCate)
-		{
+		if (arrCate) {
 			for (var i = 0; i < arrCate.length; i++) {
 				regexCategory[i] = new RegExp(arrCate[i].toLowerCase(), "i");
 			}
-		}else{
+		} else {
 			regexCategory.push(listCategory);
 		}
-		console.log("arrCate = " +  regexCategory);
-
-		product.find( {productname: {$regex: keySearch }, location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ lng,lat  ] }, $maxDistance: distance*1000  } },category: {$in: regexCategory}},{comment: 0})
-			.populate({path: "user", select : "-listproduct -listsavedproduct"})
+		console.log("arrCate = " + regexCategory);
+		product.createIndex({point: "2dsphere"});
+		product.find({
+			productname: {$regex: keySearch},
+			location: {
+				$nearSphere: {
+					$geometry: {type: "Point", coordinates: [lng, lat]},
+					$maxDistance: distance * 1000
+				}
+			},
+			category: {$in: regexCategory}
+		}, {comment: 0})
+			.populate({path: "user", select: "-listproduct -listsavedproduct"})
 			.then(products => {
 
 				if (products.length === 0) {
@@ -704,7 +709,7 @@ exports.SearchMap = (keySearch,lat,lng,distance,listCategory) =>
 			})
 			.catch(err => {
 				console.log(err.message);
-				reject({status: 500, message: err.message})
+				reject({status: 500, message: err.message});
 			});
 	});
 
@@ -715,11 +720,11 @@ exports.deleteProduct = (productid) =>
 		comment.deleteMany({product: ObjectId(productid)})
 
 			.then(() => {
-			console.log("toi day roi 1");
-				user.update({}, {$pull: {listproduct: ObjectId(productid)}},{ multi: true })
+				console.log("toi day roi 1");
+				user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
 					.then(() => {
 						console.log("toi day roi 2");
-						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}},{ multi: true })
+						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
 							.then(() => {
 								console.log("toi day roi 3");
 								product.findByIdAndRemove(productid, function (err, offer) {
@@ -735,12 +740,11 @@ exports.deleteProduct = (productid) =>
 					.catch(err => reject({status: 500, message: "Internal Server Error 2!"}));
 
 
-
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error 1!"}));
 	});
-exports.mSaveProduct = (userid,productid) =>
-	new Promise((resolve, reject) =>{
+exports.mSaveProduct = (userid, productid) =>
+	new Promise((resolve, reject) => {
 
 		saveProduct.find({"user": ObjectId(userid)})
 			.populate("product")
@@ -750,21 +754,21 @@ exports.mSaveProduct = (userid,productid) =>
 			// })
 			.then(sav => {
 				console.log("run");
-				if (sav.length === 0 ) {
+				if (sav.length === 0) {
 
 					const saveProduct2 = new saveProduct({
-						productid : productid,
-						user : userid
+						productid: productid,
+						user: userid
 					});
 					saveProduct2.save();
 					resolve({status: 201, message: "ok"});
-				}else {
+				} else {
 					const mData = sav[0];
-					saveProduct.find({"productid":ObjectId(productid)})
-						.then(get =>{
+					saveProduct.find({"productid": ObjectId(productid)})
+						.then(get => {
 							if (get.length === 0) {
 								saveProduct.findByIdAndUpdate(mData._id,
-									{$push: { "productid": productid }},
+									{$push: {"productid": productid}},
 									{safe: true, upsert: true, new: true},
 									function (err, offer) {
 										if (err) {
@@ -773,9 +777,9 @@ exports.mSaveProduct = (userid,productid) =>
 									}
 								);
 								resolve({status: 200, message: "Luu thanh cong"});
-							}else{
+							} else {
 								saveProduct.findByIdAndUpdate(mData._id,
-									{$pull: { "productid": productid }},
+									{$pull: {"productid": productid}},
 									{safe: true, upsert: true, new: true},
 									function (err, offer) {
 										if (err) {
@@ -903,7 +907,6 @@ exports.addcomment = (userid, productid, content, time) =>
 					});
 
 
-
 			})
 
 			.catch(err => {
@@ -942,17 +945,17 @@ exports.productdetail = (productid, userid) =>
 
 				} else {
 					if (products[0].user._id.toString() !== userid) {
-						user.findOne({_id: ObjectId(userid),listsavedproduct : productid}, function(err, save) {
+						user.findOne({_id: ObjectId(userid), listsavedproduct: productid}, function (err, save) {
 							if (err) isSaved = false;
 							isSaved = !!save;
 							console.log("trang thai " + isSaved);
-							products[0].view = products[0].view +1 ;
+							products[0].view = products[0].view + 1;
 							// products[0].statussave = isSaved;
 							products[0].save();
-							resolve({status: 200, product: products[0],statussave : isSaved});
+							resolve({status: 200, product: products[0], statussave: isSaved});
 						});
 					}
-					else{
+					else {
 						resolve({status: 201, product: products[0]});
 
 					}
@@ -1027,17 +1030,17 @@ exports.uploadproduct = (productid, image) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
-exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
+exports.UpImageChat = (userfrom, userto, mEmail, mName, img) =>
 
 	new Promise((resolve, reject) => {
-	//	var id = id;
-		console.log(mEmail,mName);
+		//	var id = id;
+		console.log(mEmail, mName);
 		var userFrom = userfrom;
 		var userTo = userto;
 		var email = mEmail;
 		var name = mName;
-		var message = ""
-		var photoprofile= img;
+		var message = "";
+		var photoprofile = img;
 		const day = new Date();
 		var mResult = true;
 		const timestamp = day.getTime();
@@ -1045,37 +1048,41 @@ exports.UpImageChat = (userfrom,userto,mEmail,mName,img) =>
 			email: email,
 			name: name,
 			message: message,
-			photoprofile : photoprofile,
-			created_at : timestamp
+			photoprofile: photoprofile,
+			created_at: timestamp
 		};
-		chat.findOne({userfrom: ObjectId(userFrom),userto: ObjectId(userTo)})
+		chat.findOne({userfrom: ObjectId(userFrom), userto: ObjectId(userTo)})
 			.then(chatResult => {
-					if(!chatResult){
-						let chatroom = new chat({
-							userfrom             : userFrom,
-							userto             : userTo,
-							messages             : mess
-						});
-						chatroom.save()
-						console.log(chatroom);
-						resolve({status: 200, listchat: chatroom});
-					}else{
+				if (!chatResult) {
+					let chatroom = new chat({
+						userfrom: userFrom,
+						userto: userTo,
+						messages: mess
+					});
+					chatroom.save();
+					console.log(chatroom);
+					resolve({status: 200, listchat: chatroom});
+				} else {
 
-						chat.findByIdAndUpdate(
-							chatResult._id,
-							{$push: {"messages": mess}},
-							{safe: true, upsert: true, new: true},
-							function (err, model) {
-								console.log(err);
-								let mess = model.messages.length;
-								mess -= 1;
-								console.log(model.messages[mess]);
-								console.log({status: 200, chatlist: model.messages[mess]});
-								resolve({status: 205, listchat: model.messages[mess] , message: model.messages[mess]+"//"});
-							}
-						);
+					chat.findByIdAndUpdate(
+						chatResult._id,
+						{$push: {"messages": mess}},
+						{safe: true, upsert: true, new: true},
+						function (err, model) {
+							console.log(err);
+							let mess = model.messages.length;
+							mess -= 1;
+							console.log(model.messages[mess]);
+							console.log({status: 200, chatlist: model.messages[mess]});
+							resolve({
+								status: 205,
+								listchat: model.messages[mess],
+								message: model.messages[mess] + "//"
+							});
+						}
+					);
 
-					}
+				}
 			})
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
@@ -1087,11 +1094,11 @@ exports.edit_avatar = (userid, image) =>
 		user.findByIdAndUpdate(
 			userid,
 			{$set: {"photoprofile": image}},
-			{safe: true, upsert: true, new: true,select: "-listproduct -listsavedproduct"},
+			{safe: true, upsert: true, new: true, select: "-listproduct -listsavedproduct"},
 			function (err, model) {
 				console.log(err);
 				resolve({status: 200, user: model});
 			}
-		)
+		);
 
 	});
