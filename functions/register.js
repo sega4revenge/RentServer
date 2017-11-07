@@ -402,7 +402,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 exports.registerFinish = (phone, code, type) =>
 	new Promise((resolve, reject) => {
 
-		user.find({phone: phone})
+		user.find({phone: phone},{listproduct : 0, listsavedproduct : 0})
 
 			.then(users => {
 				let diff;
