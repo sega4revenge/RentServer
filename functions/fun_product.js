@@ -680,7 +680,15 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 			regexCategory.push(listCategory);
 		}
 		console.log("arrCate = " + regexCategory);
-		//product.createIndex({point: "2dsphere"});
+		product.createIndex(
+			{point: "2dsphere"}, function(err, result) {
+			if(err){
+				throw err
+			}else{
+				console.log(result);
+				callback(result);
+			}
+			});
 		console.log(keySearch, lat, lng, distance, listCategory);
 		product.find({
 			productname: {$regex: keySearch},
