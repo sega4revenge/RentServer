@@ -72,7 +72,7 @@ module.exports = router => {
 			fun_product.SearchMap(keySearch,lat,lng,distance,listCategory)
 				.then(result => res.json(result))
 
-				.catch(err => res.status(err.status).json({message: err}));
+				.catch(err => res.status(statusCode >= 100 && statusCode < 600 ? err.code : 500).json({message: "Wrong"}));
 		}
 
 	});
@@ -93,7 +93,7 @@ module.exports = router => {
 					  res.status(result.status).json({message: result.message, product: result.product})
 				  })*/
 
-				.catch(err => res.status(statusCode >= 100 && statusCode < 600 ? err.code : 500).json({message: "Wrong"}));
+				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
 	router.post('/refreshcomment', (req, res) => {
