@@ -710,7 +710,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 
 			})
 			.catch(err => {
-				console.log("aaaaaaaaae");
+				console.log(err.message);
 				reject({status: 500, message: err.message});
 			});
 	});
