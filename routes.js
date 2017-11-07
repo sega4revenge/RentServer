@@ -63,7 +63,7 @@ module.exports = router => {
 		const lng = req.body.lng;
 		const distance = req.body.distance;
 		const listCategory = req.body.category;
-		console.log(lat,lng,distance,listCategory);
+		console.log(lat,lng,distance,listCategory,keySearch);
 
 		if(!lat || !lng)
 		{

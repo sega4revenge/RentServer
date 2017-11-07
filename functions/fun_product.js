@@ -693,7 +693,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 		}, {comment: 0})
 			.populate({path: "user", select: "-listproduct -listsavedproduct"})
 			.then(products => {
-
+				console.log("arrCate =23213 ");
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
@@ -704,6 +704,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 				}
 			})
 			.then(product => {
+				console.log("arrCate =33333 ");
 				resolve({status: 200, listproduct: product});
 
 			})
