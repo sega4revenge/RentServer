@@ -93,7 +93,7 @@ module.exports = router => {
 					  res.status(result.status).json({message: result.message, product: result.product})
 				  })*/
 
-				.catch(err => res.status(500).json({message: "Wrong"}));
+				.catch(err => res.status(statusCode >= 100 && statusCode < 600 ? err.code : 500).json({message: "Wrong"}));
 		}
 	});
 	router.post('/refreshcomment', (req, res) => {
