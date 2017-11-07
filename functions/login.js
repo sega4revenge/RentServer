@@ -64,7 +64,7 @@ exports.loginFinish = (phone, code, tokenfirebase) =>
 				if (seconds < 300) {
 					return users[0];
 				} else {
-					reject({status: 401, message: "Time Out ! Try again"});
+					reject({status: 405, message: "Time Out ! Try again"});
 				}
 			}).then(usertemp => {
 
@@ -77,7 +77,6 @@ exports.loginFinish = (phone, code, tokenfirebase) =>
 				usertemp.save();
 				resolve({status: 200, user: usertemp});
 			} else {
-
 				reject({status: 401, message: "Invalid Code !"});
 			}
 

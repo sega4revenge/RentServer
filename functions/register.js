@@ -376,7 +376,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							email: email,
 							photoprofile: "no_avatar.png",
 							phone: phone,
-							hashed_password: hash,
+							hashed_password: undefined,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							temp_password: code,
@@ -402,7 +402,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 exports.registerFinish = (phone, code, type) =>
 	new Promise((resolve, reject) => {
 
-		user.find({phone: phone})
+		user.find({phone: phone},{listproduct : 0, listsavedproduct : 0})
 
 			.then(users => {
 				let diff;

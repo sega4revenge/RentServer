@@ -63,7 +63,7 @@ module.exports = router => {
 		const lng = req.body.lng;
 		const distance = req.body.distance;
 		const listCategory = req.body.category;
-		console.log(lat,lng,distance,listCategory);
+		console.log(lat,lng,distance,listCategory,keySearch);
 
 		if(!lat || !lng)
 		{
@@ -72,7 +72,7 @@ module.exports = router => {
 			fun_product.SearchMap(keySearch,lat,lng,distance,listCategory)
 				.then(result => res.json(result))
 
-				.catch(err => res.status(err.status).json({message: err.message}));
+				.catch(err => res.status(500).json({message: err.message}));
 		}
 
 	});

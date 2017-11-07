@@ -680,7 +680,16 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 			regexCategory.push(listCategory);
 		}
 		console.log("arrCate = " + regexCategory);
-		product.createIndex({point: "2dsphere"});
+		product.createIndex(
+			{point: "2dsphere"}, function(err, result) {
+			if(err){
+				throw err
+			}else{
+				console.log(result);
+				callback(result);
+			}
+			});
+		console.log(keySearch, lat, lng, distance, listCategory);
 		product.find({
 			productname: {$regex: keySearch},
 			location: {
@@ -693,7 +702,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 		}, {comment: 0})
 			.populate({path: "user", select: "-listproduct -listsavedproduct"})
 			.then(products => {
-
+				console.log("arrCate =23213 ");
 				if (products.length === 0) {
 					reject({status: 404, message: "Product Not Found !"});
 
@@ -704,6 +713,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 				}
 			})
 			.then(product => {
+				console.log("arrCate =33333 ");
 				resolve({status: 200, listproduct: product});
 
 			})
