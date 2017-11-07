@@ -27,5 +27,5 @@ const productSchema = mongoose.Schema({
 });
 
 mongoose.Promise = global.Promise;
-productSchema.index( { coordinates : "2dsphere" } );
+productSchema.index( { location : "2dsphere" } );
 module.exports = mongoose.model('product', productSchema);
