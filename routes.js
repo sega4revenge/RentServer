@@ -72,7 +72,7 @@ module.exports = router => {
 			fun_product.SearchMap(keySearch,lat,lng,distance,listCategory)
 				.then(result => res.json(result))
 
-				.catch(err => res.status(err.status).json({message: err.message}));
+				.catch(err => res.status(err.status).json({message: err}));
 		}
 
 	});
