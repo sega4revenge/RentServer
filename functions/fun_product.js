@@ -708,7 +708,7 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 
 			})
 			.catch(err => {
-				console.log(err.message);
+				console.log("aaaaaaaaae");
 				reject({status: 500, message: err.message});
 			});
 	});
