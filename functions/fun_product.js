@@ -164,7 +164,7 @@ exports.mInboxChat = (userid) =>
 				if (room.length > 0) {
 					resolve({listinbox: room});
 				} else {
-					reject({status: 500, message: "Not Found !"});
+					resolve({status: 201, message: "Not Found !"});
 				}
 
 
@@ -680,7 +680,15 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 			regexCategory.push(listCategory);
 		}
 		console.log("arrCate = " + regexCategory);
-
+		// product.createIndex(
+		// 	{point: "2dsphere"}, function(err, result) {
+		// 	if(err){
+		// 		throw err
+		// 	}else{
+		// 		console.log(result);
+		// 		callback(result);
+		// 	}
+		// 	});
 		console.log(keySearch, lat, lng, distance, listCategory);
 		product.find({
 			productname: {$regex: keySearch},
