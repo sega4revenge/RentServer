@@ -164,7 +164,7 @@ exports.mInboxChat = (userid) =>
 				if (room.length > 0) {
 					resolve({listinbox: room});
 				} else {
-					resolve({status: 201, message: "Not Found !"});
+					resolve({status: 201, listinbox: room});
 				}
 
 
