@@ -10,7 +10,7 @@ const commentSchema = mongoose.Schema({
     product             : {type: Schema.Types.ObjectId, ref: 'product'},
     content             : String,
     time                : String,
-    listlike            : [{type: Schema.Types.ObjectId, ref: 'user'}]
+    listlike            : []
 });
 
 mongoose.Promise = global.Promise;
