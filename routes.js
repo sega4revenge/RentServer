@@ -76,6 +76,28 @@ module.exports = router => {
 		}
 
 	});
+
+	router.post('/likecomment', (req, res) => {
+		const idcomment = req.body.idcomment;
+		const iduserlike = req.body.iduserlike;
+		const type = req.body.type;
+		console.log(idcomment,iduserlike);
+		if (!idcomment) {
+
+			res.status(400).json({message: 'Null IDCOMMENT !'});
+
+		} else {
+			fun_product.likecomment(idcomment,iduserlike,type)
+				.then(result => res.json(result))
+				/*  .then(result => {
+
+					  res.status(result.status).json({message: result.message, product: result.product})
+				  })*/
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+
 	router.post('/productdetail', (req, res) => {
 		const productid = req.body.productid;
 		const userid = req.body.userid;

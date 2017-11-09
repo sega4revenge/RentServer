@@ -1013,6 +1013,56 @@ exports.allcomment = (productid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+
+exports.likecomment = (idcomment,iduserlike,type) =>
+
+	new Promise((resolve, reject) => {
+		console.log("type: "+type)
+		comment.find({_id: ObjectId(idcomment)})
+			.then(commentlist => {
+
+				if (commentlist.length === 0) {
+
+					reject({status: 404, message: "Comment Not Found !"});
+
+				} else {
+					if(type === "0"){
+						commentlist.listlike.push(iduserlike)
+						commentlist.save()
+						resolve({
+							status: 202,
+							message: "Success"
+						});
+					}else{
+						comment.findByIdAndUpdate(
+							idcomment,
+							{$pull: {"listlike": iduserlike}},
+							{safe: true, upsert: true, new: true},
+							function (err, model) {
+								if(err){
+									console.log(err);
+									resolve({
+										status: 500,
+										message: "Faile"
+									});
+								}else{
+									resolve({
+										status: 202,
+										message: "Success"
+									});
+								}
+
+
+							}
+						);
+					}
+				}
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+
 exports.uploadproduct = (productid, image) =>
 
 	new Promise((resolve, reject) => {
