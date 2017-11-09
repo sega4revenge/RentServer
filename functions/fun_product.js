@@ -1026,9 +1026,10 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 
 				} else {
 					if(type === "0"){
+						console.log("type: 1111111111")
 						comment.findByIdAndUpdate(
 							idcomment,
-							{push: {"listlike": iduserlike}},
+							{$push: {"listlike": iduserlike}},
 							{safe: true, upsert: true, new: true},
 							function (err, model) {
 								if(err){
@@ -1038,6 +1039,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 										message: "Faile"
 									});
 								}else{
+									console.log("type: 3333333333")
 									resolve({
 										status: 202,
 										message: "Success"
@@ -1048,6 +1050,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 							}
 						);
 					}else{
+						console.log("type: 2222222222222")
 						comment.findByIdAndUpdate(
 							idcomment,
 							{$pull: {"listlike": iduserlike}},
@@ -1060,6 +1063,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 										message: "Faile"
 									});
 								}else{
+									console.log("type: 44444444444")
 									resolve({
 										status: 202,
 										message: "Success"
