@@ -967,7 +967,7 @@ exports.productdetail = (productid, userid) =>
 						});
 					}
 					else {
-						console.log(products[0]);
+						console.log(products[0].comment[0].listlike[0]);
 						resolve({status: 201, product: products[0]});
 
 					}
