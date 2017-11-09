@@ -1026,12 +1026,27 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 
 				} else {
 					if(type === "0"){
-						commentlist.listlike.push(iduserlike)
-						commentlist.save()
-						resolve({
-							status: 202,
-							message: "Success"
-						});
+						comment.findByIdAndUpdate(
+							idcomment,
+							{push: {"listlike": iduserlike}},
+							{safe: true, upsert: true, new: true},
+							function (err, model) {
+								if(err){
+									console.log(err);
+									resolve({
+										status: 500,
+										message: "Faile"
+									});
+								}else{
+									resolve({
+										status: 202,
+										message: "Success"
+									});
+								}
+
+
+							}
+						);
 					}else{
 						comment.findByIdAndUpdate(
 							idcomment,
