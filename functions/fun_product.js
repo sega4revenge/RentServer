@@ -1058,7 +1058,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 				}
 			})
 
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+			.catch(err => reject({status: 500, message: err.message}));
 
 	});
 
