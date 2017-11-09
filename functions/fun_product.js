@@ -30,7 +30,6 @@ exports.allproduct = (type, page, category) =>
 							reject({status: 404, message: "Product Not Found !"});
 
 						} else {
-
 							return products;
 
 						}
@@ -968,6 +967,7 @@ exports.productdetail = (productid, userid) =>
 						});
 					}
 					else {
+						console.log(products[0]);
 						resolve({status: 201, product: products[0]});
 
 					}
