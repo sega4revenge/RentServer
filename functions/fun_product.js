@@ -198,6 +198,7 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 				const mResult = result[0];
 				const usersend = mResult.name;
 				const avata = mResult.photoprofile;
+				console.log("idrec: " + idrec);
 				user.find({_id: ObjectId(idrec)}, function (err, UserResult) {
 					if (err) {
 						throw err;
