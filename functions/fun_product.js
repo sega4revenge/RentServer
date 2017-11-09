@@ -206,6 +206,7 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 						if (UserResult) {
 							const mResultUser = UserResult[0];
 							tokencode = mResultUser.tokenfirebase;
+							console.log("tokencode: " + tokencode);
 							if (tokencode) {
 								const m = {
 									to: tokencode,
