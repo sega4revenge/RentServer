@@ -423,7 +423,7 @@ exports.registerFinish = (phone, code, type) =>
 				if (seconds < 300) {
 					return users[0];
 				} else {
-					reject({status: 401, message: "Time Out ! Try again"});
+					reject({status: 405, message: "Time Out ! Try again"});
 				}
 			}).then(usertemp => {
 

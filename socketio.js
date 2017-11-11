@@ -56,6 +56,7 @@ module.exports = io => {
 		socket.on('outroom', function (userFrom,userTo) {
 			console.log("outroom: "+userFrom+" - "+userTo);
 			socket.leave(userFrom+" - "+userTo);
+			socket.joi
 		});
 		socket.on('getData', function (userFrom,userTo,userIdOnline,page) {
 		//	console.log(userFrom,userTo);
