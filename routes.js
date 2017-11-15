@@ -786,6 +786,7 @@ module.exports = router => {
 		form.multiples = true;
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
+		console.log(uploadDir);
 		form.parse(req, (err, fields, files) => {
 			if (err) return res.status(500).json({error: err});
 			console.log(files.image.path.substring(8));
