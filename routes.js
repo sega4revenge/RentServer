@@ -794,21 +794,31 @@ module.exports = router => {
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
 		console.log(uploadDir);
-
-		form.parse(req, (err, fields, files) => {
-			console.log("abc");
-			if (err) {
-				console.log(err.message);
-				res.status(500).json({error: err.message});
-			}
+		form.on('file', function(field, files) {
 			console.log(files.image.path.substring(8));
 			fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
 			res.status(200).json({uploaded: true, name: fields.user})
 		});
+
+		// log any errors that occur
+		form.on('error', function(err) {
+			console.log(err.message);
+			res.status(500).json({error: err.message});
+		});
+
+		// once all the files have been uploaded, send a response to the client
+		form.on('end', function() {
+			res.end('success');
+		});
 		form.on('fileBegin', function (name, file) {
 			const [fileName, fileExt] = file.name.split('.');
 			file.path = path.join(uploadDir, `${fileName}_${new Date().getTime()}.${fileExt}`)
-		})
+		});
+
+		// parse the incoming request containing the form data
+		form.parse(req);
+
+
 	}
 
 	function checkToken(req) {
