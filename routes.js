@@ -793,6 +793,7 @@ module.exports = router => {
 		console.log(uploadDir);
 		try {
 			fs.accessSync(form.uploadDir, fs.F_OK);
+			console.log("ábc");
 // Do something
 		} catch (e) {
 // It isn't accessible
