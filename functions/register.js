@@ -75,6 +75,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							for(var i=0; i<user.length;i++){
 									if(user[i].facebook.status_code === "1")
 									{
+										user[i].tokenfirebase = tokenfirebase;
+										user[i].save();
 										resolve({
 											status: 200,
 											message: "User Login Sucessfully !",
@@ -108,20 +110,41 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 					}
 					else {
+						if(user.length == 1){
+							if(user[0].google.status_code === "0")
+							{
 
-						if(user[0].google.status_code === "0")
-						{
+								resolve({status: 201, message: "Dont link any account !"});
 
-							resolve({status: 201, message: "Dont link any account !"});
-
+							}
+							else {
+								user[0].tokenfirebase = tokenfirebase;
+								user[0].save();
+								resolve({
+									status: 200,
+									message: "User Registered Sucessfully !",
+									user: user[0]
+								});
+							}
+						}else{
+							for(var i=0; i<user.length;i++){
+								if(user[i].google.status_code === "1")
+								{
+									user[i].tokenfirebase = tokenfirebase;
+									user[i].save();
+									resolve({
+										status: 200,
+										message: "User Login Sucessfully !",
+										user: user[i]
+									});
+									break;
+								}
+								if(i == (user.length-1)){
+									resolve({status: 201, message: "Dont link any account !"});
+								}
+							}
 						}
-						else {
-							resolve({
-								status: 200,
-								message: "User Registered Sucessfully !",
-								user: user[0]
-							});
-						}
+
 
 					}
 				})
