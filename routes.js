@@ -15,7 +15,7 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
-const uploadDir = path.join('./uploads/');
+const uploadDir = path.join(__dirname, 'uploads');
 
 
 module.exports = router => {
