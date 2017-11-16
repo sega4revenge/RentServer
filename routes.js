@@ -15,7 +15,7 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
-const uploadDir = path.join(__dirname, 'uploads');
+const uploadDir = path.join(__dirname, '/uploads');
 
 
 module.exports = router => {
@@ -794,7 +794,7 @@ module.exports = router => {
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
 		console.log(uploadDir);
-		console.log("abc");
+
 		form.parse(req, (err, fields, files) => {
 			console.log("abc");
 			if (err) {
