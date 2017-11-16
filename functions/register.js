@@ -62,6 +62,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 								}
 								else {
+									user[0].tokenfirebase = tokenfirebase;
+									user[0].save();
 									resolve({
 										status: 200,
 										message: "User Login Sucessfully !",
