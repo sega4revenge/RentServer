@@ -15,7 +15,7 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
-const uploadDir = path.join(__dirname, '/uploads');
+const uploadDir = path.join('./uploads/');
 
 
 module.exports = router => {
@@ -716,10 +716,7 @@ module.exports = router => {
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
 		form.parse(req, (err, fields, files) => {
-			if (err) {
-				console.log(err.message);
-				res.status(500).json({error: err.message});
-			}
+			if (err) return res.status(500).json({error: err});
 			if(fields.oldavatar !== "no_avatar.png")
 			{
 				fs.unlink(uploadDir + fields.oldavatar, (err) => {
@@ -794,31 +791,24 @@ module.exports = router => {
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
 		console.log(uploadDir);
-		form.on('file', function(field, files) {
+		try {
+			fs.accessSync(form.uploadDir, fs.F_OK);
+// Do something
+		} catch (e) {
+// It isn't accessible
+			console.log("error no such folder");
+			return;
+		}
+		form.parse(req, (err, fields, files) => {
+			if (err) return res.status(500).json({error: err});
 			console.log(files.image.path.substring(8));
 			fun_product.uploadproduct(fields.productid, files.image.path.substring(8));
 			res.status(200).json({uploaded: true, name: fields.user})
 		});
-
-		// log any errors that occur
-		form.on('error', function(err) {
-			console.log(err.message);
-			res.status(500).json({error: err.message});
-		});
-
-		// once all the files have been uploaded, send a response to the client
-		form.on('end', function() {
-			res.end('success');
-		});
 		form.on('fileBegin', function (name, file) {
 			const [fileName, fileExt] = file.name.split('.');
 			file.path = path.join(uploadDir, `${fileName}_${new Date().getTime()}.${fileExt}`)
-		});
-
-		// parse the incoming request containing the form data
-		form.parse(req);
-
-
+		})
 	}
 
 	function checkToken(req) {
