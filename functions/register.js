@@ -86,10 +86,6 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 							}
 
 						}
-
-
-
-
 					}
 				})
 				.catch(err => {
@@ -181,6 +177,8 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							}
 							else
 							{
+								users[0].tokenfirebase = tokenfirebase;
+								users[0].save();
 								reject({
 									status: 409,
 									message: "Da Ton Tai"
@@ -280,6 +278,8 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							}
 							else
 							{
+								users[0].tokenfirebase =  tokenfirebase;
+								users[0].save();
 								reject({
 									status: 409,
 									message: "Da Ton Tai"
