@@ -794,7 +794,9 @@ module.exports = router => {
 		form.keepExtensions = true;
 		form.uploadDir = uploadDir;
 		console.log(uploadDir);
+		console.log("abc");
 		form.parse(req, (err, fields, files) => {
+			console.log("abc");
 			if (err) {
 				console.log(err.message);
 				res.status(500).json({error: err.message});
