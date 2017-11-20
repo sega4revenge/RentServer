@@ -189,7 +189,6 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
 		let tokencode;
-		console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		user.find({_id: ObjectId(idsend)}, function (err, result) {
 			if (err) {
 				throw err;

@@ -82,7 +82,6 @@ module.exports = io => {
 			//gui tin nhan len server
 		//	console.log(userFrom,userTo,name,message);
 			console.log(message+"//"+type);
-			console.log("///////////////////////////////////");
 			var ss=	fun_product.sendMessChat("",userFrom,userTo,email,name,message,socket,io,type);
 
 			if(ss)
