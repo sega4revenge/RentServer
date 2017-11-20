@@ -6,7 +6,7 @@ const user = new require("../models/user");
 const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
-const fcm = new FCM("AAAAW7P9c88:APA91bGd_ElMciDxNQtJUdXY2lUZzb_z2bEjXpSRZNj2tE2B7ehaJF12T9JStlEVh7xi672fc7J5B-iVpvAjSRzIK2Dt9S7s-xMTliKL7QjsalQT8vK2U-UTo7fxMkTfdzr7C6iBqjKn");
+const fcm = new FCM("AIzaSyDY8XewYpIyXYlLrGAakgya7B4EQSh2miU");
 const chat = new require("../models/chat_messager");
 exports.allproduct = (type, page, category) =>
 	new Promise((resolve, reject) => {
@@ -190,6 +190,7 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {
 		let tokencode;
+		console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		user.find({_id: ObjectId(idsend)}, function (err, result) {
 			if (err) {
 				throw err;
