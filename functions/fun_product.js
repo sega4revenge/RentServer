@@ -6,7 +6,7 @@ const user = new require("../models/user");
 const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
 const FCM = require("fcm-node");
-const fcm = new FCM("AIzaSyDY8XewYpIyXYlLrGAakgya7B4EQSh2miU");
+const fcm = new FCM("AIzaSyCFBNNnf4BL6jGvve-ysC4VxyNjmFrthVo");
 const chat = new require("../models/chat_messager");
 exports.allproduct = (type, page, category) =>
 	new Promise((resolve, reject) => {
