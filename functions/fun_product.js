@@ -651,6 +651,7 @@ exports.refreshreplycomment = (commentid) =>
 		replycomment.find({comment: ObjectId(commentid)})
 			.populate("user comment", "_id name email photoprofile user")
 			.then(comment => {
+				console.log(comment);
 				resolve({replycomment: comment});
 
 			})
