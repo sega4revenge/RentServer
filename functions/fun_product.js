@@ -673,7 +673,8 @@ exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
 		comment.find({product: ObjectId(productid)})
-			.populate("user product replycomment", "_id name email photoprofile user replycomment")
+			.populate({path: "replycomment"})
+			.populate("user product", "_id name email photoprofile user")
 			.then(comment => {
 				console.log(comment)
 				resolve({comment: comment});
@@ -1150,7 +1151,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 
 				} else {
 					if(type === "0"){
-						console.log("type: 1111111111")
+
 						comment.findByIdAndUpdate(
 							idcomment,
 							{$push: {"listlike": iduserlike}},
@@ -1163,7 +1164,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 										message: "Faile"
 									});
 								}else{
-									console.log("type: 3333333333")
+
 									resolve({
 										status: 202,
 										message: "Success"
@@ -1174,7 +1175,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 							}
 						);
 					}else{
-						console.log("type: 2222222222222")
+
 						comment.findByIdAndUpdate(
 							idcomment,
 							{$pull: {"listlike": iduserlike}},
@@ -1187,7 +1188,7 @@ exports.likecomment = (idcomment,iduserlike,type) =>
 										message: "Faile"
 									});
 								}else{
-									console.log("type: 44444444444")
+
 									resolve({
 										status: 202,
 										message: "Success"
