@@ -10,6 +10,7 @@ const commentSchema = mongoose.Schema({
     product             : {type: Schema.Types.ObjectId, ref: 'product'},
     content             : String,
     time                : String,
+	listreply            : [{type: Schema.Types.ObjectId, ref: 'replycomment'}],
     listlike            : []
 });
 

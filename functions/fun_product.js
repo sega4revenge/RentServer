@@ -2,6 +2,7 @@
 
 const product = new require("../models/product");
 const comment = new require("../models/comment");
+const replycomment = new require("../models/replycomment");
 const user = new require("../models/user");
 const saveProduct = new require("../models/ProductSave");
 const ObjectId = require("mongodb").ObjectID;
@@ -644,6 +645,29 @@ exports.push_messtotopic = (productid, msg, userid) =>
 
 
 	});
+exports.refreshreplycomment = (commentid) =>
+	new Promise((resolve, reject) => {
+
+		replycomment.find({comment: ObjectId(commentid)})
+			.populate("user comment", "_id name email photoprofile user")
+			.then(comment => {
+				resolve({replycomment: comment});
+
+			})
+
+			.catch(err => {
+
+				if (err.code === 11000) {
+
+					reject({status: 409, message: "Comment Already Registered !"});
+
+				} else {
+					reject({status: 500, message: "Internal Server Error2 !"});
+					throw err;
+
+				}
+			});
+	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
@@ -874,6 +898,42 @@ exports.deletecomment = (commentid, productid) =>
 			});
 
 	});
+exports.deletereplycomment = (replycommentid, commentid) =>
+
+	new Promise((resolve, reject) => {
+		// console.log("cmtid:" + commentid + " productid: " + productid);
+		comment.findOneAndUpdate(commentid, {$pull: {listreply: replycommentid}})
+			.then(() => {
+				replycomment.findByIdAndRemove(replycommentid, function (err, offer) {
+					if (err) {
+						throw err;
+					}
+					module.exports.refreshreplycomment(commentid)
+
+						.then(result => {
+
+							resolve({status: 201, comment: result.replycomment});
+						})
+						.catch(err => {
+							if (err.code === 11000) {
+
+								reject({status: 409, message: "Comment Already Registered !"});
+
+							} else {
+								reject({status: 500, message: "Internal Server Error 1!"});
+								throw err;
+
+							}
+						});
+
+
+					module.exports.push_messtotopic(commentid, "Ahihi", 1);
+
+				});
+
+			});
+
+	});
 exports.addcomment = (userid, productid, content, time) =>
 
 	new Promise((resolve, reject) => {
@@ -936,7 +996,68 @@ exports.addcomment = (userid, productid, content, time) =>
 			});
 	});
 
+exports.addreplycomment = (userid, commentid, content, time) =>
 
+	new Promise((resolve, reject) => {
+
+		let newcomment;
+
+
+		newcomment = new replycomment({
+			user: userid,
+			comment: commentid,
+			content: content,
+			time: time
+		});
+
+		newcomment.save()
+
+
+			.then(() => {
+				comment.findByIdAndUpdate(
+					commentid,
+					{$push: {"listreply": newcomment._id}},
+					{safe: true, upsert: true, new: true},
+					function (err, model) {
+						console.log(err);
+					}
+				);
+					this.refreshreplycomment(commentid)
+					.then(result => {
+						resolve({status: 201, comment: result.replycomment});
+
+						module.exports.push_messtotopic(productid, result.replycomment[0].comment.product.user, userid);
+
+						console.log("addcommnet : " + result.replycomment[0].comment.product.user);
+					})
+					.catch(err => {
+						if (err.code === 11000) {
+
+							reject({status: 409, message: "Comment Already Registered !"});
+
+						} else {
+							reject({status: 500, message: "Internal Server Error 1!"});
+							throw err;
+
+						}
+					});
+
+
+			})
+
+			.catch(err => {
+
+				if (err.code === 11000) {
+
+					reject({status: 409, message: "Comment Already Registered !"});
+
+				} else {
+					reject({status: 500, message: "Internal Server Error 1!"});
+					throw err;
+
+				}
+			});
+	});
 exports.productdetail = (productid, userid) =>
 
 	new Promise((resolve, reject) => {

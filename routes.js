@@ -138,7 +138,26 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/refreshreplycomment', (req, res) => {
+		const commentid = req.body.productid;
 
+		console.log(commentid);
+		if (!commentid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+			console.log(commentid);
+			fun_product.refreshreplycomment(commentid)
+				.then(result => res.json(result))
+				/*  .then(result => {
+
+					  res.status(result.status).json({message: result.message, product: result.product})
+				  })*/
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/getfullprofile', (req, res) => {
 		const userid = req.body.userid;
 
@@ -531,6 +550,46 @@ module.exports = router => {
 		} else {
 
 			fun_product.addcomment(userid, productid,content, timestamp)
+
+				.then(result => {
+
+					res.status(result.status).json({message: result.message,comment: result.comment})
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+	router.post('/addreplycomment', (req, res) => {
+		const userid = req.body.userid;
+		const commentid = req.body.commentid;
+		const content = req.body.content;
+		const day = new Date();
+		const timestamp = day.getTime();
+		if (!userid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.addreplycomment(userid, commentid,content, timestamp)
+
+				.then(result => {
+
+					res.status(result.status).json({message: result.message,comment: result.comment})
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
+	router.post('/deletereplycomment', (req, res) => {
+		const replycommentid = req.body.replycommentid;
+		const commentid = req.body.commentid;
+
+		if (!replycommentid) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.deletereplycomment(replycommentid,commentid)
 
 				.then(result => {
 
