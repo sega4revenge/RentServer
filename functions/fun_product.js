@@ -652,7 +652,7 @@ exports.refreshreplycomment = (commentid) =>
 			.populate("user comment", "_id name email photoprofile user")
 			.then(comment => {
 				console.log(comment);
-				resolve({replycomment: comment});
+				resolve({comment: comment});
 
 			})
 
@@ -913,7 +913,7 @@ exports.deletereplycomment = (replycommentid, commentid) =>
 
 						.then(result => {
 
-							resolve({status: 201, comment: result.replycomment});
+							resolve({status: 201, comment: result.comment});
 						})
 						.catch(err => {
 							if (err.code === 11000) {
@@ -1025,11 +1025,11 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 				);
 					this.refreshreplycomment(commentid)
 					.then(result => {
-						resolve({status: 201, comment: result.replycomment});
+						resolve({status: 201, comment: result.comment});
 
-						module.exports.push_messtotopic(commentid, result.replycomment[0].comment.product.user, userid);
+						module.exports.push_messtotopic(commentid, result.comment[0].comment.product.user, userid);
 
-						console.log("addcommnet : " + result.replycomment[0].comment.product.user);
+						console.log("addcommnet : " + result.comment[0].comment.product.user);
 					})
 					.catch(err => {
 						if (err.code === 11000) {
