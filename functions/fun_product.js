@@ -673,8 +673,7 @@ exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 
 		comment.find({product: ObjectId(productid)})
-			.populate({path: "replycomment"})
-			.populate("user product", "_id name email photoprofile user")
+			.populate("user product listreply", "_id name email photoprofile user")
 			.then(comment => {
 				console.log(comment)
 				resolve({comment: comment});
