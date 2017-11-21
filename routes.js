@@ -138,7 +138,7 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
-	router.post('/refreshreplycomment', (req, res) => {
+	router.post('/refreshrelycomment', (req, res) => {
 		const commentid = req.body.productid;
 
 		console.log(commentid);
