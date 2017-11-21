@@ -671,9 +671,9 @@ exports.refreshreplycomment = (commentid) =>
 	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
-
+//.populate("user product listreply", "_id name email photoprofile user replycomment")
 		comment.find({product: ObjectId(productid)})
-			.populate("user product listreply", "_id name email photoprofile user replycomment")
+			.populate("user product", "_id name email photoprofile user")
 			.then(comment => {
 				console.log(comment);
 				resolve({comment: comment});
@@ -1066,8 +1066,8 @@ exports.productdetail = (productid, userid) =>
 		let isSaved;
 		product.find({_id: ObjectId(productid)})
 			.populate({
-				path: "user comment listreply",
-				select: "-listproduct -listsavedproduct replycomment",
+				path: "user comment",
+				select: "-listproduct -listsavedproduct",
 				options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
 				populate: {path: "user", select: "_id name email photoprofile"}
