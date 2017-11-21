@@ -1026,7 +1026,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 					.then(result => {
 						resolve({status: 201, comment: result.replycomment});
 
-						module.exports.push_messtotopic(productid, result.replycomment[0].comment.product.user, userid);
+						module.exports.push_messtotopic(commentid, result.replycomment[0].comment.product.user, userid);
 
 						console.log("addcommnet : " + result.replycomment[0].comment.product.user);
 					})
