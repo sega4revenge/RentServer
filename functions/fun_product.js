@@ -618,17 +618,19 @@ exports.saveproduct = (userid, productid, type) =>
 			);
 		}
 	});
-
-exports.push_messtotopic = (productid, msg, userid) =>
+exports.push_messtotopicreply = (commentid, username, userreply, userown, content, msg, token) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: "/topics/" + productid,
+			to: "/topics/" + commentid,
 
 			data: {
-				productid: productid,
-				useridproduct: msg,
-				useridcmt: userid
+				commentid: commentid,
+				username: username,
+				content: content,
+				userreply: userreply,
+				userown : userown,
+				msg: msg
 			}
 		};
 		console.log("push mess: " + msg);
@@ -646,23 +648,20 @@ exports.push_messtotopic = (productid, msg, userid) =>
 
 
 	});
-exports.push_messtopicreply = (commentid, username, userreply, userown, content, msg) =>
+exports.push_messtotopic = (productid, msg, userid) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: "/topics/" + commentid,
+			to: "/topics/" + productid,
 
 			data: {
-				commentid: commentid,
-				username: username,
-				content: content,
-				userreply: userreply,
-				userown : userown,
-				msg: msg
+				productid: productid,
+				useridproduct: msg,
+				useridcmt: userid
 			}
 		};
-		console.log("push mess: " +token + " / " + msg);
-
+		console.log("push mess: " + msg);
+		console.log("push topics: " + productid);
 		fcm.send(m, function (err, response) {
 			if (err) {
 				console.log(err);
@@ -1096,8 +1095,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 						resolve({status: 201, comment: result.comment});
 						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
 						module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
-						//module.exports.push_messtotopic(commentid, result.comment[0].comment.user._id, userid);
-						module.exports.push_messtopicreply(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn");
+						module.exports.push_messtotopicreply(commentid,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
 
 					})
 					.catch(err => {
