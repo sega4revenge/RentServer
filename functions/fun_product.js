@@ -631,7 +631,7 @@ exports.push_messtotopic = (productid, msg, userid) =>
 			}
 		};
 		console.log("push mess: " + msg);
-
+		console.log("push topics: " + productid);
 		fcm.send(m, function (err, response) {
 			if (err) {
 				console.log(err);
