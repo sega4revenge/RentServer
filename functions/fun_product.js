@@ -648,8 +648,8 @@ exports.push_messtotopic = (productid, msg, userid) =>
 exports.refreshreplycomment = (commentid) =>
 	new Promise((resolve, reject) => {
 
-		replycomment.find({comment: ObjectId(commentid)})
-			.populate("user", "_id name email photoprofile user")
+		replycomment.find({comment: ObjectId(commentid)},{comment: 0})
+			.populate("user", "_id name email photoprofile ")
 			.then(comment => {
 				console.log(comment);
 				resolve({comment: comment});
