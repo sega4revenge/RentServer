@@ -649,7 +649,7 @@ exports.refreshreplycomment = (commentid) =>
 	new Promise((resolve, reject) => {
 
 		replycomment.find({comment: ObjectId(commentid)})
-			.populate("user comment", "_id name email photoprofile user")
+			.populate("user", "_id name email photoprofile user")
 			.then(comment => {
 				console.log(comment);
 				resolve({comment: comment});
@@ -678,7 +678,7 @@ exports.refreshcomment = (productid) =>
 				select: "_id name email photoprofile user content time",
 			//	options: {sort: {"time": -1}},
 				// Get friends of friends - populate the 'friends' array for every friend
-				populate: {path: "user ", select: "_id name email photoprofile"}})
+				populate: {path: "user ", select: "_id name email photoprofile "}})
 
 			.then(comment => {
 				console.log(comment);
