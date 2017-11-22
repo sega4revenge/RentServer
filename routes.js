@@ -344,6 +344,8 @@ module.exports = router => {
 
 		const type = req.body.type;
 		const tokenfirebase = req.body.tokenfirebase;
+
+
 		if (!phone) {
 
 			res.status(400).json({message: 'Invalid Request !'});
@@ -387,13 +389,14 @@ module.exports = router => {
 		const phone = req.body.phone;
 		const code = req.body.code;
 		const type  = req.body.type;
+		const token  = req.body.token;
 		if (!phone || !code) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			register.registerFinish(phone,code,type)
+			register.registerFinish(phone,code,type,token)
 
 				.then(result => {
 					res.status(result.status).json({message: result.message,user: result.user})

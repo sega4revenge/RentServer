@@ -442,7 +442,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 		}
 
 	});
-exports.registerFinish = (phone, code, type) =>
+exports.registerFinish = (phone, code, type, token) =>
 	new Promise((resolve, reject) => {
 
 		user.find({phone: phone},{listproduct : 0, listsavedproduct : 0})
@@ -472,7 +472,7 @@ exports.registerFinish = (phone, code, type) =>
 
 			if (type === 0) {
 				if (bcrypt.compareSync(code, usertemp.temp_password)) {
-
+					usertemp.tokenfirebase = token;
 					usertemp.temp_password = undefined;
 					usertemp.temp_password_time = undefined;
 					usertemp.status_code = "1";
