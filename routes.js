@@ -390,6 +390,7 @@ module.exports = router => {
 		const code = req.body.code;
 		const type  = req.body.type;
 		const token  = req.body.token;
+		console.log("AAAAAAAAAABBBBBBAAAAAAAAAAAAA",phone + " / " + code+ " / " +type + " / " +token );
 		if (!phone || !code) {
 
 			res.status(400).json({message: 'Invalid Request !'});

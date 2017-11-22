@@ -448,7 +448,6 @@ exports.registerFinish = (phone, code, type, token) =>
 		user.find({phone: phone},{listproduct : 0, listsavedproduct : 0})
 
 			.then(users => {
-				console.log("AAAAAAAAAABBBBBBAAAAAAAAAAAAA",phone + " / " + code+ " / " +type + " / " +token );
 				let diff;
 
 				if (type === 0) {
