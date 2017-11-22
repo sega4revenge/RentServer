@@ -699,43 +699,18 @@ exports.refreshreplycomment = (commentid) =>
 				}
 			});
 	});
-// exports.refreshcomment = (productid) =>
-// 	new Promise((resolve, reject) => {
-// //
-// 		comment.find({product: ObjectId(productid)})
-// 			.populate({
-// 				path: "user product listreply",
-// 				select: "_id name email photoprofile user content time",
-// 			//	options: {sort: {"time": -1}},
-// 				// Get friends of friends - populate the 'friends' array for every friend
-// 				populate: {path: "user ", select: "_id name email photoprofile "}})
-//
-// 			.then(comment => {
-// 				console.log(comment);
-// 				resolve({comment: comment});
-//
-// 			})
-//
-// 			.catch(err => {
-//
-// 				if (err.code === 11000) {
-//
-// 					reject({status: 409, message: "Comment Already Registered !"});
-//
-// 				} else {
-// 					reject({status: 500, message: "Internal Server Error2 !"});
-// 					throw err;
-//
-// 				}
-// 			});
-// 	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
-
+//
 		comment.find({product: ObjectId(productid)})
-			.populate("user product", "_id name email photoprofile user")
-			.then(comment => {
+			.populate({
+				path: "user product listreply",
+				select: "_id name email photoprofile user content time",
+			//	options: {sort: {"time": -1}},
+				// Get friends of friends - populate the 'friends' array for every friend
+				populate: {path: "user ", select: "_id name email photoprofile "}})
 
+			.then(comment => {
 				resolve({comment: comment});
 
 			})
@@ -818,10 +793,13 @@ exports.deleteProduct = (productid) =>
 		comment.deleteMany({product: ObjectId(productid)})
 
 			.then(() => {
+				console.log("toi day roi 1");
 				user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
 					.then(() => {
+						console.log("toi day roi 2");
 						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
 							.then(() => {
+								console.log("toi day roi 3");
 								product.findByIdAndRemove(productid, function (err, offer) {
 									if (err) {
 										console.log(err);
@@ -901,39 +879,33 @@ exports.deletecomment = (commentid, productid) =>
 		// console.log("cmtid:" + commentid + " productid: " + productid);
 		product.findOneAndUpdate(productid, {$pull: {comment: commentid}})
 			.then(() => {
-				replycomment.deleteMany({comment: ObjectId(commentid)})
-					.then(() => {
-						comment.findByIdAndRemove(commentid, function (err, offer) {
-							if (err) {
+				comment.findByIdAndRemove(commentid, function (err, offer) {
+					if (err) {
+						throw err;
+					}
+					module.exports.refreshcomment(productid)
+
+						.then(result => {
+
+							resolve({status: 201, comment: result.comment});
+						})
+						.catch(err => {
+							if (err.code === 11000) {
+
+								reject({status: 409, message: "Comment Already Registered !"});
+
+							} else {
+								reject({status: 500, message: "Internal Server Error 1!"});
 								throw err;
+
 							}
-							module.exports.refreshcomment(productid)
-
-								.then(result => {
-
-									resolve({status: 201, comment: result.comment});
-								})
-								.catch(err => {
-									if (err.code === 11000) {
-
-										reject({status: 409, message: "Comment Already Registered !"});
-
-									} else {
-										reject({status: 500, message: "Internal Server Error 1!"});
-										throw err;
-
-									}
-								});
-
-
-							module.exports.push_messtotopic(productid, "Ahihi", 1);
-
 						});
-					})
-					.catch(err => reject({status: 500, message: "Internal Server Error 1!"}));
 
 
+					module.exports.push_messtotopic(productid, "Ahihi", 1);
 
+				});
+				console.log("fdhdfdj");
 
 
 				// let ObjectId;
@@ -1027,6 +999,7 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
+						console.log("ASDASDASDASDASDSAD",productid + " / " + result.comment[0].product.user  + " / " + userid)
 						resolve({status: 201, comment: result.comment});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user, userid);
 						console.log("addcommnet : " + result.comment[0].product.user);
