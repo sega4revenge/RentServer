@@ -699,19 +699,43 @@ exports.refreshreplycomment = (commentid) =>
 				}
 			});
 	});
+// exports.refreshcomment = (productid) =>
+// 	new Promise((resolve, reject) => {
+// //
+// 		comment.find({product: ObjectId(productid)})
+// 			.populate({
+// 				path: "user product listreply",
+// 				select: "_id name email photoprofile user content time",
+// 			//	options: {sort: {"time": -1}},
+// 				// Get friends of friends - populate the 'friends' array for every friend
+// 				populate: {path: "user ", select: "_id name email photoprofile "}})
+//
+// 			.then(comment => {
+// 				console.log(comment);
+// 				resolve({comment: comment});
+//
+// 			})
+//
+// 			.catch(err => {
+//
+// 				if (err.code === 11000) {
+//
+// 					reject({status: 409, message: "Comment Already Registered !"});
+//
+// 				} else {
+// 					reject({status: 500, message: "Internal Server Error2 !"});
+// 					throw err;
+//
+// 				}
+// 			});
+// 	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
-//
-		comment.find({product: ObjectId(productid)})
-			.populate({
-				path: "user product listreply",
-				select: "_id name email photoprofile user content time",
-			//	options: {sort: {"time": -1}},
-				// Get friends of friends - populate the 'friends' array for every friend
-				populate: {path: "user ", select: "_id name email photoprofile "}})
 
+		comment.find({product: ObjectId(productid)})
+			.populate("user product", "_id name email photoprofile user")
 			.then(comment => {
-				console.log(comment);
+
 				resolve({comment: comment});
 
 			})
