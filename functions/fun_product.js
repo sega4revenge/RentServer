@@ -649,7 +649,7 @@ exports.refreshreplycomment = (commentid) =>
 	new Promise((resolve, reject) => {
 	// ,{comment: 0}
 		replycomment.find({comment: ObjectId(commentid)})
-			.populate("user", "_id name email photoprofile ")
+			.populate({path : "user comment",select : "_id name email photoprofile".populate({path : "user",select : "_id name email photoprofile"})})
 			.then(comment => {
 				console.log(comment);
 				resolve({comment: comment});
