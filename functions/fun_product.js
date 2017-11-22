@@ -618,18 +618,19 @@ exports.saveproduct = (userid, productid, type) =>
 			);
 		}
 	});
-exports.push_messtotopic2 = (productid, msg, userid,content,name) =>
+exports.push_messtotopic2 = (commentid, username, userreply, userown, content, msg, token) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: "/topics/" + productid,
+			to: "/topics/" + commentid,
 
 			data: {
-				productid: productid,
-				useridproduct: msg,
-				useridcmt: userid,
+				commentid: commentid,
+				username: username,
 				content: content,
-				name: name
+				userreply: userreply,
+				userown : userown,
+				msg: msg
 			}
 		};
 		console.log("push mess: " + msg);
@@ -1094,7 +1095,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 						resolve({status: 201, comment: result.comment});
 						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
 						module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
-						module.exports.push_messtotopic2(commentid,result.comment[0].comment.user._id,userid,result.comment[0].comment.content,result.comment[0].comment.user.name);
+						module.exports.push_messtotopic2(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
 
 					})
 					.catch(err => {
