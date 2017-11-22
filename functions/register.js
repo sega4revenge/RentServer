@@ -202,7 +202,6 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							}
 							else
 							{
-								console.log("aaaaaaaaaa"+tokenfirebase);
 								users[0].tokenfirebase = tokenfirebase;
 								users[0].save();
 								reject({
