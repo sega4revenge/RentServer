@@ -650,7 +650,7 @@ exports.refreshreplycomment = (commentid) =>
 	// ,{comment: 0}
 		replycomment.find({comment: ObjectId(commentid)})
 			.populate({path : "user comment",
-				select : "_id name email photoprofile",
+				select : "_id name email photoprofile user",
 				populate : ({path : "user",select : "_id name email photoprofile"})})
 			.then(comment => {
 				console.log(comment);
