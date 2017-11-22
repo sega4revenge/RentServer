@@ -649,7 +649,7 @@ exports.push_messtotoken = (commentid, username, userreply, userown, content, ms
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: "/topics/" + commentid,
+			to: token,
 
 			data: {
 				commentid: commentid,
