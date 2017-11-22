@@ -645,12 +645,39 @@ exports.push_messtotopic = (productid, msg, userid) =>
 
 
 	});
+exports.push_mess = (commentid, prou, userid) =>
+
+	new Promise((resolve, reject) => {
+		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+			to: "/topics/" + productid,
+
+			data: {
+				productid: productid,
+				useridproduct: msg,
+				useridcmt: userid
+			}
+		};
+		console.log("push mess: " + msg);
+
+		fcm.send(m, function (err, response) {
+			if (err) {
+				console.log(err);
+				reject({status: 409, message: "MessToTopic Error !"});
+			} else {
+				console.log(response);
+				resolve({status: 201, message: "MessToTopic Sucessfully !", response: response});
+
+			}
+		});
+
+
+	});
 exports.refreshreplycomment = (commentid) =>
 	new Promise((resolve, reject) => {
 	// ,{comment: 0}
 		replycomment.find({comment: ObjectId(commentid)})
 			.populate({path : "user comment",
-				select : "_id name email photoprofile user",
+				select : "_id name email photoprofile user content",
 				populate : ({path : "user",select : "_id name email photoprofile"})})
 			.then(comment => {
 				console.log(comment);
