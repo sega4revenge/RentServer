@@ -1095,7 +1095,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 						resolve({status: 201, comment: result.comment});
 						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
 						module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
-						module.exports.push_messtotopicreply(commentid,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
+						module.exports.push_messtotopic(commentid,result.comment[0].comment.user._id,userid);
 
 					})
 					.catch(err => {
