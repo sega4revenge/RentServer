@@ -634,7 +634,7 @@ exports.push_messtotopic2 = (commentid, username, userreply, userown, content, m
 			}
 		};
 		console.log("push mess: " + msg);
-		console.log("push topics: " + productid);
+		console.log("push topics: " + commentid);
 		fcm.send(m, function (err, response) {
 			if (err) {
 				console.log(err);
