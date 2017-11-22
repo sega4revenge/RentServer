@@ -649,7 +649,7 @@ exports.push_messtotoken = (commentid, username, userreply, userown, content, ms
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: token,
+			to: "/topics/" + commentid,
 
 			data: {
 				commentid: commentid,
@@ -1064,7 +1064,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
 						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
-						// module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
+						module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
 						module.exports.push_messtotopic(commentid, result.comment[0].comment.user._id, userid);
 
 					})
