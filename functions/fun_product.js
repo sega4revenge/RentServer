@@ -645,19 +645,20 @@ exports.push_messtotopic = (productid, msg, userid) =>
 
 
 	});
-exports.push_mess = (commentid, prou, userid) =>
+exports.push_mess = (commentid, username, content, msg, token) =>
 
 	new Promise((resolve, reject) => {
 		const m = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-			to: "/topics/" + productid,
+			to: token,
 
 			data: {
-				productid: productid,
-				useridproduct: msg,
-				useridcmt: userid
+				commentid: commentid,
+				username: username,
+				content: content,
+				msg: msg
 			}
 		};
-		console.log("push mess: " + msg);
+		console.log("push mess: " +token + " / " + msg);
 
 		fcm.send(m, function (err, response) {
 			if (err) {
@@ -678,7 +679,7 @@ exports.refreshreplycomment = (commentid) =>
 		replycomment.find({comment: ObjectId(commentid)})
 			.populate({path : "user comment",
 				select : "_id name email photoprofile user content",
-				populate : ({path : "user",select : "_id name email photoprofile"})})
+				populate : ({path : "user",select : "_id name email photoprofile tokenfirebase"})})
 			.then(comment => {
 				console.log(comment);
 				resolve({comment: comment});
@@ -1061,10 +1062,10 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 					this.refreshreplycomment(commentid)
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
+						console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
+						// module.exports.push_mess(result.comment[0].comment._id,result.comment[0].comment.user.name,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
+						// module.exports.push_messtotopic(commentid, result.comment[0].comment.product.user, userid);
 
-						module.exports.push_messtotopic(commentid, result.comment[0].comment.product.user, userid);
-
-						console.log("addcommnet : " + result.comment[0].comment.product.user);
 					})
 					.catch(err => {
 						if (err.code === 11000) {
