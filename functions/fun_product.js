@@ -1062,8 +1062,8 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 					this.refreshreplycomment(commentid)
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
-						console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
-						// module.exports.push_mess(result.comment[0].comment._id,result.comment[0].comment.user.name,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
+						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
+						module.exports.push_mess(result.comment[0].comment._id,result.comment[0].comment.user.name,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
 						// module.exports.push_messtotopic(commentid, result.comment[0].comment.product.user, userid);
 
 					})
