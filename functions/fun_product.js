@@ -825,13 +825,13 @@ exports.deleteProduct = (productid) =>
 		comment.deleteMany({product: ObjectId(productid)})
 
 			.then(() => {
-				console.log("toi day roi 1");
+
 				user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
 					.then(() => {
-						console.log("toi day roi 2");
+
 						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
 							.then(() => {
-								console.log("toi day roi 3");
+
 								product.findByIdAndRemove(productid, function (err, offer) {
 									if (err) {
 										console.log(err);
@@ -918,7 +918,11 @@ exports.deletecomment = (commentid, productid) =>
 					module.exports.refreshcomment(productid)
 
 						.then(result => {
-
+							replycomment.deleteMany({comment: ObjectId(commentid)},function (err, offer){
+								if (err) {
+									throw err;
+								}
+							});
 							resolve({status: 201, comment: result.comment});
 						})
 						.catch(err => {
@@ -937,7 +941,7 @@ exports.deletecomment = (commentid, productid) =>
 					module.exports.push_messtotopic(productid, "Ahihi", 1);
 
 				});
-				console.log("fdhdfdj");
+
 
 
 				// let ObjectId;
