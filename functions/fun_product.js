@@ -856,6 +856,24 @@ exports.deleteProduct = (productid) =>
 						})
 						.catch(err => reject({status: 500, message: err.message}));
 
+				}else{
+					user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
+						.then(() => {
+
+							user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
+								.then(() => {
+
+									product.findByIdAndRemove(productid, function (err, offer) {
+										if (err) {
+											console.log(err);
+										}
+										resolve({status: 200, message: "DELETE OK!"});
+									});
+								})
+								.catch(err => reject({status: 500, message: err.message}));
+
+						})
+						.catch(err => reject({status: 500, message: err.message}));
 				}
 			})
 			.catch(err => {
