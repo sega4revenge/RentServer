@@ -851,8 +851,6 @@ exports.deleteProduct = (productid) =>
 
 								})
 								.catch(err => reject({status: 500, message: err.message}));
-
-
 						})
 						.catch(err => reject({status: 500, message: err.message}));
 
@@ -1068,7 +1066,6 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
-						console.log("ASDASDASDASDASDSAD",productid + " / " + result.comment[0].product.user  + " / " + userid)
 						resolve({status: 201, comment: result.comment});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
 					})
@@ -1130,7 +1127,6 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 					this.refreshreplycomment(commentid)
 					.then(result => {
 						resolve({status: 201, comment: result.comment});
-						// console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +result.comment[0].comment._id + " / " +result.comment[0].comment.user.tokenfirebase);
 						module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
 						module.exports.push_messtotopic2(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
 
