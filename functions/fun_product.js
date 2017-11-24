@@ -819,12 +819,12 @@ exports.deleteProduct = (productid) =>
 
 	new Promise((resolve, reject) => {
 		comment.find({product: productid})
-			.then(comment => {
-				if(comment.length > 0){
+			.then(listcomment => {
+				if(listcomment.length > 0){
 
-					for(var i = 0;i<comment.length;i++)
+					for(var i = 0;i<listcomment.length;i++)
 					{
-						replycomment.deleteMany({comment: comment[i]},function (err,offer) {
+						replycomment.deleteMany({comment: listcomment[i]},function (err,offer) {
 							if (err) {
 								console.log(err);
 							}
