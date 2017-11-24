@@ -221,7 +221,6 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 										userfrom: userfrom
 									}
 								};
-								console.log("push mess: " + msg);
 
 								fcm.send(m, function (err, response) {
 									if (err) {
@@ -241,8 +240,6 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 						}
 					}
 				});
-
-				console.log(tokencode, usersend, avata);
 
 				/*	user.find({_id: ObjectId(userfrom)}, function (err, UserResult) {
 						if (err) {
@@ -821,32 +818,50 @@ exports.SearchMap = (keySearch, lat, lng, distance, listCategory) =>
 exports.deleteProduct = (productid) =>
 
 	new Promise((resolve, reject) => {
+		comment.find({product: productid})
+			.then(comment => {
+				if(comment.length > 0){
 
-		comment.deleteMany({product: ObjectId(productid)})
+					for(var i = 0;i<comment.length;i++)
+					{
+						replycomment.deleteMany({comment: comment[i]},function (err,offer) {
+							if (err) {
+								console.log(err);
+							}
+						});
+					}
+					comment.deleteMany({product: ObjectId(productid)})
 
-			.then(() => {
+						.then(() => {
 
-				user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
-					.then(() => {
+							user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
+								.then(() => {
 
-						user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
-							.then(() => {
+									user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
+										.then(() => {
 
-								product.findByIdAndRemove(productid, function (err, offer) {
-									if (err) {
-										console.log(err);
-									}
-									resolve({status: 200, message: "DELETE OK!"});
-								});
-							})
-							.catch(err => reject({status: 500, message: "Internal Server Error 3!"}));
+											product.findByIdAndRemove(productid, function (err, offer) {
+												if (err) {
+													console.log(err);
+												}
+												resolve({status: 200, message: "DELETE OK!"});
+											});
+										})
+										.catch(err => reject({status: 500, message: err.message}));
 
-					})
-					.catch(err => reject({status: 500, message: "Internal Server Error 2!"}));
+								})
+								.catch(err => reject({status: 500, message: err.message}));
 
 
+						})
+						.catch(err => reject({status: 500, message: err.message}));
+
+				}
 			})
-			.catch(err => reject({status: 500, message: "Internal Server Error 1!"}));
+			.catch(err => {
+				reject({status: 500, message: err.message});
+			});
+
 	});
 exports.mSaveProduct = (userid, productid) =>
 	new Promise((resolve, reject) => {
