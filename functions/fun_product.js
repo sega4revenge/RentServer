@@ -1067,10 +1067,17 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
-						var commentlist = [];
-						commentlist.push(newcomment);
-						resolve({status: 201, comment: commentlist});
-						module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
+						for(var i = (result.comment.length-1); i > 0 ;i--){
+							if(newcomment._id == result.comment[i]._id){
+								var commentlist = [];
+								commentlist.push(result.comment[i]._id);
+								resolve({status: 201, comment: commentlist});
+								module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
+								break;
+							}
+						}
+
+
 					})
 					.catch(err => {
 						if (err.code === 11000) {
