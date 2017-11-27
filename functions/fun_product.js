@@ -1066,7 +1066,7 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
-						resolve({status: 201, comment: result.comment});
+						resolve({status: 201, comment: newcomment});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
 					})
 					.catch(err => {
