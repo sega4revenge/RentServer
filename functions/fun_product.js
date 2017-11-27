@@ -729,6 +729,35 @@ exports.refreshreplycomment = (commentid) =>
 				}
 			});
 	});
+exports.getComment = (commentid) =>
+	new Promise((resolve, reject) => {
+//
+		comment.find({_id: ObjectId(commentid)})
+			.populate({
+				path: "user product listreply",
+				select: "_id name email photoprofile user content time",
+				//	options: {sort: {"time": -1}},
+				// Get friends of friends - populate the 'friends' array for every friend
+				populate: {path: "user ", select: "_id name email photoprofile "}})
+
+			.then(comment => {
+				resolve({comment: comment});
+
+			})
+
+			.catch(err => {
+
+				if (err.code === 11000) {
+
+					reject({status: 409, message: "Comment Already Registered !"});
+
+				} else {
+					reject({status: 500, message: "Internal Server Error2 !"});
+					throw err;
+
+				}
+			});
+	});
 exports.refreshcomment = (productid) =>
 	new Promise((resolve, reject) => {
 //
@@ -1064,19 +1093,12 @@ exports.addcomment = (userid, productid, content, time) =>
 						console.log(err);
 					}
 				);
-				this.refreshcomment(productid)
+				this.getComment(newcomment._id)
 
 					.then(result => {
-						var commentlist = [];
-						for(var i =0; i< result.comment.length ;i++ ){
-							if(newcomment.comment._id == result.comment[i]){
-								commentlist.push(newcomment);
-								break;
-							}
-						}
-						resolve({status: 201, comment: commentlist});
+						console.log(result);
+						resolve({status: 201, comment: result});
 						module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
-
 					})
 					.catch(err => {
 						if (err.code === 11000) {
