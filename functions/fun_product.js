@@ -214,6 +214,7 @@ exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 									to: tokencode,
 
 									data: {
+										idsend : idsend,
 										userto: userto,
 										name: usersend,
 										messager: msg,
