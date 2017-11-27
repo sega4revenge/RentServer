@@ -1067,7 +1067,7 @@ exports.addcomment = (userid, productid, content, time) =>
 				this.refreshcomment(productid)
 
 					.then(result => {
-
+						console.log(result.comment);
 						var commentlist = [];
 						commentlist.push(newcomment);
 						resolve({status: 201, comment: commentlist});
