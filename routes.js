@@ -180,7 +180,7 @@ module.exports = router => {
 	});
 	router.get('/link', (req, res) => {
 		console.log(req.url);
-		res.redirect('http://google.com')
+		res.redirect(req.url)
 	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
