@@ -1147,32 +1147,42 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 
 
 			.then(() => {
-				comment.findByIdAndUpdate(
-					commentid,
-					{$push: {"listreply": newcomment._id}},
-					{safe: true, upsert: true, new: true},
-					function (err, model) {
-						console.log(err);
-					}
-				);
-					this.refreshreplycomment(commentid)
-					.then(result => {
-						resolve({status: 201, comment: result.comment});
-					//	module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
-						module.exports.push_messtotopic2(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
-
-					})
-					.catch(err => {
-						if (err.code === 11000) {
-
-							reject({status: 409, message: "Comment Already Registered !"});
-
-						} else {
-							reject({status: 500, message: "Internal Server Error 1!"});
-							throw err;
-
+				comment.find({_id: commentid}, function (err,model) {
+						if(err){
+							console.log(err);
 						}
-					});
+						if(model.length != 0 ){
+							comment.findByIdAndUpdate(
+								commentid,
+								{$push: {"listreply": newcomment._id}},
+								{safe: true, upsert: true, new: true},
+								function (err, model) {
+									console.log(err);
+								}
+							);
+							this.refreshreplycomment(commentid)
+								.then(result => {
+									resolve({status: 201, comment: result.comment});
+									//	module.exports.push_messtotoken(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase)
+									module.exports.push_messtotopic2(result.comment[0].comment._id,result.comment[0].comment.user.name,userid,result.comment[0].comment.user._id,result.comment[0].comment.content,"Có người trả lời bình luận của bạn",result.comment[0].comment.user.tokenfirebase);
+
+								})
+								.catch(err => {
+									if (err.code === 11000) {
+										reject({status: 409, message: "Comment Already Registered !"});
+
+									} else {
+										reject({status: 500, message: "Internal Server Error 1!"});
+										throw err;
+
+									}
+								});
+						}else{
+							reject({status: 409, message: "Comment was delete!"});
+						}
+
+				});
+
 
 
 			})
