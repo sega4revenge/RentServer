@@ -1178,7 +1178,7 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 									}
 								});
 						}else{
-							reject({status: 505, message: "Comment was delete!"});
+							reject({status: 405, message: "Comment was delete!"});
 						}
 
 				});
