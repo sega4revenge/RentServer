@@ -179,6 +179,7 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
+		console.log(req);
 		res.redirect('http://google.com')
 	});
 	router.post('/allcomment', (req, res) => {
