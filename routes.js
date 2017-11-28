@@ -179,7 +179,7 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-
+		res.redirect('https://market.android.com/details?id=finger.thuetot.vn')
 	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
