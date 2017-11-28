@@ -179,7 +179,8 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-		res.redirect('http://google.com')
+		res.set('Location', 'intent://link?productid=5a1c1aeaa8d7760414934179&userid=5a1c19d9a8d7760414934177#Intent;scheme=thuetot;package=finger.thuetot.vn;');
+		res.status(307).end();
 	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
