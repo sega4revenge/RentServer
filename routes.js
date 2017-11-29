@@ -179,7 +179,8 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-		res.redirect('intent://link?productid=5a1c1aeaa8d7760414934179&userid=5a1c19d9a8d7760414934177#Intent;scheme=http;package=finger.thuetot.vn;S.browser_fallback_url=http://www.google.com;end');
+		res.redirect(`intent://link?productid=${req.params.productid}&userid=${req.params.userid}#Intent;scheme=http;package=finger.thuetot.vn;S.browser_fallback_url=http://www.google.com;end`);
+
 	/*	res.set('Location', 'intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
 		res.status(307).end();*/
 	});
