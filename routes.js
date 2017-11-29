@@ -179,8 +179,9 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-		res.set('Location', 'intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
-		res.status(307).end();
+		res.redirect('intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
+	/*	res.set('Location', 'intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
+		res.status(307).end();*/
 	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
