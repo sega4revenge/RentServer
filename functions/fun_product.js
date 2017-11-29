@@ -1203,6 +1203,11 @@ exports.addreplycomment = (userid, commentid, content, time) =>
 									}
 								});
 						}else{
+							replycomment.findByIdAndRemove(newcomment._id, function (err, offer) {
+								if (err) {
+									throw err;
+								}
+							});
 							reject({status: 405, message: "Comment was delete!"});
 						}
 
