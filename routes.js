@@ -179,7 +179,7 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-		console.log("AAAAAAAAAAAAAAA",req.query("productid") + " / " +req.query("userid"));
+		console.log("AAAAAAAAAAAAAAA",req.param("productid") + " / " +req.param("userid"));
 		res.redirect(`intent://link?productid=${req.params.productid}&userid=${req.params.userid}#Intent;scheme=http;package=finger.thuetot.vn;S.browser_fallback_url=http://www.thuetot.vn;end`);
 
 	/*	res.set('Location', 'intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
