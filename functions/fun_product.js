@@ -1089,6 +1089,7 @@ exports.addcomment = (userid, productid, content, time) =>
 					.then(result => {
 						console.log(result.length);
 						if(result.length !=  0){
+							console.log(result.length+"///");
 							product.findByIdAndUpdate(
 								productid,
 								{$push: {"comment": newcomment._id}},
