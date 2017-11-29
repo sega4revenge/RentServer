@@ -1085,42 +1085,51 @@ exports.addcomment = (userid, productid, content, time) =>
 
 
 			.then(() => {
-				product.find({_id: ObjectId(productid)}, function (err,model) {
-					if(err){
-						throw err;
-					}
-					console.log(model.length);
-					if(model.length !=  0){
-						product.findByIdAndUpdate(
-							productid,
-							{$push: {"comment": newcomment._id}},
-							{safe: true, upsert: true, new: true},
-							function (err, model) {
-								console.log(err);
-							}
-						);
-						module.exports.getComment(newcomment._id)
-
-							.then(result => {
-								console.log(result.comment);
-								resolve({status: 201, comment: result.comment});
-								module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
-							})
-							.catch(err => {
-								if (err.code === 11000) {
-
-									reject({status: 409, message: "Comment Already Registered !"});
-
-								} else {
-									reject({status: 500, message: "Internal Server Error 1!"});
-									throw err;
-
+				product.find({_id: ObjectId(productid)})
+					.then(result => {
+						console.log(result.length);
+						if(result.length !=  0){
+							product.findByIdAndUpdate(
+								productid,
+								{$push: {"comment": newcomment._id}},
+								{safe: true, upsert: true, new: true},
+								function (err, model) {
+									console.log(err);
 								}
-							});
-					}else{
-						reject({status: 405, message: "Product is not Found !"});
-					}
-				});
+							);
+							module.exports.getComment(newcomment._id)
+
+								.then(result => {
+									console.log(result.comment);
+									resolve({status: 201, comment: result.comment});
+									module.exports.push_messtotopic(productid, result.comment[0].product.user._id, userid);
+								})
+								.catch(err => {
+									if (err.code === 11000) {
+
+										reject({status: 409, message: "Comment Already Registered !"});
+
+									} else {
+										reject({status: 500, message: "Internal Server Error 1!"});
+										throw err;
+
+									}
+								});
+						}else{
+							reject({status: 405, message: "Product is not Found !"});
+						}
+					})
+					.catch(err => {
+						if (err.code === 11000) {
+
+							reject({status: 409, message: "Comment Already Registered !"});
+
+						} else {
+							reject({status: 500, message: "Internal Server Error 1!"});
+							throw err;
+
+						}
+					});
 
 
 
