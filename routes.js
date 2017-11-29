@@ -179,7 +179,8 @@ module.exports = router => {
 		}
 	});
 	router.get('/link', (req, res) => {
-		res.redirect('https://market.android.com/details?id=finger.thuetot.vn')
+		res.set('Location', 'intent://open?link_click_id=123456#Intent;scheme=branchtest;package=io.branch.testbed;');
+		res.status(307).end();
 	});
 	router.post('/allcomment', (req, res) => {
 		const productid = req.body.productid;
