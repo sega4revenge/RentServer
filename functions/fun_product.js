@@ -1089,6 +1089,7 @@ exports.addcomment = (userid, productid, content, time) =>
 					if(err){
 						throw err;
 					}
+					console.log(model.length);
 					if(model.length != 0){
 						product.findByIdAndUpdate(
 							productid,
