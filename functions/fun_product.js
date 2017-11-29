@@ -1089,7 +1089,7 @@ exports.addcomment = (userid, productid, content, time) =>
 					if(err){
 						throw err;
 					}
-					if(model.length > 0){
+					if(model.length != 0){
 						product.findByIdAndUpdate(
 							productid,
 							{$push: {"comment": newcomment._id}},
