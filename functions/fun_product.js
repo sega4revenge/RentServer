@@ -1085,10 +1085,14 @@ exports.addcomment = (userid, productid, content, time) =>
 
 
 			.then(() => {
+
 				product.find({_id: ObjectId(productid)})
 					.then(result => {
 						console.log(result.length);
-						if(result.length !=  0){
+						if(result.length ==  0){
+							console.log(result.length+"///2");
+							reject({status: 405, message: "Product is not Found !"});
+						}else{
 							console.log(result.length+"///");
 							product.findByIdAndUpdate(
 								productid,
@@ -1116,8 +1120,6 @@ exports.addcomment = (userid, productid, content, time) =>
 
 									}
 								});
-						}else{
-							reject({status: 405, message: "Product is not Found !"});
 						}
 					})
 					.catch(err => {
