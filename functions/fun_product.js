@@ -1098,7 +1098,7 @@ exports.addcomment = (userid, productid, content, time) =>
 								console.log(err);
 							}
 						);
-						this.module.exports.getComment(newcomment._id)
+						module.exports.getComment(newcomment._id)
 
 							.then(result => {
 								console.log(result.comment);
