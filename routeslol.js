@@ -27,7 +27,7 @@ module.exports = router => {
 			MongoClient.connect(url, function(err, db) {
 				assert.equal(null, err);
 
-				db.collection('restaurants').insertOne( {body
+				db.collection('champion').insertOne( {body
 				}, function(err, result) {
 					assert.equal(err, null);
 					console.log("Inserted a document into the restaurants collection.");
