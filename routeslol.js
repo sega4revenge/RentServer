@@ -30,7 +30,7 @@ module.exports = router => {
 			url: "http://ddragon.leagueoflegends.com/cdn/7.24.1/data/vn_VN/champion.json",
 			json: true
 		}, function(err, response, body) {
-			console.log(err);
+			console.log(body);
 			res.json(body);
 			var info = JSON.parse(body);
 			console.log(info.articles);
