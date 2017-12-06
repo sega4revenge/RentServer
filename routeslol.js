@@ -10,7 +10,7 @@ const request = require("request");
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const ObjectId = require("mongodb").ObjectID;
-const url = "mongodb://45.77.36.109:27017/lol";
+const url = "mongodb://sega:sega4deptrai@45.77.36.109:27017/lol";
 module.exports = router => {
 
 	router.get('/listchampion', function(req, res){
@@ -24,14 +24,7 @@ module.exports = router => {
 
 			console.log(err);
 			res.json(body);
-			MongoClient.connect(url, {
-				useMongoClient: true,
-				user: "sega",
-				pass: "sega4deptrai",
-				auth: {
-					authdb: 'admin'
-				}
-			}, function(err, db) {
+			MongoClient.connect(url, function(err, db) {
 				assert.equal(null, err);
 
 				db.collection('champion').insertOne( {body
