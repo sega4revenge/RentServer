@@ -24,7 +24,7 @@ module.exports = router => {
 
 			console.log(err);
 			res.json(body);
-			MongoClient.connect(url, {authMechanism: 'ScramSHA1'}, function(err, db) {
+			MongoClient.connect(url, function(err, db) {
 				assert.equal(null, err);
 				db.authenticate(user, password, function(err, res) {
 					// callback
