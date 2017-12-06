@@ -24,7 +24,14 @@ module.exports = router => {
 
 			console.log(err);
 			res.json(body);
-			MongoClient.connect(url, function(err, db) {
+			MongoClient.connect(url, {
+				useMongoClient: true,
+				user: "sega",
+				pass: "sega4deptrai",
+				auth: {
+					authdb: 'admin'
+				}
+			}, function(err, db) {
 				assert.equal(null, err);
 
 				db.collection('champion').insertOne( {body
