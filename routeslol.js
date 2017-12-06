@@ -17,7 +17,7 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
-const request = require("http").request;
+const request = require("request");
 const uploadDir = path.join('./uploads/');
 
 
