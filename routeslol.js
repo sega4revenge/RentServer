@@ -31,9 +31,7 @@ module.exports = router => {
 			json: true
 		}, function(err, response, body) {
 			console.log(body);
-			res.json(body);
-			var info = JSON.parse(body);
-			console.log(info.articles);
+
 		})
 
 	});
