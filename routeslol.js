@@ -1,6 +1,6 @@
 'use strict';
 
-import {request} from "http";
+
 
 
 const jwt = require('jsonwebtoken');
@@ -17,6 +17,7 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
+const request = require("http").request;
 const uploadDir = path.join('./uploads/');
 
 
