@@ -3,26 +3,14 @@
 
 
 
-const jwt = require('jsonwebtoken');
-const register = require('./functions/register');
-const login = require('./functions/login');
-const search = require('./functions/search');
-const sms = require('./functions/speedsms');
-const profile = require('./functions/profile');
-const fun_product = require('./functions/fun_product');
-const push_mess = require('./functions/push_mess');
-const fs = require('fs'),
-	url = require('url');
-const password = require('./functions/password');
-const config = require('./config/config.json');
-const formidable = require('formidable');
+
 const path = require('path');
 const request = require("request");
-const uploadDir = path.join('./uploads/');
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://45.77.36.109:27017/lol';
+
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
+const ObjectId = require("mongodb").ObjectID;
+const url = "mongodb://45.77.36.109:27017/lol";
 module.exports = router => {
 
 	router.get('/listchampion', function(req, res){
