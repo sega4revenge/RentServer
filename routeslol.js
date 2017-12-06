@@ -10,7 +10,7 @@ const request = require("request");
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const ObjectId = require("mongodb").ObjectID;
-const url = "mongodb://45.77.36.109:27017/lol";
+const url = "mongodb://sega:sega4deptrai@45.77.36.109:27017/lol";
 module.exports = router => {
 
 	router.get('/listchampion', function(req, res){
@@ -26,16 +26,15 @@ module.exports = router => {
 			res.json(body);
 			MongoClient.connect(url, {authMechanism: 'ScramSHA1'}, function(err, db) {
 				assert.equal(null, err);
-				db.authenticate('sega', 'sega4deptrai', function(err, result) {
-					assert.equal(true, result);
-					db.collection('champion').insertOne( {body
-					}, function(err, result) {
-						assert.equal(err, null);
-						console.log("Inserted a document into the restaurants collection.");
-						db.close();
-					});
+				db.authenticate(user, password, function(err, res) {
+					// callback
 				});
-
+				db.collection('champion').insertOne( {body
+				}, function(err, result) {
+					assert.equal(err, null);
+					console.log("Inserted a document into the restaurants collection.");
+					db.close();
+				});
 			});
 
 
