@@ -10,7 +10,7 @@ const request = require("request");
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 const ObjectId = require("mongodb").ObjectID;
-const url = "mongodb://sega:sega4deptrai@45.77.36.109:27017/lol";
+const url = "mongodb://sega:sega4deptrai@45.77.36.109:27017/lol?authSource=admin";
 module.exports = router => {
 
 	router.get('/listchampion', function(req, res){
