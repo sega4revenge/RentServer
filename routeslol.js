@@ -26,9 +26,6 @@ module.exports = router => {
 			res.json(body);
 			MongoClient.connect(url, function(err, db) {
 				assert.equal(null, err);
-				db.authenticate(user, password, function(err, res) {
-					// callback
-				});
 				db.collection('champion').insertOne( {body
 				}, function(err, result) {
 					assert.equal(err, null);
