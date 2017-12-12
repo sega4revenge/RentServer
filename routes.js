@@ -292,11 +292,11 @@ module.exports = router => {
 		const category = req.body.category;
 
 		console.log(category);
-		if (!category) {
-			console.log(category+"22222");
-			res.status(400).json({message: 'Invalid Request !'});
-
-		} else {
+		// if (!category) {
+		// 	console.log(category+"22222");
+		// 	res.status(400).json({message: 'Invalid Request !'});
+		//
+		// } else {
 
 			fun_product.allproductlikenew(category)
 			// .then(result => res.json(result))
@@ -304,7 +304,7 @@ module.exports = router => {
 				.then(result => res.json(result))
 
 				.catch(err => res.status(err.status).json({message: err.message}));
-		}
+	//	}
 
 	});
 	router.post('/allproductsaved', (req, res) => {
