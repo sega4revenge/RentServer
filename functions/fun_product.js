@@ -122,7 +122,7 @@ exports.allproduct = (type, page, category) =>
 exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 
-			product.find({category: category}, {comment: 0}).sort({"created_at": -1})
+			product.find({category: category}, {comment: 0}).sort({"created_at": -1}).limit(10)
 			.populate({path: "user", select: "-listproduct -listsavedproduct"})
 
 			.then(products => {
