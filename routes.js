@@ -293,7 +293,7 @@ module.exports = router => {
 
 		console.log(category);
 		if (!category) {
-
+			console.log(category+"22222");
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
