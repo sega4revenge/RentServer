@@ -119,6 +119,34 @@ exports.allproduct = (type, page, category) =>
 
 
 	});
+exports.allproductlikenew = (category) =>
+	new Promise((resolve, reject) => {
+
+			product.find({category: category}, {comment: 0}).sort({"created_at": -1})
+			.populate({path: "user", select: "-listproduct -listsavedproduct"})
+
+			.then(products => {
+
+				if (products.length === 0) {
+
+					reject({status: 404, message: "User Not Found !"});
+
+				} else {
+
+					return products;
+
+				}
+			})
+
+			.then(product => {
+				resolve({status: 200, product: product});
+
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+
+	});
 exports.allproductsaved = (type, page, userid) =>
 	new Promise((resolve, reject) => {
 		const limit = 10;

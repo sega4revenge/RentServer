@@ -287,6 +287,26 @@ module.exports = router => {
 		}
 
 	});
+	router.post('/allproductlikenew', (req, res) => {
+
+		const category = req.body.category;
+
+		console.log(category);
+		if (!category) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			fun_product.allproductlikenew(category)
+			// .then(result => res.json(result))
+
+				.then(result => res.json(result))
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+
+	});
 	router.post('/allproductsaved', (req, res) => {
 
 		const userid = req.body.userid;
