@@ -287,7 +287,7 @@ module.exports = router => {
 		}
 
 	});
-	router.post('/allproductlikenew', (req, res) => {
+	router.post('/productlikenew', (req, res) => {
 
 		const category = req.body.category;
 
