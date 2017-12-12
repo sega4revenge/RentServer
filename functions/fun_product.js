@@ -139,8 +139,7 @@ exports.allproductlikenew = (category) =>
 			})
 
 			.then(product => {
-				console.log(product);
-				resolve({status: 200, product: product});
+				resolve({status: 200, listproduct: product});
 
 			})
 
