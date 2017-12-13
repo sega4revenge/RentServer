@@ -122,10 +122,10 @@ exports.allproduct = (type, page, category) =>
 exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 		var max = 0;
-		product.count({category: category}), function (err, count) {
+		product.find({category: category}), function (err, count) {
 			console.log(count);
 			max = count/2;
-		};
+		}.count();
 
 			var random = Math.random() * (max - 0) + 0;
 			console.log(max,random);
