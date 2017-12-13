@@ -123,6 +123,7 @@ exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 			var max = (product.find({category: category}, {comment: 0}).count())/2;
 			var random = Math.random() * (max - 0) + 0
+			console.log(max,random);
 			product.find({category: category}, {comment: 0}).limit(5).skip(max - random)
 			.populate({path: "user", select: "-listproduct -listsavedproduct"})
 
