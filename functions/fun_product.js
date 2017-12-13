@@ -122,6 +122,7 @@ exports.allproduct = (type, page, category) =>
 exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 		var max = 0;
+		console.log("aaaaasdsdsds");
 		product.find({category: category}), function (err, count) {
 			console.log(count.size);
 			max = (count.size)/2;
