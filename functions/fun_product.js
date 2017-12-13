@@ -122,36 +122,37 @@ exports.allproduct = (type, page, category) =>
 exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 		var max = 0;
-		console.log("aaaaasdsdsds");
+
 		product.find({category: category}), function (err, count) {
 			console.log(count.size);
 			max = (count.size)/2;
-		};
-
 			var random = Math.random() * (max - 0) + 0;
 			console.log(max,random);
 			product.find({category: category}, {comment: 0}).limit(5).skip(max - random)
-			.populate({path: "user", select: "-listproduct -listsavedproduct"})
+				.populate({path: "user", select: "-listproduct -listsavedproduct"})
 
-			.then(products => {
+				.then(products => {
 
-				if (products.length === 0) {
+					if (products.length === 0) {
 
-					reject({status: 404, message: "User Not Found !"});
+						reject({status: 404, message: "User Not Found !"});
 
-				} else {
+					} else {
 
-					return products;
+						return products;
 
-				}
-			})
+					}
+				})
 
-			.then(product => {
-				resolve({status: 200, listproduct: product});
+				.then(product => {
+					resolve({status: 200, listproduct: product});
 
-			})
+				})
 
-			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+		};
+
+
 
 
 	});
