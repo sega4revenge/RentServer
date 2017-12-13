@@ -125,8 +125,8 @@ exports.allproductlikenew = (category) =>
 
 		product.find({category: category},{comment: 0}, function (err, count) {
 			console.log(count.length);
-			max = (count.length)/2;
-			var random = Math.random() * (max - 0) + 0;
+			max = Math.round((count.length)/2);
+			var random = Math.round(Math.random() * (max - 0) + 0);
 			console.log(max,random);
 			product.find({category: category}, {comment: 0}).limit(5).skip(max - random)
 				.populate({path: "user", select: "-listproduct -listsavedproduct"})
