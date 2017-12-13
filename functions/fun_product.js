@@ -124,8 +124,8 @@ exports.allproductlikenew = (category) =>
 		var max = 0;
 
 		product.find({category: category},{comment: 0}, function (err, count) {
-			console.log(count.size);
-			max = (count.size)/2;
+			console.log(count.length);
+			max = (count.length)/2;
 			var random = Math.random() * (max - 0) + 0;
 			console.log(max,random);
 			product.find({category: category}, {comment: 0}).limit(5).skip(max - random)
