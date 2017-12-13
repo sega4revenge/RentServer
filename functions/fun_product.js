@@ -125,7 +125,7 @@ exports.allproductlikenew = (category) =>
 		product.count({category: category}), function (err, count) {
 			console.log(count);
 			max = count/2;
-		});
+		};
 
 			var random = Math.random() * (max - 0) + 0;
 			console.log(max,random);
