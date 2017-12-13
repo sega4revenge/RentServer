@@ -123,8 +123,8 @@ exports.allproductlikenew = (category) =>
 	new Promise((resolve, reject) => {
 		var max = 0;
 
-		product.find({category: category},{comment: 0}), function (err, count) {
-			console.log(count);
+		product.find({category: category},{comment: 0}, function (err, count) {
+			console.log(count.size);
 			max = (count.size)/2;
 			var random = Math.random() * (max - 0) + 0;
 			console.log(max,random);
@@ -150,7 +150,7 @@ exports.allproductlikenew = (category) =>
 				})
 
 				.catch(err => reject({status: 500, message: "Internal Server Error !"}));
-		};
+		});
 
 
 
