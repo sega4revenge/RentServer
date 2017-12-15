@@ -329,6 +329,15 @@ module.exports = router => {
 		}
 
 	});
+	router.post('/UpView', (req, res) => {
+
+		fun_product.mUpView()
+
+			.then(result => res.status(result.status).json(result))
+
+			.catch(err => res.status(err.status).json({message: err.message}));
+
+	});
 	router.post('/users', (req, res) => {
 		const id = req.body.token;
 		const token = req.body.token;
@@ -414,7 +423,7 @@ module.exports = router => {
 		const code = req.body.code;
 		const type  = req.body.type;
 		const token  = req.body.token;
-		console.log("AAAAAAAAAABBBBBBAAAAAAAAAAAAA",phone + " / " + code+ " / " +type + " / " +token );
+
 		if (!phone || !code) {
 
 			res.status(400).json({message: 'Invalid Request !'});

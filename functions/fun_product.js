@@ -193,6 +193,33 @@ exports.allproductsaved = (type, page, userid) =>
 
 
 	});
+
+exports.mUpView = () =>
+
+	new Promise((resolve, reject) => {
+
+		product.find({})
+			.then(result => {
+				if (result.length > 0) {
+					reject({status: 404, message: "Product Not Found !"});
+				} else {
+					for(var i = 0 ; i < result.length;i++){
+						var rows = result[i];
+						var mView =	rows.view;
+						var random = Math.round(Math.random() * (20 - 0) + 0);
+						rows.view = mView + random;
+						rows.save();
+					}
+					resolve({status: 201, message: "UpView Success"});
+				}
+
+
+			})
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
+
 exports.mInboxChat = (userid) =>
 
 	new Promise((resolve, reject) => {
