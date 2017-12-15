@@ -201,8 +201,6 @@ exports.mUpView = () =>
 		product.find({})
 			.then(result => {
 				if (result.length > 0) {
-					reject({status: 404, message: "Product Not Found !"});
-				} else {
 					for(var i = 0 ; i < result.length;i++){
 						var rows = result[i];
 						var mView =	rows.view;
@@ -211,6 +209,9 @@ exports.mUpView = () =>
 						rows.save();
 					}
 					resolve({status: 201, message: "UpView Success"});
+
+				} else {
+					reject({status: 404, message: "Product Not Found !"});
 				}
 
 
