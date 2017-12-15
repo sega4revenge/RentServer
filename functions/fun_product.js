@@ -208,7 +208,7 @@ exports.mUpView = () =>
 						rows.view = mView + random;
 						rows.save();
 					}
-					resolve({status: 201, message: "UpView Success"});
+					resolve({status: 201, message: "UpView Success With Number:"+random });
 
 				} else {
 					reject({status: 404, message: "Product Not Found !"});
