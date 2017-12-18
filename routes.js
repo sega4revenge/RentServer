@@ -396,6 +396,36 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/linkaccountdev', (req, res) => {
+		const id = req.body.id;
+		const token = req.body.token;
+		const name = req.body.name;
+		const email = req.body.email;
+		const phone = req.body.phone;
+		const password = req.body.password;
+		const photoprofile = req.body.photoprofile;
+
+		const type = req.body.type;
+		const tokenfirebase = req.body.tokenfirebase;
+
+
+		if (!phone) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.registerUserLinkDev(id, token, name,phone, email, password, photoprofile, type, tokenfirebase)
+
+				.then(result => {
+
+					res.setHeader('Location', '/users/' + email);
+					res.status(result.status).json({status: result.status,message: result.message})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/verifyemail', (req, res) => {
 
 		const email = req.body.email;

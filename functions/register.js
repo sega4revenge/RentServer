@@ -442,6 +442,293 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 		}
 
 	});
+exports.registerUserLinkDev = (id, token, name, phone, email, password, photoprofile, type, tokenfirebase) =>
+
+	new Promise((resolve, reject) => {
+		let code;
+		let newUser;
+		const random = randomstring.generate({
+			length: 6,
+			charset: "numeric"
+		});
+		if(photoprofile == "null" || photoprofile == ""){
+			console.log("profile null");
+			photoprofile = "no_avatar.png"
+		}
+		const salt = bcrypt.genSaltSync(10);
+
+		code = bcrypt.hashSync(random, salt);
+
+		if (type === 1) {
+
+			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
+
+				.then(users => {
+
+					if (users.length !== 0) {
+						if(users[0].status_code === "1")
+						{
+							if(users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined)
+							{
+
+								users[0].facebook.name = name;
+								users[0].facebook.id = id;
+								users[0].facebook.token = token;
+								users[0].facebook.email = email;
+								users[0].facebook.photoprofile = photoprofile;
+								users[0].tokenfirebase = tokenfirebase;
+								users[0].facebook.temp_password = code;
+								users[0].facebook.temp_password_time = new Date();
+								users[0].facebook.status_code = "0";
+								users[0].save();
+								speedsms.sendsms(phone, random, "", "", 1);
+								resolve({
+									status: 202,
+									message: "Check code !"
+								});
+							}
+							else
+							{
+								users[0].tokenfirebase = tokenfirebase;
+								users[0].save();
+								reject({
+									status: 409,
+									message: "Da Ton Tai"
+
+								});
+							}
+
+						}
+						else {
+							users[0].name = name;
+							users[0].email = email;
+							users[0].photoprofile = photoprofile;
+							users[0].created_at = new Date();
+							users[0].status_code = "0";
+							users[0].hashed_password = undefined;
+							users[0].facebook.name = name;
+							users[0].facebook.id = id;
+							users[0].facebook.email= email;
+							users[0].facebook.token = token;
+							users[0].facebook.photoprofile = photoprofile;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].facebook.temp_password = code;
+							users[0].facebook.temp_password_time = new Date();
+							users[0].facebook.status_code = "0";
+							users[0].save();
+							speedsms.sendsms(phone, random, "", "", 1);
+							resolve({
+								status: 202,
+								message: "Check code !"
+							});
+						}
+
+					}
+					else {
+
+						newUser = new user({
+							name: name,
+							email: email,
+							hashed_password: "",
+							phone: phone,
+							photoprofile: photoprofile,
+							tokenfirebase: tokenfirebase,
+							created_at: new Date(),
+							status_code: "0",
+							facebook: {
+								id: id,
+								token: token,
+								name: name,
+								email: email,
+								photoprofile: photoprofile,
+								temp_password: code,
+								temp_password_time: new Date(),
+								status_code: "0"
+							}
+						});
+
+						newUser.save();
+						speedsms.sendsms(phone, random, "", "", 1);
+						resolve({
+							status: 202,
+							message: "Check code !"
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err.message);
+					reject({status: 500, message: err.message})
+				});
+		}
+		else if( type === 2)
+		{
+			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
+
+				.then(users => {
+
+					if (users.length !== 0) {
+						if(users[0].status_code === "1")
+						{
+							if(users[0].google.status_code === "0" || users[0].google.status_code === undefined)
+							{
+
+								users[0].google.name = name;
+								users[0].google.id = id;
+								users[0].google.token = token;
+								users[0].google.email = email;
+								users[0].google.photoprofile = photoprofile;
+								users[0].tokenfirebase = tokenfirebase;
+								users[0].google.temp_password = code;
+								users[0].google.temp_password_time = new Date();
+								users[0].google.status_code = "0";
+								users[0].save();
+								speedsms.sendsms(phone, random, "", "", 1);
+								resolve({
+									status: 202,
+									message: "Check code !"
+								});
+							}
+							else
+							{
+
+								users[0].tokenfirebase =  tokenfirebase;
+								users[0].save();
+								reject({
+									status: 409,
+									message: "Da Ton Tai"
+
+								});
+							}
+
+						}
+						else {
+							users[0].name = name;
+							users[0].email = email;
+							users[0].photoprofile = photoprofile;
+							users[0].created_at = new Date();
+							users[0].status_code = "0";
+							users[0].hashed_password = undefined;
+							users[0].google.name = name;
+							users[0].google.id = id;
+							users[0].google.email= email;
+							users[0].google.token = token;
+							users[0].google.photoprofile = photoprofile;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].google.temp_password = code;
+							users[0].google.temp_password_time = new Date();
+							users[0].google.status_code = "0";
+							users[0].save();
+							speedsms.sendsms(phone, random, "", "", 1);
+							resolve({
+								status: 202,
+								message: "Check code !"
+							});
+						}
+
+					}
+					else {
+
+
+						newUser = new user({
+							name: name,
+							email: email,
+							hashed_password: "",
+							phone: phone,
+							photoprofile: photoprofile,
+							tokenfirebase: tokenfirebase,
+							created_at: new Date(),
+							status_code: "0",
+							google: {
+								id: id,
+								token: token,
+								name: name,
+								email: email,
+								photoprofile: photoprofile,
+								temp_password: code,
+								temp_password_time: new Date(),
+								status_code: "0"
+							}
+						});
+
+						newUser.save();
+						speedsms.sendsms(phone, random, "", "", 1);
+						resolve({
+							status: 202,
+							message: "Check code !"
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err.message);
+					reject({status: 500, message: err.message})
+				});
+
+
+		}
+		else {
+			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
+
+				.then(users => {
+
+					if (users.length !=0) {
+						if(users[0].status_code === "1")
+						{
+							reject({
+								status: 409,
+								message: "Da Ton Tai"
+
+							});
+						}
+						else
+						{
+							users[0].name = name;
+							users[0].email = email;
+							users[0].photoprofile = "no_avatar.png";
+							users[0].created_at = new Date();
+							users[0].status_code = "0";
+							users[0].hashed_password = undefined;
+							users[0].tokenfirebase = tokenfirebase;
+							users[0].temp_password = code;
+							users[0].temp_password_time = new Date();
+							users[0].status_code = "0";
+							users[0].save();
+							speedsms.sendsms(phone, random, "", "", 1);
+							resolve({
+								status: 202,
+								message: "Check code !"
+							});
+						}
+					}
+					else {
+						const  hash = bcrypt.hashSync(password, salt);
+						newUser = new user({
+							name: name,
+							email: email,
+							photoprofile: "no_avatar.png",
+							phone: phone,
+							hashed_password: undefined,
+							tokenfirebase: tokenfirebase,
+							created_at: new Date(),
+							temp_password: code,
+							temp_password_time: new Date(),
+							status_code: "0"
+
+						});
+						newUser.save();
+						speedsms.sendsms(phone, "Chào bạn ! Bạn đã được đăng ký tài khoản tại THUÊ TỐT bằng số điện thoại của bạn. Bạn có thể tải ngay THUÊ TỐT và đăng tin cho thuê miễn phí. Truy cập thuetot.vn để biết thêm chi tiết.", "", "", 1);
+						resolve({
+							status: 202,
+							message: "Check code !"
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err.message);
+					reject({status: 500, message: err.message})
+				});
+		}
+
+	});
 exports.registerFinish = (phone, code, type, token) =>
 	new Promise((resolve, reject) => {
 
