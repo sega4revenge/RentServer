@@ -604,6 +604,24 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/referral', (req, res) => {
+		const userid = req.body.userid;
+		const phone = req.body.phone;
+		if (!userid || !phone) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.referral(userid, phone)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/addcomment', (req, res) => {
 		const userid = req.body.userid;
 		const productid = req.body.productid;
