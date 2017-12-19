@@ -27,7 +27,45 @@ exports.verifyemail = (email) =>
 
 			.catch(err => {
 				console.log(err.message);
-				reject({status: 500, message: err.message})
+				reject({status: 500, message: err.message});
+			});
+
+	});
+
+exports.referral = (id, phone) =>
+
+	new Promise((resolve, reject) => {
+
+		user.find({phone: phone, status_code: "1"})
+
+			.then(users => {
+
+				if (users.length === 0) {
+					reject({status: 404, message: "Phone not found"});
+
+				} else {
+					user.find({_id: ObjectId(id), status_code: "1"})
+
+						.then(users2 => {
+							users2[0].referral = phone;
+							users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+
+							reject({status: 404, message: "Referral Success !"});
+
+
+						})
+
+						.catch(err => {
+							console.log(err.message);
+							reject({status: 500, message: err.message});
+						});
+
+				}
+			})
+
+			.catch(err => {
+				console.log(err.message);
+				reject({status: 500, message: err.message});
 			});
 
 	});
@@ -49,15 +87,12 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 					}
 					else {
-						if(user.length == 1){
-							if(user[0].status_code === "0")
-							{
+						if (user.length == 1) {
+							if (user[0].status_code === "0") {
 								resolve({status: 201, message: "Dont link any account !"});
 							}
-							else
-							{
-								if(user[0].facebook.status_code === "0")
-								{
+							else {
+								if (user[0].facebook.status_code === "0") {
 									resolve({status: 201, message: "Dont link any account !"});
 
 								}
@@ -71,22 +106,21 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									});
 								}
 							}
-						}else{
-							for(var i=0; i<user.length;i++){
-									if(user[i].facebook.status_code === "1")
-									{
-										user[i].tokenfirebase = tokenfirebase;
-										user[i].save();
-										resolve({
-											status: 200,
-											message: "User Login Sucessfully !",
-											user: user[i]
-										});
-										break;
-									}
-									if(i == (user.length-1)){
-										resolve({status: 201, message: "Dont link any account !"});
-									}
+						} else {
+							for (var i = 0; i < user.length; i++) {
+								if (user[i].facebook.status_code === "1") {
+									user[i].tokenfirebase = tokenfirebase;
+									user[i].save();
+									resolve({
+										status: 200,
+										message: "User Login Sucessfully !",
+										user: user[i]
+									});
+									break;
+								}
+								if (i == (user.length - 1)) {
+									resolve({status: 201, message: "Dont link any account !"});
+								}
 							}
 
 						}
@@ -94,7 +128,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
 		else {
@@ -110,9 +144,8 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 
 					}
 					else {
-						if(user.length == 1){
-							if(user[0].google.status_code === "0")
-							{
+						if (user.length == 1) {
+							if (user[0].google.status_code === "0") {
 
 								resolve({status: 201, message: "Dont link any account !"});
 
@@ -126,10 +159,9 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									user: user[0]
 								});
 							}
-						}else{
-							for(var i=0; i<user.length;i++){
-								if(user[i].google.status_code === "1")
-								{
+						} else {
+							for (var i = 0; i < user.length; i++) {
+								if (user[i].google.status_code === "1") {
 									user[i].tokenfirebase = tokenfirebase;
 									user[i].save();
 									resolve({
@@ -139,7 +171,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 									});
 									break;
 								}
-								if(i == (user.length-1)){
+								if (i == (user.length - 1)) {
 									resolve({status: 201, message: "Dont link any account !"});
 								}
 							}
@@ -150,7 +182,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
 
@@ -164,9 +196,9 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 			length: 6,
 			charset: "numeric"
 		});
-		if(photoprofile == "null" || photoprofile == ""){
+		if (photoprofile == "null" || photoprofile == "") {
 			console.log("profile null");
-			photoprofile = "no_avatar.png"
+			photoprofile = "no_avatar.png";
 		}
 		const salt = bcrypt.genSaltSync(10);
 
@@ -179,10 +211,8 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				.then(users => {
 
 					if (users.length !== 0) {
-						if(users[0].status_code === "1")
-						{
-							if(users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined)
-							{
+						if (users[0].status_code === "1") {
+							if (users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined) {
 
 								users[0].facebook.name = name;
 								users[0].facebook.id = id;
@@ -200,8 +230,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 									message: "Check code !"
 								});
 							}
-							else
-							{
+							else {
 								users[0].tokenfirebase = tokenfirebase;
 								users[0].save();
 								reject({
@@ -221,7 +250,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].hashed_password = undefined;
 							users[0].facebook.name = name;
 							users[0].facebook.id = id;
-							users[0].facebook.email= email;
+							users[0].facebook.email = email;
 							users[0].facebook.token = token;
 							users[0].facebook.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
@@ -244,6 +273,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							email: email,
 							hashed_password: "",
 							phone: phone,
+							totalreferralpoint : 20000,
 							photoprofile: photoprofile,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
@@ -270,20 +300,17 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
-		else if( type === 2)
-		{
+		else if (type === 2) {
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
 				.then(users => {
 
 					if (users.length !== 0) {
-						if(users[0].status_code === "1")
-						{
-							if(users[0].google.status_code === "0" || users[0].google.status_code === undefined)
-							{
+						if (users[0].status_code === "1") {
+							if (users[0].google.status_code === "0" || users[0].google.status_code === undefined) {
 
 								users[0].google.name = name;
 								users[0].google.id = id;
@@ -301,10 +328,9 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 									message: "Check code !"
 								});
 							}
-							else
-							{
+							else {
 
-								users[0].tokenfirebase =  tokenfirebase;
+								users[0].tokenfirebase = tokenfirebase;
 								users[0].save();
 								reject({
 									status: 409,
@@ -323,7 +349,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].hashed_password = undefined;
 							users[0].google.name = name;
 							users[0].google.id = id;
-							users[0].google.email= email;
+							users[0].google.email = email;
 							users[0].google.token = token;
 							users[0].google.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
@@ -347,6 +373,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							email: email,
 							hashed_password: "",
 							phone: phone,
+							totalreferralpoint : 20000,
 							photoprofile: photoprofile,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
@@ -373,7 +400,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 
 
@@ -383,17 +410,15 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 				.then(users => {
 
-					if (users.length !=0) {
-						if(users[0].status_code === "1")
-						{
+					if (users.length != 0) {
+						if (users[0].status_code === "1") {
 							reject({
 								status: 409,
 								message: "Da Ton Tai"
 
 							});
 						}
-						else
-						{
+						else {
 							users[0].name = name;
 							users[0].email = email;
 							users[0].photoprofile = "no_avatar.png";
@@ -413,10 +438,11 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						}
 					}
 					else {
-						const  hash = bcrypt.hashSync(password, salt);
+						const hash = bcrypt.hashSync(password, salt);
 						newUser = new user({
 							name: name,
 							email: email,
+							totalreferralpoint : 20000,
 							photoprofile: "no_avatar.png",
 							phone: phone,
 							hashed_password: undefined,
@@ -437,7 +463,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
 
@@ -451,9 +477,9 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 			length: 6,
 			charset: "numeric"
 		});
-		if(photoprofile == "null" || photoprofile == ""){
+		if (photoprofile == "null" || photoprofile == "") {
 			console.log("profile null");
-			photoprofile = "no_avatar.png"
+			photoprofile = "no_avatar.png";
 		}
 		const salt = bcrypt.genSaltSync(10);
 
@@ -466,10 +492,8 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 				.then(users => {
 
 					if (users.length !== 0) {
-						if(users[0].status_code === "1")
-						{
-							if(users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined)
-							{
+						if (users[0].status_code === "1") {
+							if (users[0].facebook.status_code === "0" || users[0].facebook.status_code === undefined) {
 
 								users[0].facebook.name = name;
 								users[0].facebook.id = id;
@@ -487,8 +511,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 									message: "Check code !"
 								});
 							}
-							else
-							{
+							else {
 								users[0].tokenfirebase = tokenfirebase;
 								users[0].save();
 								reject({
@@ -508,7 +531,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							users[0].hashed_password = undefined;
 							users[0].facebook.name = name;
 							users[0].facebook.id = id;
-							users[0].facebook.email= email;
+							users[0].facebook.email = email;
 							users[0].facebook.token = token;
 							users[0].facebook.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
@@ -531,6 +554,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							email: email,
 							hashed_password: "",
 							phone: phone,
+							totalreferralpoint : 20000,
 							photoprofile: photoprofile,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
@@ -557,20 +581,17 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
-		else if( type === 2)
-		{
+		else if (type === 2) {
 			user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
 				.then(users => {
 
 					if (users.length !== 0) {
-						if(users[0].status_code === "1")
-						{
-							if(users[0].google.status_code === "0" || users[0].google.status_code === undefined)
-							{
+						if (users[0].status_code === "1") {
+							if (users[0].google.status_code === "0" || users[0].google.status_code === undefined) {
 
 								users[0].google.name = name;
 								users[0].google.id = id;
@@ -588,10 +609,9 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 									message: "Check code !"
 								});
 							}
-							else
-							{
+							else {
 
-								users[0].tokenfirebase =  tokenfirebase;
+								users[0].tokenfirebase = tokenfirebase;
 								users[0].save();
 								reject({
 									status: 409,
@@ -610,7 +630,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							users[0].hashed_password = undefined;
 							users[0].google.name = name;
 							users[0].google.id = id;
-							users[0].google.email= email;
+							users[0].google.email = email;
 							users[0].google.token = token;
 							users[0].google.photoprofile = photoprofile;
 							users[0].tokenfirebase = tokenfirebase;
@@ -634,6 +654,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							email: email,
 							hashed_password: "",
 							phone: phone,
+							totalreferralpoint : 20000,
 							photoprofile: photoprofile,
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
@@ -660,7 +681,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 
 
@@ -670,17 +691,15 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 
 				.then(users => {
 
-					if (users.length !=0) {
-						if(users[0].status_code === "1")
-						{
+					if (users.length != 0) {
+						if (users[0].status_code === "1") {
 							reject({
 								status: 409,
 								message: "Da Ton Tai"
 
 							});
 						}
-						else
-						{
+						else {
 							users[0].name = name;
 							users[0].email = email;
 							users[0].photoprofile = "no_avatar.png";
@@ -700,10 +719,11 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 						}
 					}
 					else {
-						const  hash = bcrypt.hashSync(password, salt);
+						const hash = bcrypt.hashSync(password, salt);
 						newUser = new user({
 							name: name,
 							email: email,
+							totalreferralpoint : 20000,
 							photoprofile: "no_avatar.png",
 							phone: phone,
 							hashed_password: undefined,
@@ -725,7 +745,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 				})
 				.catch(err => {
 					console.log(err.message);
-					reject({status: 500, message: err.message})
+					reject({status: 500, message: err.message});
 				});
 		}
 
@@ -733,7 +753,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 exports.registerFinish = (phone, code, type, token) =>
 	new Promise((resolve, reject) => {
 
-		user.find({phone: phone},{listproduct : 0, listsavedproduct : 0})
+		user.find({phone: phone}, {listproduct: 0, listsavedproduct: 0})
 
 			.then(users => {
 				let diff;
@@ -803,7 +823,7 @@ exports.registerFinish = (phone, code, type, token) =>
 
 			.catch(err => {
 				console.log(err.message);
-				reject({status: 500, message: err.message})
+				reject({status: 500, message: err.message});
 			});
 
 	});
