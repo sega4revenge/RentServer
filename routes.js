@@ -616,7 +616,7 @@ module.exports = router => {
 			register.referral(userid, phone)
 
 				.then(result => {
-					res.status(result.status).json({user: result.user})
+					res.status(result.status).json({message: result.user, user : result.user})
 				})
 
 				.catch(err => res.status(err.status).json({message: err.message}));
