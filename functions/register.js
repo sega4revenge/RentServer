@@ -72,7 +72,29 @@ exports.referral = (id, phone) =>
 			});
 
 	});
+exports.cancelreferral = (id) =>
 
+	new Promise((resolve, reject) => {
+
+
+					user.find({_id: ObjectId(id), status_code: "1"})
+
+						.then(users => {
+							users[0].referral = "null";
+							users[0].save();
+							resolve({status: 200, user: users[0], message : "Success"});
+
+
+						})
+
+						.catch(err => {
+							console.log(err.message);
+							reject({status: 500, message: err.message});
+						});
+
+
+
+	});
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
 	new Promise((resolve, reject) => {
