@@ -51,7 +51,7 @@ exports.referral = (id, phone) =>
 							users2[0].referral = phone;
 							users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
 							users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
-
+							user.save();
 							reject({status: 200, message: users2[0], user : users2[0]});
 
 
