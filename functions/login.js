@@ -36,7 +36,7 @@ exports.loginUser = (phone) =>
 				user.temp_password = code;
 				user.temp_password_time = new Date();
 				user.save();
-				speedsms.sendsms(phone, random, "", "", 1);
+				speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 				resolve({
 					status: 202,
 					message: "Check code !"
