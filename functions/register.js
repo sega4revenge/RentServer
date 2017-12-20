@@ -5,6 +5,7 @@ const bcrypt = new require("bcryptjs");
 const speedsms = new require("../functions/speedsms");
 const randomstring = new require("randomstring");
 const nodemailer = new require("nodemailer");
+const ObjectId = require("mongodb").ObjectID;
 
 
 exports.verifyemail = (email) =>
@@ -51,7 +52,7 @@ exports.referral = (id, phone) =>
 							users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
 							users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
 
-							reject({status: 404, message: "Referral Success !"});
+							reject({status: 200, message: "Referral Success !"});
 
 
 						})
