@@ -761,7 +761,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 						});
 						newUser.save();
 						console.log("CODEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + email + " : ",random );
-						speedsms.sendsms(phone, "Chào bạn! Bạn đã được đăng ký tài khoản tại THUÊ TỐT bằng số điện thoại của bạn. Bạn có thể tải ngay THUÊ TỐT và đăng tin cho thuê miễn phí. Truy cập http://thuetot.vn/ để biết thêm chi tiết.", "", "", 1);
+						// speedsms.sendsms(phone, "Chào bạn! Bạn đã được đăng ký tài khoản tại THUÊ TỐT bằng số điện thoại của bạn. Bạn có thể tải ngay THUÊ TỐT và đăng tin cho thuê miễn phí. Truy cập http://thuetot.vn/ để biết thêm chi tiết.", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
