@@ -9,6 +9,7 @@ const router2        = express.Router();
 const server = require("http").createServer(app);
 const port        = process.env.PORT || 8080;
 const io = require("socket.io")(server);
+const schedule = require("node-schedule");
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
@@ -22,4 +23,7 @@ server.listen(port, function () {
 });
 
 
+const j = schedule.scheduleJob("42 * * * * *", function () {
+	console.log("The answer to life, the universe, and everything!");
+});
 
