@@ -208,7 +208,7 @@ exports.mUpView = () =>
 						rows.view = mView + random;
 						rows.save();
 					}
-					resolve({status: 201, message: "UpView Success With Number:"+random });
+					resolve({status: 201, message: "UpView Success With Number: "+random });
 
 				} else {
 					reject({status: 404, message: "Product Not Found !"});
@@ -420,7 +420,7 @@ exports.sendMessChat = (id, userFrom, userTo, email, name, message, socket, io, 
 				console.log("fist create");
 
 			}
-			io.to(userFrom + " - " + userTo).emit("sendchat", userFrom, userTo, email, name, message, photoprofile);
+			io.to(userFrom + " - " + userTo).emit("sendchat", userFrom, userTo, email, name, message, photoprofile,timestamp);
 			//socket.broadcast.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 			//socket.emit('sendchat: '+userFrom+" - "+userTo,userFrom,userTo,email, name,message,photoprofile);
 		}
