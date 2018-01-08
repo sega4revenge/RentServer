@@ -756,6 +756,14 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
+	router.post('/addValue', (req, res) => {
+
+			fun_product.addValue()
+				.then(result => res.status(result.status).json({user: result.user }))
+
+				.catch(err => res.status(err.status).json({ message: err.message }));
+
+	});
 	router.post('/editphonenumber', (req, res) => {
 		const userid = req.body.userid;
 		const phone = req.body.phone;
