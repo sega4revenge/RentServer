@@ -1552,6 +1552,9 @@ exports.addValue = () =>
 					for(var i = 0 ; i< model.length; i++){
 						if(model[i].totalreferralpoint == "" || model[i].totalreferralpoint == null){
 							console.log(model[i].name);
+						//	var add = model[i];
+							model[i].totalreferralpoint = 20000;
+							model[i].save();
 						}
 					}
 				}
