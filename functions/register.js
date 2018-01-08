@@ -77,7 +77,7 @@ exports.cancelreferral = (id) =>
 	new Promise((resolve, reject) => {
 
 
-					user.find({_id: ObjectId(id), status_code: "1"})
+					user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
 						.then(users => {
 							users[0].referral = "null";
