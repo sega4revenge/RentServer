@@ -37,7 +37,7 @@ exports.referral = (id, phone) =>
 
 	new Promise((resolve, reject) => {
 
-		user.find({phone: phone, status_code: "1"})
+		user.find({phone: phone, status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
 			.then(users => {
 
@@ -45,7 +45,7 @@ exports.referral = (id, phone) =>
 					reject({status: 404, message: "Phone not found"});
 
 				} else {
-					user.find({_id: ObjectId(id), status_code: "1"})
+					user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
 						.then(users2 => {
 							users2[0].referral = phone;
