@@ -1542,3 +1542,21 @@ exports.edit_avatar = (userid, image) =>
 		);
 
 	});
+exports.addValue = () =>
+
+	new Promise((resolve, reject) => {
+		user.find({},
+			function (err, model) {
+				if(err){console.log(err);}
+				if(model.length>0){
+					for(var i = 0 ; i< model.length; i++){
+						if(model[i].totalreferralpoint == "" || model[i].totalreferralpoint == null){
+							console.log(model[i].name);
+						}
+					}
+				}
+				resolve({status: 200, user: model});
+			}
+		);
+
+	});
