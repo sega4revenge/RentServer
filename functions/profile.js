@@ -22,6 +22,7 @@ exports.getProfile = userid =>
             		console.log("yeah");
             	else
 				{
+
 					console.log("yeah2345");
 				}
 
