@@ -1481,7 +1481,7 @@ exports.fixcheat = () =>
 						user.find({referral: {$regex: users[i].phone}},function (err,data){
 							if(err){throw err;}
 							if(data.length>0){
-								console.log("sdt "+users[i].phone);
+								console.log("sdt "+ users[i].phone);
 								console.log("so nguoi chia se "+data.length);
 								var num = (data.length)*5;
 								num = num + 20000;
