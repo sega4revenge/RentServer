@@ -49,7 +49,7 @@ exports.referral = (id, phone) =>
 
 						.then(users2 => {
 							console.log(users2.referral);
-							if(!users2.referral || users2.referral== "undefined")
+							if(!users2.referral || users2.referral== undefined)
 							{
 								users2[0].referral = phone;
 								users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
