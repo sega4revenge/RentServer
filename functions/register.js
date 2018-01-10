@@ -48,6 +48,7 @@ exports.referral = (id, phone) =>
 					user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
 						.then(users2 => {
+							console.log(users2.referral);
 							if(users2.referral==""||users2.referral==null)
 							{
 								users2[0].referral = phone;
