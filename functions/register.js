@@ -59,7 +59,7 @@ exports.referral = (id, phone) =>
 						})
 
 						.catch(err => {
-							console.log(err.message);
+							console.log(err.message);+
 							reject({status: 500, message: err.message});
 						});
 
@@ -106,9 +106,7 @@ exports.registerUser = (id, token, name, email, password, photoprofile, type, to
 				.then(user => {
 
 					if (user.length === 0) {
-						console.log("abc");
 						resolve({status: 201, message: "Dont link any account !"});
-
 
 					}
 					else {

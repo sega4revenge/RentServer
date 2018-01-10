@@ -1470,6 +1470,32 @@ exports.uploadproduct = (productid, image) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.fixcheat = () =>
+
+	new Promise((resolve, reject) => {
+
+		user.find({})
+			.then(users => {
+				if(users.length >0){
+					for(var i=0 ; i<users.length ; i++){
+						user.find({referral: {$regex: users[i].phone}},function (err,data){
+							if(err){throw err;}
+							if(data.length>0){
+								console.log("sdt "+users[i].phone);
+								console.log("so nguoi chia se "+data.length);
+								var num = (data.length)*5;
+								num = num + 20000;
+								console.log("tien "+num);
+							}
+						});
+					}
+				}
+			})
+
+
+			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
+
+	});
 exports.UpImageChat = (userfrom, userto, mEmail, mName, img) =>
 
 	new Promise((resolve, reject) => {

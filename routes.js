@@ -638,6 +638,17 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/fixcheat', (req, res) => {
+
+			fun_product.fixcheat()
+
+				.then(result => {
+					res.status(result.status).json({message: result.message, user : result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+
+	});
 	router.post('/addcomment', (req, res) => {
 		const userid = req.body.userid;
 		const productid = req.body.productid;
@@ -756,14 +767,14 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-	router.post('/addValue', (req, res) => {
-
-			fun_product.addValue()
-				.then(result => res.status(result.status).json({user: result.user }))
-
-				.catch(err => res.status(err.status).json({ message: err.message }));
-
-	});
+	// router.post('/addValue', (req, res) => {
+	//
+	// 		fun_product.addValue()
+	// 			.then(result => res.status(result.status).json({user: result.user }))
+	//
+	// 			.catch(err => res.status(err.status).json({ message: err.message }));
+	//
+	// });
 	router.post('/editphonenumber', (req, res) => {
 		const userid = req.body.userid;
 		const phone = req.body.phone;
