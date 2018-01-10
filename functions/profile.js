@@ -18,6 +18,12 @@ exports.getProfile = userid =>
 
             })
             .then(users => {
+            	if(users[0].referral === undefined)
+            		console.log("yeah");
+            	else
+				{
+					console.log("yeah2345");
+				}
 
 					resolve(users[0]);
             }
