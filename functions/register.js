@@ -48,21 +48,12 @@ exports.referral = (id, phone) =>
 					user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
 						.then(users2 => {
-							console.log(users2[0].referral);
-							if(!users2[0].referral || users2[0].referral== undefined)
-							{
-								users2[0].referral = phone;
-								users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-								users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
-								users2[0].save();
-								users[0].save();
-								resolve({status: 200, user: users2[0], message : "Success"});
-							}
-							else {
-								console.log(err.message);+
-								reject({status: 500, message: "Đã nhập mã rồi"});
-							}
-
+							users2[0].referral = phone;
+							users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
+							users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+							users2[0].save();
+							users[0].save();
+							resolve({status: 200, user: users2[0], message : "Success"});
 
 
 						})
@@ -256,7 +247,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 								users[0].facebook.temp_password_time = new Date();
 								users[0].facebook.status_code = "0";
 								users[0].save();
-							//	speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+								speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 								resolve({
 									status: 202,
 									message: "Check code !"
@@ -290,7 +281,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].facebook.temp_password_time = new Date();
 							users[0].facebook.status_code = "0";
 							users[0].save();
-							//speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -323,7 +314,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						});
 
 						newUser.save();
-						//speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+						speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
@@ -354,7 +345,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 								users[0].google.temp_password_time = new Date();
 								users[0].google.status_code = "0";
 								users[0].save();
-							//	speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+								speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 								resolve({
 									status: 202,
 									message: "Check code !"
@@ -389,7 +380,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].google.temp_password_time = new Date();
 							users[0].google.status_code = "0";
 							users[0].save();
-							//speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -423,7 +414,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 						});
 
 						newUser.save();
-						//speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+						speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
@@ -462,7 +453,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							users[0].temp_password_time = new Date();
 							users[0].status_code = "0";
 							users[0].save();
-						//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -486,7 +477,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 
 						});
 						newUser.save();
-					//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+						speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
@@ -537,7 +528,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 								users[0].facebook.temp_password_time = new Date();
 								users[0].facebook.status_code = "0";
 								users[0].save();
-							//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+								speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 								resolve({
 									status: 202,
 									message: "Check code !"
@@ -571,7 +562,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							users[0].facebook.temp_password_time = new Date();
 							users[0].facebook.status_code = "0";
 							users[0].save();
-						//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -604,7 +595,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 						});
 
 						newUser.save();
-					//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+						speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
@@ -635,7 +626,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 								users[0].google.temp_password_time = new Date();
 								users[0].google.status_code = "0";
 								users[0].save();
-							//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+								speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 								resolve({
 									status: 202,
 									message: "Check code !"
@@ -670,7 +661,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							users[0].google.temp_password_time = new Date();
 							users[0].google.status_code = "0";
 							users[0].save();
-						//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -704,7 +695,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 						});
 
 						newUser.save();
-					//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+						speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 						resolve({
 							status: 202,
 							message: "Check code !"
@@ -743,7 +734,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							users[0].temp_password_time = new Date();
 							users[0].status_code = "0";
 							users[0].save();
-						//	speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
+							speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 							resolve({
 								status: 202,
 								message: "Check code !"
@@ -767,7 +758,6 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 
 						});
 						newUser.save();
-
 						console.log("CODEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + email + " : ",random );
 						// speedsms.sendsms(phone, "Chào bạn! Bạn đã được đăng ký tài khoản tại THUÊ TỐT bằng số điện thoại của bạn. Bạn có thể tải ngay THUÊ TỐT và đăng tin cho thuê miễn phí. Truy cập http://thuetot.vn/ để biết thêm chi tiết.", "", "", 1);
 						resolve({
