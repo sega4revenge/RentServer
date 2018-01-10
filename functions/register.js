@@ -36,40 +36,47 @@ exports.verifyemail = (email) =>
 exports.referral = (id, phone) =>
 
 	new Promise((resolve, reject) => {
+		user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
+			.then(users2 => {
+				if(users2[0].referral ===undefined)
+				{
+					user.find({phone: phone, status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
-		user.find({phone: phone, status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
+						.then(users => {
 
-			.then(users => {
+							if (users.length === 0) {
+								reject({status: 404, message: "Phone not found"});
 
-				if (users.length === 0) {
-					reject({status: 404, message: "Phone not found"});
+							} else {
 
-				} else {
-					user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
+								users2[0].referral = phone;
+								users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
+								users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+								users2[0].save();
+								users[0].save();
+								resolve({status: 200, user: users2[0], message : "Success"});
 
-						.then(users2 => {
-							users2[0].referral = phone;
-							users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-							users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
-							users2[0].save();
-							users[0].save();
-							resolve({status: 200, user: users2[0], message : "Success"});
-
-
+							}
 						})
 
 						.catch(err => {
-							console.log(err.message);+
+							console.log(err.message);
 							reject({status: 500, message: err.message});
 						});
-
 				}
+				else
+				{
+					console.log("loi roi em oi");+
+					reject({status: 500, message: "loi roi em oi"});
+				}
+
 			})
 
 			.catch(err => {
-				console.log(err.message);
-				reject({status: 500, message: err.message});
+				console.log(err.message);+
+					reject({status: 500, message: err.message});
 			});
+
 
 	});
 exports.cancelreferral = (id) =>
