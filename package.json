@@ -1,7 +1,7 @@
 {
-  "name": "lol",
+  "name": "quickjobfind",
   "version": "1.0.0",
-  "main": "lol.js",
+  "main": "app.js",
   "dependencies": {
     "basic-auth": "^1.0.4",
     "bcryptjs": "^2.3.0",
