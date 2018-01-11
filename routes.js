@@ -603,6 +603,25 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/referral_tk', (req, res) => {
+		const userid = req.body.userid;
+		const phone = req.body.phone;
+		const token = req.body.token;
+		if (!userid || !phone) {
+
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.referraltoken(userid, phone,token)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message, user : result.user})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/referral', (req, res) => {
 		const userid = req.body.userid;
 		const phone = req.body.phone;
