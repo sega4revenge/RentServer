@@ -39,6 +39,8 @@ exports.referraltoken = (id, phone,token) =>
 			if(err){throw err.message;}
 			console.log("consttttttttttttttttttttttttttttttttttttttt");
 			console.log(data.length);
+			console.log(token);
+			console.log(phone);
 			if(data.length >2){
 				reject({status: 405, message: "Phone userd more 3 device"});
 			}else{
