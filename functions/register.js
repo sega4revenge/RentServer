@@ -37,6 +37,8 @@ exports.referraltoken = (id, phone,token) =>
 	new Promise((resolve, reject) => {
 		user.find({tokenfirebase: {$regex: token},referral: phone} ,function (err,data) {
 			if(err){throw err.message;}
+			console.log("consttttttttttttttttttttttttttttttttttttttt");
+			console.log(data.length);
 			if(data.length >2){
 				reject({status: 405, message: "Phone userd more 3 device"});
 			}else{
