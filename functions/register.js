@@ -41,7 +41,7 @@ exports.referraltoken = (id, phone,token) =>
 			console.log(data.length);
 			console.log(token);
 			console.log(phone);
-			if(data.length >2){
+			if(data.length >=2){
 				reject({status: 405, message: "Phone userd more 3 device"});
 			}else{
 				user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
