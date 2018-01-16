@@ -89,3 +89,13 @@ exports.editPhoneNumber = (userid,phone) =>
 			}
 		)
 	});
+// exports.newversion = (versioncode,versionname) =>
+//
+// 	new Promise((resolve,reject) => {
+// 		let newVersion;
+// 		newVersion = new version({
+// 			version_name: versionname,
+// 			version: versioncode,
+// 		});
+// 		newVersion.save();
+// 	});

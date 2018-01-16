@@ -16,6 +16,7 @@ const config = require('./config/config.json');
 const formidable = require('formidable');
 const path = require('path');
 const uploadDir = path.join('./uploads/');
+const version = require('.functions/version');
 
 
 module.exports = router => {
@@ -811,6 +812,29 @@ module.exports = router => {
 
 				.catch(err => res.status(err.status).json({ message: err.message }));
 		}
+	});
+	router.post('/newversion', (req, res) => {
+		const versioncode = req.body.versioncode;
+		const versionname = req.body.versionname;
+		let newVersion;
+		newVersion = new version({
+			version_name: versionname,
+			version: versioncode,
+		});
+		newVersion.save();
+		// if (!userid) {
+		//
+		// 	res.status(400).json({message: 'Invalid Request !'});
+		//
+		// } else {
+		//
+		// 	profile.newversion(versioncode,versionname)
+		//
+		//
+		// 		.then(result => res.status(result.status).json(result))
+		//
+		// 		.catch(err => res.status(err.status).json({ message: err.message }));
+		// }
 	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
