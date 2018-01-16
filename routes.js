@@ -851,7 +851,7 @@ module.exports = router => {
 		const id = req.params.id;
 		profile.getProfile(id)
 
-			.then(result => res.json({user : result}))
+			.then(result => res.json(result))
 
 			.catch(err => res.status(err.status).json({message: err.message}));
 
