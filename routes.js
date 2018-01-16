@@ -845,6 +845,18 @@ module.exports = router => {
 
 
 	});
+	router.get('/updatemoney/:id', (req, res) => {
+
+		console.log("getDetailUser"+req.params.id);
+		const id = req.params.id;
+		profile.getProfile(id)
+
+			.then(result => res.json({user : result}))
+
+			.catch(err => res.status(err.status).json({message: err.message}));
+
+
+	});
 	router.post('/users/:id', (req, res) => {
 
 		if (checkToken(req)) {
