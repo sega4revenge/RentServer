@@ -822,6 +822,12 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({ message: err.message }));
 
 	});
+	router.post('/getversion', (req, res) => {
+		profile.getversion()
+			.then(result => res.status(result.status).json(result))
+			.catch(err => res.status(err.status).json({ message: err.message }));
+
+	});
 	router.post('/push_mess', (req, res) => {
 		const message = req.body.message;
 		/*		const deviceId = req.body.deviceId;*/

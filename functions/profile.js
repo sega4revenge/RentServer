@@ -90,6 +90,14 @@ exports.editPhoneNumber = (userid,phone) =>
 			}
 		)
 	});
+exports.getversion = () =>
+	new Promise((resolve,reject) => {
+		version.find({},function (err,data) {
+			if(err) throw err;
+			resolve({status: 200, message: data[0].version_name});
+		})
+	});
+
 exports.newversion = () =>
 
 	new Promise((resolve,reject) => {
