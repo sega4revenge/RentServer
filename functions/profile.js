@@ -96,7 +96,7 @@ exports.newversion = () =>
 		let newVersion;
 		newVersion = new version({
 			version_name: "32.13.2",
-			version: "32.1.4"
+			version_code: "32.1.4"
 		});
 		newVersion.save();
 	});
