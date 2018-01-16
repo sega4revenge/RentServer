@@ -1,6 +1,7 @@
 'use strict';
 const user = new require('../models/user');
 const fun_product = require('./fun_product');
+const version = require('./version');
 
 
 exports.getProfile = userid =>
@@ -89,13 +90,13 @@ exports.editPhoneNumber = (userid,phone) =>
 			}
 		)
 	});
-// exports.newversion = (versioncode,versionname) =>
-//
-// 	new Promise((resolve,reject) => {
-// 		let newVersion;
-// 		newVersion = new version({
-// 			version_name: versionname,
-// 			version: versioncode,
-// 		});
-// 		newVersion.save();
-// 	});
+exports.newversion = (versioncode,versionname) =>
+
+	new Promise((resolve,reject) => {
+		let newVersion;
+		newVersion = new version({
+			version_name: versionname,
+			version: versioncode,
+		});
+		newVersion.save();
+	});
