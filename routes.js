@@ -57,6 +57,21 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({message: err.message}));
 
 	});
+	router.post('/searchLoadMore', (req, res) => {
+		var keySearch = req.body.keysearch;
+		var listaddress = req.body.location;
+		var listcategory = req.body.category;
+		var typeArrange = req.body.typeArrange;
+		var page = req.body.page;
+		console.log(listaddress,listcategory,typeArrange,page);
+
+		search.mSearchMore(keySearch,listaddress,listcategory,typeArrange,page)
+		//search.mSearch1(keysearch,location, category,typeArrange)
+			.then(result => res.json(result))
+
+			.catch(err => res.status(err.status).json({message: err.message}));
+
+	});
 	router.post('/searchmap', (req, res) =>{
 		const lat = req.body.lat;
 		var keySearch = req.body.keysearch;

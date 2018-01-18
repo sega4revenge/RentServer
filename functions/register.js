@@ -309,7 +309,8 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 								users[0].tokenfirebase = tokenfirebase;
 								users[0].facebook.temp_password = code;
 								users[0].facebook.temp_password_time = new Date();
-								users[0].facebook.status_code = "0";
+								users[0].facebook.status_code = "0"
+								37
 								users[0].save();
 								speedsms.sendsms(phone, "Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
 								resolve({
