@@ -119,7 +119,7 @@ exports.mSearch2 = (keySearch,location, category,typeArrange) =>
 exports.mSearchMore = (keySearch,location, category,typeArrange,page) =>
 
 	new Promise((resolve,reject) => {
-		const limit = 10;
+		const limit = 20;
 		if (page.is)
 			if (page < 1) page = 1;
 		const start = (limit * page) - limit;
