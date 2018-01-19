@@ -72,6 +72,17 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({message: err.message}));
 
 	});
+	router.post('/addAndroidId', (req, res) => {
+		var androidid = req.body.androidid;
+		var iduser = req.body.iduser;
+		console.log(androidid,iduser);
+
+		fun_product.mAndroidId(androidid,iduser)
+			.then(result => res.json(result))
+
+			.catch(err => res.status(err.status).json({message: err.message}));
+
+	});
 	router.post('/searchmap', (req, res) =>{
 		const lat = req.body.lat;
 		var keySearch = req.body.keysearch;

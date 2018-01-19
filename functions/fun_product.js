@@ -254,6 +254,34 @@ exports.allproductbyuser = (userid) =>
 			.catch(err => reject({status: 500, message: "Internal Server Error !"}));
 
 	});
+exports.mAndroidId = (androidid,userid) =>
+
+	new Promise((resolve, reject) => {
+
+		user.find({_id: ObjectId(userid)})
+
+			.then(users => {
+				if(users.length != 0){
+					if(users[0].AndroidId !== "" || users[0].AndroidId !== undefined){
+						if(androidid === users[0].AndroidId ){
+							reject({status: 200, message: "Success !"});
+						}else{
+							reject({status: 202, message: "Not Device !"});
+						}
+					}else{
+						users[0].AndroidId = androidid;
+						users[0].save();
+						reject({status: 200, message: "Add Success ID Device !"});
+					}
+				}else{
+					reject({status: 404, message: "Not Found User !"});
+				}
+
+
+			})
+			.catch(err => reject({status: 500, message: err.message}));
+
+	});
 exports.push_notification_chat = (idsend, idrec, userfrom, msg, userto) =>
 
 	new Promise((resolve, reject) => {

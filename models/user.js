@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema({
 		temp_password_time : String,
 		status_code : String
     },
+	AndroidId : String,
     listproduct: [{type: Schema.Types.ObjectId, ref: 'product'}],
 	listsavedproduct: [{type: Schema.Types.ObjectId, ref: 'product'}]
 
