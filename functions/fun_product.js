@@ -262,7 +262,7 @@ exports.mAndroidId = (androidid,userid) =>
 
 			.then(users => {
 				if(users.length != 0){
-					if(users[0].AndroidId !== "" || users[0].AndroidId !== undefined){
+					if(users[0].AndroidId != "" || users[0].AndroidId != undefined){
 						if(androidid === users[0].AndroidId ){
 							reject({status: 200, message: "Success !"});
 						}else{
