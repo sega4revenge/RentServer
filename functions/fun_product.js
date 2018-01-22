@@ -1002,6 +1002,77 @@ exports.deleteProduct = (productid) =>
 			});
 
 	});
+exports.deleteProductDev = (productid) =>
+
+	new Promise((resolve, reject) => {
+
+		comment.find({product: productid})
+			.then(listcomment => {
+				if(listcomment.length > 0){
+
+					for(var i = 0;i<listcomment.length;i++)
+					{
+						replycomment.deleteMany({comment: listcomment[i]},function (err,offer) {
+							if (err) {
+								console.log(err);
+							}
+						});
+					}
+					comment.deleteMany({product: ObjectId(productid)})
+
+						.then(() => {
+
+							user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
+								.then(() => {
+
+									user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
+										.then(() => {
+											product.find({_id: ObjectId(productid)})
+												.then(products => {
+											if(products.images.length > 0){
+												resolve({status: 204, message: "CO ANH!"});
+											}
+										})
+										.catch(err => reject({status: 500, message: err.message}));
+											product.findByIdAndRemove(productid, function (err, offer) {
+												if (err) {
+													console.log(err);
+												}
+												resolve({status: 200, message: "DELETE OK!"});
+											});
+										})
+										.catch(err => reject({status: 500, message: err.message}));
+
+								})
+								.catch(err => reject({status: 500, message: err.message}));
+						})
+						.catch(err => reject({status: 500, message: err.message}));
+
+				}else{
+					user.update({}, {$pull: {listproduct: ObjectId(productid)}}, {multi: true})
+						.then(() => {
+
+							user.update({}, {$pull: {listsavedproduct: ObjectId(productid)}}, {multi: true})
+								.then(() => {
+
+									product.findByIdAndRemove(productid, function (err, offer) {
+										if (err) {
+											console.log(err);
+										}
+										resolve({status: 200, message: "DELETE OK!"});
+									});
+								})
+								.catch(err => reject({status: 500, message: err.message}));
+
+						})
+						.catch(err => reject({status: 500, message: err.message}));
+				}
+			})
+			.catch(err => {
+				reject({status: 500, message: err.message});
+			});
+
+	});
 exports.mSaveProduct = (userid, productid) =>
 	new Promise((resolve, reject) => {
 

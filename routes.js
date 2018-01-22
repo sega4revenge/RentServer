@@ -523,7 +523,35 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/deleteproductdev', (req, res) => {
 
+		const productid = req.body.productid;
+		// var listitem = req.body.listimg;
+		// var arrImgDel = [];
+		// if(listitem != "0")
+		// {
+		// 	console.log(listitem);
+		// 	arrImgDel = listitem.split(" , ");
+		// 	if (arrImgDel.length > 0) {
+		// 		for (var i = 0; i <= (arrImgDel.length - 1); i++) {
+		// 			fs.unlink(uploadDir + arrImgDel[i], (err) => {
+		// 				if (err) console.log(err);
+		// 				console.log('successfully deleted /image/' + arrImgDel[i]);
+		// 			});
+		// 		}
+		// 	}
+		// }
+		if (!productid) {
+			res.status(400).json({message: 'Invalid Request !'});
+		} else {
+			fun_product.deleteProductDev(productid)
+				.then(result => {
+
+					res.status(result.status).json(result)
+				})
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	// router.post('/saveproduct', (req,res) => {
 	// 	const userid = req.body.usid;
 	// 	const productid = req.body.proid;
