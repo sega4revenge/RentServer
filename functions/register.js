@@ -6,7 +6,8 @@ const speedsms = new require("../functions/speedsms");
 const randomstring = new require("randomstring");
 const nodemailer = new require("nodemailer");
 const ObjectId = require("mongodb").ObjectID;
-
+const FCM = require("fcm-node");
+const fcm = new FCM("AIzaSyDbZnEq9-lpTvAk41v_fSe_ijKRIIj6R6Y");
 exports.blockuser = (userid) =>
 
 	new Promise((resolve, reject) => {
@@ -20,7 +21,29 @@ exports.blockuser = (userid) =>
 				} else {
 					users[0].status_code = 3;
 					users[0].save();
-					reject({status: 200, message: "User Blocked Success !"});
+					const m = {
+						to: users[0].tokenfirebase,
+
+						data: {
+							userblock: users[0]._id
+						}
+					};
+
+					fcm.send(m, function (err, response) {
+						if (err) {
+							console.log(err);
+							reject({status: 409, message: "MessToTopic Error !"});
+						} else {
+							console.log(response);
+							resolve({
+								status: 201,
+								message: "MessToTopic Sucessfully !",
+								response: response
+							});
+
+						}
+					});
+
 
 				}
 			})
