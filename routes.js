@@ -657,7 +657,7 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
-	router.post('/referral_androidid', (req, res) => {
+	router.post('/referralandroidid', (req, res) => {
 		const userid = req.body.userid;
 		const phone = req.body.phone;
 		const androidid = req.body.androidid;
