@@ -695,6 +695,23 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+	router.post('/blockUserId', (req, res) => {
+		const userid = req.body.userid;
+
+		if (!userid) {
+			res.status(400).json({message: 'Invalid Request !'});
+
+		} else {
+
+			register.blockuser(userid)
+
+				.then(result => {
+					res.status(result.status).json({message: result.message})
+				})
+
+				.catch(err => res.status(err.status).json({message: err.message}));
+		}
+	});
 	router.post('/referral', (req, res) => {
 		const userid = req.body.userid;
 		const phone = req.body.phone;

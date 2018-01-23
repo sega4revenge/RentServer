@@ -7,6 +7,30 @@ const randomstring = new require("randomstring");
 const nodemailer = new require("nodemailer");
 const ObjectId = require("mongodb").ObjectID;
 
+exports.blockuser = (userid) =>
+
+	new Promise((resolve, reject) => {
+
+		user.find({_id: userid})
+
+			.then(users => {
+
+				if (users.length === 0) {
+					resolve({status: 404, message: "User Not Found"});
+				} else {
+					users[0].status_code = 3;
+					users[0].save();
+					reject({status: 200, message: "User Blocked Success !"});
+
+				}
+			})
+
+			.catch(err => {
+				console.log(err.message);
+				reject({status: 500, message: err.message});
+			});
+
+	});
 
 exports.verifyemail = (email) =>
 
