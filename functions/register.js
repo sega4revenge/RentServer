@@ -158,7 +158,7 @@ exports.referralAndroidId= (id, phone,token) =>
 										reject({status: 404, message: "Phone not found"});
 
 									} else { console.log(users[0].status_block);
-										if(users[0].status_block === "") {
+										if(users[0].status_block === undefined) {
 											users2[0].referral = phone;
 											users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
 											users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
