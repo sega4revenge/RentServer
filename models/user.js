@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema({
 	temp_password : String,
 	temp_password_time : String,
     status_code : String,
+	status_block : String,
     facebook :{
         id : String,
         token : String,
