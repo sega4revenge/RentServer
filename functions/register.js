@@ -157,17 +157,22 @@ exports.referralAndroidId= (id, phone,token) =>
 									if (users.length === 0) {
 										reject({status: 404, message: "Phone not found"});
 
-									} else { console.log(users[0].status_block);
-										if(users[0].status_block === undefined) {
-											users2[0].referral = phone;
-											users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-											users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
-											users2[0].save();
-											users[0].save();
-											resolve({status: 200, user: users2[0], message : "Success"});
+									} else {
+										if(phone === users2[0].phone) {
+											reject({status: 404, message: "Phone not found"});
 										} else {
-											reject({status: 406, message: "User blocked !"});
+											if(users[0].status_block === undefined) {
+												users2[0].referral = phone;
+												users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
+												users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+												users2[0].save();
+												users[0].save();
+												resolve({status: 200, user: users2[0], message : "Success"});
+											} else {
+												reject({status: 406, message: "User blocked !"});
+											}
 										}
+
 									}
 								})
 
