@@ -204,7 +204,7 @@ exports.mUpView = () =>
 					for(var i = 0 ; i < result.length;i++){
 						var rows = result[i];
 						var mView =	rows.view;
-						var random = Math.round(Math.random() * (20 - 0) + 0);
+						var random = Math.round(Math.random() * (5 - 0) + 0);
 						rows.view = mView + random;
 						rows.save();
 					}
