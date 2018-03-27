@@ -25,7 +25,6 @@ server.listen(port, function () {
 
 
 const j = schedule.scheduleJob("50 * * * *", function () {
-	console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA!");
 	fun_product.mUpView()
 	// console.log("The answer to life, the universe, and everything!");
 });

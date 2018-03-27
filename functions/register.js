@@ -149,7 +149,7 @@ exports.referralAndroidId= (id, phone,token) =>
 			}else{
 				user.find({_id: ObjectId(id), status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 					.then(users2 => {
-						if(users2[0].referral ===undefined)
+						if(users2[0].referral === undefined || users2[0].referral === "")
 						{
 							user.find({phone: phone, status_code: "1"},{listproduct :0 ,listsavedproduct : 0})
 
