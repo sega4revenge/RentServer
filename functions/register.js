@@ -475,6 +475,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
+							referral : "nullpause",
 							facebook: {
 								id: id,
 								token: token,
@@ -575,6 +576,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
+							referral : "nullpause",
 							google: {
 								id: id,
 								token: token,
@@ -647,7 +649,9 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							created_at: new Date(),
 							temp_password: code,
 							temp_password_time: new Date(),
-							status_code: "0"
+							status_code: "0",
+							referral : "nullpause"
+
 						});
 						newUser.save();
 						speedsms.sendsms(phone,"Dùng " + random + " để xác minh tài khoản Thuê Tốt của bạn!", "", "", 1);
@@ -755,6 +759,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
+							referral : "nullpause",
 							facebook: {
 								id: id,
 								token: token,
@@ -855,6 +860,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
+							referral : "nullpause",
 							google: {
 								id: id,
 								token: token,
@@ -928,6 +934,7 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							temp_password: code,
 							temp_password_time: new Date(),
 							status_code: "0",
+							referral : "nullpause"
 						});
 						newUser.save();
 						console.log("CODEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + email + " : ",random );
