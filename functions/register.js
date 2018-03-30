@@ -104,8 +104,8 @@ exports.referraltoken = (id, phone,token) =>
 									} else {
 
 										users2[0].referral = phone;
-										users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-										users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+										users2[0].totalreferralpoint = users2[0].totalreferralpoint + 1;
+										users[0].totalreferralpoint = users[0].totalreferralpoint + 1;
 										users2[0].save();
 										users[0].save();
 										resolve({status: 200, user: users2[0], message : "Success"});
@@ -163,8 +163,8 @@ exports.referralAndroidId= (id, phone,token) =>
 										} else {
 											if(users[0].status_block === undefined) {
 												users2[0].referral = phone;
-												users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-												users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+												users2[0].totalreferralpoint = users2[0].totalreferralpoint + 1;
+												users[0].totalreferralpoint = users[0].totalreferralpoint + 1;
 												users2[0].save();
 												users[0].save();
 												resolve({status: 200, user: users2[0], message : "Success"});
@@ -216,8 +216,8 @@ exports.referral = (id, phone) =>
 							} else {
 
 								users2[0].referral = phone;
-								users2[0].totalreferralpoint = users2[0].totalreferralpoint + 5000;
-								users[0].totalreferralpoint = users[0].totalreferralpoint + 5000;
+								users2[0].totalreferralpoint = users2[0].totalreferralpoint + 1;
+								users[0].totalreferralpoint = users[0].totalreferralpoint + 1;
 								users2[0].save();
 								users[0].save();
 								resolve({status: 200, user: users2[0], message : "Success"});
