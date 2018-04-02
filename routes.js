@@ -472,6 +472,7 @@ module.exports = router => {
 				.catch(err => res.status(err.status).json({message: err.message}));
 		}
 	});
+
 	router.post('/registerfinish', (req, res) => {
 
 		const phone = req.body.phone;

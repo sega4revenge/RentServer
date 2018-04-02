@@ -268,6 +268,7 @@ exports.cancelreferral = (id) =>
 
 
 	});
+
 exports.registerUser = (id, token, name, email, password, photoprofile, type, tokenfirebase) =>
 
 	new Promise((resolve, reject) => {
@@ -475,7 +476,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
-							referral : "nullpause",
+
 							facebook: {
 								id: id,
 								token: token,
@@ -576,7 +577,7 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
-							referral : "nullpause",
+
 							google: {
 								id: id,
 								token: token,
@@ -649,8 +650,8 @@ exports.registerUserLink = (id, token, name, phone, email, password, photoprofil
 							created_at: new Date(),
 							temp_password: code,
 							temp_password_time: new Date(),
-							status_code: "0",
-							referral : "nullpause"
+							status_code: "0"
+
 
 						});
 						newUser.save();
@@ -759,7 +760,6 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
-							referral : "nullpause",
 							facebook: {
 								id: id,
 								token: token,
@@ -860,7 +860,6 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							tokenfirebase: tokenfirebase,
 							created_at: new Date(),
 							status_code: "0",
-							referral : "nullpause",
 							google: {
 								id: id,
 								token: token,
@@ -933,8 +932,8 @@ exports.registerUserLinkDev = (id, token, name, phone, email, password, photopro
 							created_at: new Date(),
 							temp_password: code,
 							temp_password_time: new Date(),
-							status_code: "0",
-							referral : "nullpause"
+							status_code: "0"
+
 						});
 						newUser.save();
 						console.log("CODEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + email + " : ",random );
