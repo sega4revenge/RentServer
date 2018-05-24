@@ -496,9 +496,8 @@ module.exports = router => {
 		}
 	});
 	router.post('/deleteproduct', (req, res) => {
-
-		const productid = req.body.productid;
-		var listitem = req.body.listimg;
+		const productid = req.productid;
+		var listitem = req.listimg;
 		var arrImgDel = [];
 		if(listitem != "0")
 		{
