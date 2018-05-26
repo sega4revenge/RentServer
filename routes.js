@@ -41,7 +41,10 @@ module.exports = router => {
 	router.get('/sendsms', (req, res) => {
 		sms.sendsms("0906448076","abc","","",1)
 	});
-
+	router.get('/testhaha', (req, res) => {
+		var barcode = req.body.barcode;
+		console.log(barcode+"//haha");
+	});
 	router.post('/search', (req, res) => {
 		var keySearch = req.body.keysearch;
 		var listaddress = req.body.location;
